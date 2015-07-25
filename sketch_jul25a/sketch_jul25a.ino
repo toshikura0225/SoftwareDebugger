@@ -5,8 +5,8 @@ int dataPin = 11;  // 74HC595のDSへ
 int ledPin = 13;
 char flag = 0;
 
-unsigned int data = 6144;  // 0001 10000 00000 00
-unsigned int data2 = 7372;  // 0001 11001 10011 00
+unsigned int data = 6144;  // 0001 10000 00000 00   // 2.5V
+unsigned int data2 = 7372;  // 0001 11001 10011 00  // 4V
 
 void setup() {
   pinMode(latchPin, OUTPUT);
@@ -34,8 +34,12 @@ void loop() {
   digitalWrite(latchPin, LOW);
   digitalWrite(dataPin, LOW);
   delay(1);
-  //shiftOut(dataPin, clockPin, MSBFIRST, data << 8);
-  //shiftOut(dataPin, clockPin, MSBFIRST, data);
+  /*
+  shiftOut(dataPin, clockPin, MSBFIRST, data);
+  shiftOut(dataPin, clockPin, MSBFIRST, data << 8);
+  shiftOut(dataPin, clockPin, MSBFIRST, data2);
+  shiftOut(dataPin, clockPin, MSBFIRST, data2 << 8);
+  */
   shiftOutTK(dataPin, clockPin, data);
   shiftOutTK(dataPin, clockPin, data2);
   delay(1);
