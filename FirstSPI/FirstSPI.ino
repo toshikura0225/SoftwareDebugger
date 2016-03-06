@@ -62,11 +62,11 @@ void loop() {
   }
   */
 
-  digitalPotWrite(0, 100);
+  digitalPotWrite(4, 100);
 
   delay(3000);
 
-  digitalPotWrite(0, 200);
+  digitalPotWrite(4, 200);
 
   delay(3000);
   

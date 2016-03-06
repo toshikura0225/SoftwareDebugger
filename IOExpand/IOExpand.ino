@@ -2,9 +2,11 @@
 
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(9600);
-  Serial.println("started");
   
+  delay(1000);
+  Serial.begin(9600);
+  
+  Serial.println("started");
   Wire.begin(); // I2Cバスに接続
   delay(500);
   
@@ -31,9 +33,13 @@ void loop() {
 
   // setup()を参照
   Wire.beginTransmission(0x20);
+  delay(300);
   Wire.write(0x02);
+  delay(300);
   Wire.write(flag ? 1 : 0);
+  delay(300);
   Wire.write(0x02);
+  delay(300);
   int b = Wire.endTransmission();
   Serial.print(b); 
   delay(1000);
