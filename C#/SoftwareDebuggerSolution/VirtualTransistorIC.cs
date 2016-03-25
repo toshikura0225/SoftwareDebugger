@@ -43,7 +43,15 @@ namespace SoftwareDebuggerSolution
 		public void Init()
 		{
 			// Wire.begin(); // I2Cバスに接続
-			this.write(new byte[] { 0x00, 0x06, 0x06, 0x00, 0x00, 0x00, 0xAA, 0xAA });
+			//this.write(new byte[] { 0x00, 0x06, 0x06, 0x00, 0x00, 0x00, 0xAA, 0xAA });
+			Query_x06 query = new Query_x06()
+			{
+				DeviceAddress = 0x00,
+				FunctionCode = 0x06,
+				RegisterAddress = ModbusData.bytes2int(0x06, 0x00),
+				PresetData = ModbusData.bytes2int(0x00, 0x00),
+			};
+			Arduino.ModbusSerial.Write(query);
 		}
 
 		/// <summary>
@@ -53,19 +61,59 @@ namespace SoftwareDebuggerSolution
 		public void WriteDirection(Dictionary<PortType, List<bool>> directionCollection)
 		{
 			// Wire.beginTransmission(0x20);	                // アドレスを7バイト
-			this.write(new byte[] { 0x00, 0x06, 0x06, 0x01, 0x00, this.deviceAddress, 0xAA, 0xAA });
+			//this.write(new byte[] { 0x00, 0x06, 0x06, 0x01, 0x00, this.deviceAddress, 0xAA, 0xAA });
+			Query_x06 query = new Query_x06()
+			{
+				DeviceAddress = 0x00,
+				FunctionCode = 0x06,
+				RegisterAddress = ModbusData.bytes2int(0x06, 0x01),
+				PresetData = ModbusData.bytes2int(0x00, this.deviceAddress),
+			};
+			Arduino.ModbusSerial.Write(query);
 
 			// Wire.write(0x06);				// I/O direction(ic0)
-			this.write(new byte[] { 0x00, 0x06, 0x06, 0x02, 0x00, 0x06, 0xAA, 0xAA });
-
+			//this.write(new byte[] { 0x00, 0x06, 0x06, 0x02, 0x00, 0x06, 0xAA, 0xAA });
+			query = new Query_x06()
+			{
+				DeviceAddress = 0x00,
+				FunctionCode = 0x06,
+				RegisterAddress = ModbusData.bytes2int(0x06, 0x02),
+				PresetData = ModbusData.bytes2int(0x00, 0x06),
+			};
+			Arduino.ModbusSerial.Write(query);
+			
 			// Wire.write(0x00);				// ic0 directon
-			this.write(new byte[] { 0x00, 0x06, 0x06, 0x02, 0x00, 0x00, 0xAA, 0xAA });
+			//this.write(new byte[] { 0x00, 0x06, 0x06, 0x02, 0x00, 0x00, 0xAA, 0xAA });
+			query = new Query_x06()
+			{
+				DeviceAddress = 0x00,
+				FunctionCode = 0x06,
+				RegisterAddress = ModbusData.bytes2int(0x06, 0x02),
+				PresetData = ModbusData.bytes2int(0x00, 0x00),
+			};
+			Arduino.ModbusSerial.Write(query);
 
 			// Wire.write(0x00);				// ic1 directionを続けて送信しても可
-			this.write(new byte[] { 0x00, 0x06, 0x06, 0x02, 0x00, 0x00, 0xAA, 0xAA });
+			//this.write(new byte[] { 0x00, 0x06, 0x06, 0x02, 0x00, 0x00, 0xAA, 0xAA });
+			query = new Query_x06()
+			{
+				DeviceAddress = 0x00,
+				FunctionCode = 0x06,
+				RegisterAddress = ModbusData.bytes2int(0x06, 0x02),
+				PresetData = ModbusData.bytes2int(0x00, 0x00),
+			};
+			Arduino.ModbusSerial.Write(query);
 
 			// Wire.endTransmission();		// 送信
-			this.write(new byte[] { 0x00, 0x06, 0x06, 0x03, 0x00, 0x00, 0xAA, 0xAA });
+			//this.write(new byte[] { 0x00, 0x06, 0x06, 0x03, 0x00, 0x00, 0xAA, 0xAA });
+			query = new Query_x06()
+			{
+				DeviceAddress = 0x00,
+				FunctionCode = 0x06,
+				RegisterAddress = ModbusData.bytes2int(0x06, 0x03),
+				PresetData = ModbusData.bytes2int(0x00, 0x00),
+			};
+			Arduino.ModbusSerial.Write(query);
 		}
 		
 		/// <summary>
@@ -75,29 +123,61 @@ namespace SoftwareDebuggerSolution
 		public void WriteLevel(Dictionary<PortType, List<bool>> levelCollection)
 		{
 			// Wire.beginTransmission(0x20);	                // アドレスを7バイト
-			this.write(new byte[] { 0x00, 0x06, 0x06, 0x01, 0x00, this.deviceAddress, 0xAA, 0xAA });
+			//this.write(new byte[] { 0x00, 0x06, 0x06, 0x01, 0x00, this.deviceAddress, 0xAA, 0xAA });
+			Query_x06 query = new Query_x06()
+			{
+				DeviceAddress = 0x00,
+				FunctionCode = 0x06,
+				RegisterAddress = ModbusData.bytes2int(0x06, 0x01),
+				PresetData = ModbusData.bytes2int(0x00, this.deviceAddress),
+			};
+			Arduino.ModbusSerial.Write(query);
 
 			// Wire.write(0x02);				// コマンド
-			this.write(new byte[] { 0x00, 0x06, 0x06, 0x02, 0x00, 0x02, 0xAA, 0xAA });
+			//this.write(new byte[] { 0x00, 0x06, 0x06, 0x02, 0x00, 0x02, 0xAA, 0xAA });
+			query = new Query_x06()
+			{
+				DeviceAddress = 0x00,
+				FunctionCode = 0x06,
+				RegisterAddress = ModbusData.bytes2int(0x06, 0x02),
+				PresetData = ModbusData.bytes2int(0x00, 0x02),
+			};
+			Arduino.ModbusSerial.Write(query);
 
 			// Wire.write(0x**);				// ic0 data
-			this.write(new byte[] { 0x00, 0x06, 0x06, 0x02, 0x00, this.Bool2Byte(levelCollection[PortType.port0]), 0xAA, 0xAA });
+			//this.write(new byte[] { 0x00, 0x06, 0x06, 0x02, 0x00, this.Bool2Byte(levelCollection[PortType.port0]), 0xAA, 0xAA });
+			query = new Query_x06()
+			{
+				DeviceAddress = 0x00,
+				FunctionCode = 0x06,
+				RegisterAddress = ModbusData.bytes2int(0x06, 0x02),
+				PresetData = ModbusData.bytes2int(0x00, this.Bool2Byte(levelCollection[PortType.port0])),
+			};
+			Arduino.ModbusSerial.Write(query);
 
 			// Wire.write(0x**);				// ic1 data
-			this.write(new byte[] { 0x00, 0x06, 0x06, 0x02, 0x00, this.Bool2Byte(levelCollection[PortType.port1]), 0xAA, 0xAA });
+			//this.write(new byte[] { 0x00, 0x06, 0x06, 0x02, 0x00, this.Bool2Byte(levelCollection[PortType.port1]), 0xAA, 0xAA });
+			query = new Query_x06()
+			{
+				DeviceAddress = 0x00,
+				FunctionCode = 0x06,
+				RegisterAddress = ModbusData.bytes2int(0x06, 0x02),
+				PresetData = ModbusData.bytes2int(0x00, this.Bool2Byte(levelCollection[PortType.port1])),
+			};
+			Arduino.ModbusSerial.Write(query);
 
 			// Wire.endTransmission();		// 送信
-			this.write(new byte[] { 0x00, 0x06, 0x06, 0x03, 0x00, 0x00, 0xAA, 0xAA });
+			//this.write(new byte[] { 0x00, 0x06, 0x06, 0x03, 0x00, 0x00, 0xAA, 0xAA });
+			query = new Query_x06()
+			{
+				DeviceAddress = 0x00,
+				FunctionCode = 0x06,
+				RegisterAddress = ModbusData.bytes2int(0x06, 0x03),
+				PresetData = ModbusData.bytes2int(0x00, 0x00),
+			};
+			Arduino.ModbusSerial.Write(query);
 		}
-
-		//async void write(byte[] buf)
-		void write(byte[] buf)
-		{
-			Arduino.ModbusSerial.Write(buf, 0, 8);
-			//await Task.Run( () => Thread.Sleep(10));
-			//Task.Run( () => Thread.Sleep(10));
-		}
-
+		
 		byte Bool2Byte(List<bool> list)
 		{
 

@@ -65,6 +65,17 @@ namespace SharedLibrary.SerialPort.Modbus
 		}
 
 		/// <summary>
+		/// 2つのバイトを整数に変換する
+		/// </summary>
+		/// <param name="highByte"></param>
+		/// <param name="lowByte"></param>
+		/// <returns></returns>
+		public static int bytes2int(byte highByte, byte lowByte)
+		{
+			return (highByte << 8) + lowByte;
+		}
+
+		/// <summary>
 		/// Modbusデータからバイナリデータを取得する
 		/// </summary>
 		/// <returns></returns>

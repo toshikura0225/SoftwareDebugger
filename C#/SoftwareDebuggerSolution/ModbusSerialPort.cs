@@ -251,58 +251,13 @@ namespace SharedLibrary.SerialPort.Modbus
 			return retFlag;
 		}
 
-		public virtual void Write(Query_x03 query)
-		{
-			//byte[] buffer = query.get
-		}
-
-		/// <summary>
-		/// ファンクションコード0x03の応答データを送信する
-		/// </summary>
-		/// <param name="response"></param>
-		public virtual void Write(Response_x03 response)
-		{
-			byte[] buffer = response.GetBytes();
-			this.Write(buffer, 0, buffer.Length);
-		}
-
-		/// <summary>
-		/// ファンクションコード0x06の応答データを送信する
-		/// </summary>
-		/// <param name="response"></param>
-		public virtual void Write(Response_x06 response)
-		{
-			byte[] buffer = response.GetBytes();
-			this.Write(buffer, 0, buffer.Length);
-		}
-
-		/// <summary>
-		/// ファンクションコード0x06の応答データを送信する
-		/// </summary>
-		/// <param name="response"></param>
-		public virtual void Write(Response_x08 response)
-		{
-			byte[] buffer = response.GetBytes();
-			this.Write(buffer, 0, buffer.Length);
-		}
-
-		/// <summary>
-		/// ファンクションコード0x10の応答データを送信する
-		/// </summary>
-		/// <param name="response"></param>
-		public virtual void Write(Response_x10 response)
-		{
-			byte[] buffer = response.GetBytes();
-			this.Write(buffer, 0, buffer.Length);
-		}
-
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="response"></param>
-		public virtual void Write(ErrorResponse response)
+		public virtual void Write(ModbusData modbus)
 		{
-			byte[] buffer = response.GetBytes();
+			byte[] buffer = modbus.GetBytes();
 			this.Write(buffer, 0, buffer.Length);
 		}
 
