@@ -9,7 +9,7 @@ namespace SharedLibrary.SerialPort.Modbus
 	/// <summary>
 	/// Modbus形式データの共通部分
 	/// </summary>
-	public class ModbusData
+	public abstract class ModbusData
 	{
 		/// <summary>
 		/// デバイスアドレス
@@ -64,12 +64,17 @@ namespace SharedLibrary.SerialPort.Modbus
 			return true;
 		}
 
+		/// <summary>
+		/// Modbusデータからバイナリデータを取得する
+		/// </summary>
+		/// <returns></returns>
+		public abstract byte[] GetBytes();
 	}
 
 	/// <summary>
 	/// 返信データ
 	/// </summary>
-	public class Response : ModbusData
+	public abstract class Response : ModbusData
 	{
 		/// <summary>
 		/// 誤ったCRCコードで返答するかどうか
@@ -77,11 +82,19 @@ namespace SharedLibrary.SerialPort.Modbus
 		public bool CRCErrorFlag = false;
 	}
 
+	/// <summary>
+	/// 要求データ
+	/// </summary>
+	public abstract class Query : ModbusData
+	{
+		// Nothing
+	}
+
 
 	/// <summary>
 	/// ファンクションコード0x03の要求データ
 	/// </summary>
-	public class Query_x03 : ModbusData
+	public class Query_x03 : Query
 	{
 		/// <summary>
 		/// データ要求する先頭アドレス
@@ -92,6 +105,28 @@ namespace SharedLibrary.SerialPort.Modbus
 		/// データ要求するアドレス数
 		/// </summary>
 		public int NumberOfPoints;
+
+		/// <summary>
+		/// Modbusデータからバイナリデータを取得する
+		/// </summary>
+		/// <returns></returns>
+		public override byte[] GetBytes()
+		{
+			byte[] buf = new byte[8];
+
+			buf[0] = this.DeviceAddress;
+			buf[1] = this.FunctionCode;
+			buf[2] = (byte)((this.StartingAddress >> 8) & 0xFF);
+			buf[3] = (byte)(this.StartingAddress & 0xFF);
+			buf[4] = (byte)((this.NumberOfPoints >> 8) & 0xFF);
+			buf[5] = (byte)(this.NumberOfPoints & 0xFF);
+
+			int CRC = ModbusData.GetCRC(buf, 6);
+			buf[6] = (byte)(CRC & 0xFF);
+			buf[7] = (byte)((CRC >> 8) & 0xFF);
+
+			return buf;
+		}
 	}
 
 	/// <summary>
@@ -113,7 +148,7 @@ namespace SharedLibrary.SerialPort.Modbus
 		/// オブジェクトデータをModbusプロトコルのバイト配列にして返す
 		/// </summary>
 		/// <returns></returns>
-		public byte[] GetBytes()
+		public override byte[] GetBytes()
 		{
 			byte[] retBytes = new byte[this.ByteCount + 5];
 
@@ -154,7 +189,7 @@ namespace SharedLibrary.SerialPort.Modbus
 	/// <summary>
 	/// ファンクションコード0x06の要求データ
 	/// </summary>
-	public class Query_x06 : ModbusData
+	public class Query_x06 : Query
 	{
 		/// <summary>
 		/// データ設定するアドレス
@@ -165,6 +200,28 @@ namespace SharedLibrary.SerialPort.Modbus
 		/// データ設定する値
 		/// </summary>
 		public int PresetData;
+
+		/// <summary>
+		/// Modbusデータからバイナリデータを取得する
+		/// </summary>
+		/// <returns></returns>
+		public override byte[] GetBytes()
+		{
+			byte[] buf = new byte[8];
+
+			buf[0] = this.DeviceAddress;
+			buf[1] = this.FunctionCode;
+			buf[2] = (byte)((this.RegisterAddress >> 8) & 0xFF);
+			buf[3] = (byte)(this.RegisterAddress & 0xFF);
+			buf[4] = (byte)((this.PresetData >> 8) & 0xFF);
+			buf[5] = (byte)(this.PresetData & 0xFF);
+
+			int CRC = ModbusData.GetCRC(buf, 6);
+			buf[6] = (byte)(CRC & 0xFF);
+			buf[7] = (byte)((CRC >> 8) & 0xFF);
+
+			return buf;
+		}
 	}
 	
 	/// <summary>
@@ -187,7 +244,7 @@ namespace SharedLibrary.SerialPort.Modbus
 		/// オブジェクトデータをModbusプロトコルのバイト配列にして返す
 		/// </summary>
 		/// <returns></returns>
-		public byte[] GetBytes()
+		public override byte[] GetBytes()
 		{
 			byte[] retBytes = new byte[8];
 
@@ -215,7 +272,7 @@ namespace SharedLibrary.SerialPort.Modbus
 	/// <summary>
 	/// ファンクションコード0x08の要求データ
 	/// </summary>
-	public class Query_x08 : ModbusData
+	public class Query_x08 : Query
 	{
 		/// <summary>
 		/// サブファンクションコード
@@ -226,6 +283,28 @@ namespace SharedLibrary.SerialPort.Modbus
 		/// 要求データ
 		/// </summary>
 		public int Data;
+
+		/// <summary>
+		/// Modbusデータからバイナリデータを取得する
+		/// </summary>
+		/// <returns></returns>
+		public override byte[] GetBytes()
+		{
+			byte[] buf = new byte[8];
+
+			buf[0] = this.DeviceAddress;
+			buf[1] = this.FunctionCode;
+			buf[2] = (byte)((this.Subfunction >> 8) & 0xFF);
+			buf[3] = (byte)(this.Subfunction & 0xFF);
+			buf[4] = (byte)((this.Data >> 8) & 0xFF);
+			buf[5] = (byte)(this.Data & 0xFF);
+
+			int CRC = ModbusData.GetCRC(buf, 6);
+			buf[6] = (byte)(CRC & 0xFF);
+			buf[7] = (byte)((CRC >> 8) & 0xFF);
+
+			return buf;
+		}
 	}
 
 	/// <summary>
@@ -247,7 +326,7 @@ namespace SharedLibrary.SerialPort.Modbus
 		/// オブジェクトデータをModbusプロトコルのバイト配列にして返す
 		/// </summary>
 		/// <returns></returns>
-		public byte[] GetBytes()
+		public override byte[] GetBytes()
 		{
 			byte[] retBytes = new byte[8];
 
@@ -274,7 +353,7 @@ namespace SharedLibrary.SerialPort.Modbus
 	/// <summary>
 	/// ファンクションコード0x10の要求データ
 	/// </summary>
-	public class Query_x10 : ModbusData
+	public class Query_x10 : Query
 	{
 		/// <summary>
 		/// 設定するデータのアドレス‐値リスト
@@ -295,6 +374,28 @@ namespace SharedLibrary.SerialPort.Modbus
 		/// 設定するバイト数（読込み専用）
 		/// </summary>
 		public int ByteCount { get { return chk() ? this.NumberOfRegisters * 2 : -1; } }
+
+		/// <summary>
+		/// Modbusデータからバイナリデータを取得する
+		/// </summary>
+		/// <returns></returns>
+		public override byte[] GetBytes()
+		{
+			byte[] buf = new byte[8];
+
+			//buf[0] = this.DeviceAddress;
+			//buf[1] = this.FunctionCode;
+			//buf[2] = (byte)((this.Subfunction >> 8) & 0xFF);
+			//buf[3] = (byte)(this.Subfunction & 0xFF);
+			//buf[4] = (byte)((this.Data >> 8) & 0xFF);
+			//buf[5] = (byte)(this.Data & 0xFF);
+
+			//int CRC = ModbusData.GetCRC(buf, 6);
+			//buf[6] = (byte)(CRC & 0xFF);
+			//buf[7] = (byte)((CRC >> 8) & 0xFF);
+
+			return buf;
+		}
 
 		private bool chk() { return (this.DataList != null && this.DataList.Count > 0); }
 	}
@@ -323,7 +424,7 @@ namespace SharedLibrary.SerialPort.Modbus
 		/// オブジェクトデータをModbusプロトコルのバイト配列にして返す
 		/// </summary>
 		/// <returns></returns>
-		public byte[] GetBytes()
+		public override byte[] GetBytes()
 		{
 			byte[] retBytes = new byte[8];
 
@@ -356,7 +457,7 @@ namespace SharedLibrary.SerialPort.Modbus
 		/// オブジェクトデータをModbusプロトコルのバイト配列にして返す
 		/// </summary>
 		/// <returns></returns>
-		public byte[] GetBytes()
+		public override byte[] GetBytes()
 		{
 			byte[] retBytes = new byte[5];
 

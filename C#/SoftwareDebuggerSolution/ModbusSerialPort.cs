@@ -122,14 +122,14 @@ namespace SharedLibrary.SerialPort.Modbus
 							modbusData.ReadData = this.GetQuery_x10();
 							break;
 
-						default:
+						//default:
 
-							modbusData.ReadData = new ModbusData()
-							{
-								DeviceAddress = this.readDataList[0],
-								FunctionCode = (byte)(this.readDataList[1] + 0x80),
-							};
-							break;
+						//	modbusData.ReadData = new ModbusData()
+						//	{
+						//		DeviceAddress = this.readDataList[0],
+						//		FunctionCode = (byte)(this.readDataList[1] + 0x80),
+						//	};
+						//	break;
 					}
 
 					// 受信イベントを発行
@@ -251,9 +251,13 @@ namespace SharedLibrary.SerialPort.Modbus
 			return retFlag;
 		}
 
+		public virtual void Write(Query_x03 query)
+		{
+			//byte[] buffer = query.get
+		}
 
 		/// <summary>
-		/// ファンクションコード0x03のデータを送信する
+		/// ファンクションコード0x03の応答データを送信する
 		/// </summary>
 		/// <param name="response"></param>
 		public virtual void Write(Response_x03 response)
@@ -263,7 +267,7 @@ namespace SharedLibrary.SerialPort.Modbus
 		}
 
 		/// <summary>
-		/// ファンクションコード0x06のデータを送信する
+		/// ファンクションコード0x06の応答データを送信する
 		/// </summary>
 		/// <param name="response"></param>
 		public virtual void Write(Response_x06 response)
@@ -273,7 +277,7 @@ namespace SharedLibrary.SerialPort.Modbus
 		}
 
 		/// <summary>
-		/// ファンクションコード0x06のデータを送信する
+		/// ファンクションコード0x06の応答データを送信する
 		/// </summary>
 		/// <param name="response"></param>
 		public virtual void Write(Response_x08 response)
@@ -283,7 +287,7 @@ namespace SharedLibrary.SerialPort.Modbus
 		}
 
 		/// <summary>
-		/// ファンクションコード0x10のデータを送信する
+		/// ファンクションコード0x10の応答データを送信する
 		/// </summary>
 		/// <param name="response"></param>
 		public virtual void Write(Response_x10 response)
