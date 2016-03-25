@@ -93,7 +93,7 @@ namespace SoftwareDebuggerSolution
 		//async void write(byte[] buf)
 		void write(byte[] buf)
 		{
-			Arduino.Serial.Write(buf, 0, 8);
+			Arduino.ModbusSerial.Write(buf, 0, 8);
 			//await Task.Run( () => Thread.Sleep(10));
 			//Task.Run( () => Thread.Sleep(10));
 		}

@@ -64,7 +64,7 @@ namespace SharedLibrary.SerialPort.Modbus
 					{
 						// 受信完了タイマスタート
 						this.timeoutTimer.AutoReset = false;
-						this.timeoutTimer.Interval = this.DataReceivedDelay;
+						this.timeoutTimer.Interval = (this.DataReceivedDelay != 0) ? this.DataReceivedDelay : 100;
 						this.timeoutTimer.Enabled = true;
 
 						// 受信バッファ内のデータを受信済みデータとして追加
