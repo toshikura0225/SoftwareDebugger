@@ -56,6 +56,7 @@ namespace SoftwareDebuggerSolution
 						Console.Write(buf[i] + ",");
 					}
 					Console.WriteLine();
+					Console.WriteLine();
 				};
 		}
 
