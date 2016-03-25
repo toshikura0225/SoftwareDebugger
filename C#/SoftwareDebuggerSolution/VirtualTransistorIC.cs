@@ -51,7 +51,7 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(0x06, 0x00),
 				PresetData = ModbusData.bytes2int(0x00, 0x00),
 			};
-			Arduino.ModbusSerial.Write(query);
+			this.Write(query);
 		}
 
 		/// <summary>
@@ -69,7 +69,7 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(0x06, 0x01),
 				PresetData = ModbusData.bytes2int(0x00, this.deviceAddress),
 			};
-			Arduino.ModbusSerial.Write(query);
+			this.Write(query);
 
 			// Wire.write(0x06);				// I/O direction(ic0)
 			//this.write(new byte[] { 0x00, 0x06, 0x06, 0x02, 0x00, 0x06, 0xAA, 0xAA });
@@ -80,7 +80,7 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(0x06, 0x02),
 				PresetData = ModbusData.bytes2int(0x00, 0x06),
 			};
-			Arduino.ModbusSerial.Write(query);
+			this.Write(query);
 			
 			// Wire.write(0x00);				// ic0 directon
 			//this.write(new byte[] { 0x00, 0x06, 0x06, 0x02, 0x00, 0x00, 0xAA, 0xAA });
@@ -91,7 +91,7 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(0x06, 0x02),
 				PresetData = ModbusData.bytes2int(0x00, 0x00),
 			};
-			Arduino.ModbusSerial.Write(query);
+			this.Write(query);
 
 			// Wire.write(0x00);				// ic1 directionを続けて送信しても可
 			//this.write(new byte[] { 0x00, 0x06, 0x06, 0x02, 0x00, 0x00, 0xAA, 0xAA });
@@ -102,7 +102,7 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(0x06, 0x02),
 				PresetData = ModbusData.bytes2int(0x00, 0x00),
 			};
-			Arduino.ModbusSerial.Write(query);
+			this.Write(query);
 
 			// Wire.endTransmission();		// 送信
 			//this.write(new byte[] { 0x00, 0x06, 0x06, 0x03, 0x00, 0x00, 0xAA, 0xAA });
@@ -113,7 +113,7 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(0x06, 0x03),
 				PresetData = ModbusData.bytes2int(0x00, 0x00),
 			};
-			Arduino.ModbusSerial.Write(query);
+			this.Write(query);
 		}
 		
 		/// <summary>
@@ -131,7 +131,7 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(0x06, 0x01),
 				PresetData = ModbusData.bytes2int(0x00, this.deviceAddress),
 			};
-			Arduino.ModbusSerial.Write(query);
+			this.Write(query);
 
 			// Wire.write(0x02);				// コマンド
 			//this.write(new byte[] { 0x00, 0x06, 0x06, 0x02, 0x00, 0x02, 0xAA, 0xAA });
@@ -142,7 +142,7 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(0x06, 0x02),
 				PresetData = ModbusData.bytes2int(0x00, 0x02),
 			};
-			Arduino.ModbusSerial.Write(query);
+			this.Write(query);
 
 			// Wire.write(0x**);				// ic0 data
 			//this.write(new byte[] { 0x00, 0x06, 0x06, 0x02, 0x00, this.Bool2Byte(levelCollection[PortType.port0]), 0xAA, 0xAA });
@@ -153,7 +153,7 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(0x06, 0x02),
 				PresetData = ModbusData.bytes2int(0x00, this.Bool2Byte(levelCollection[PortType.port0])),
 			};
-			Arduino.ModbusSerial.Write(query);
+			this.Write(query);
 
 			// Wire.write(0x**);				// ic1 data
 			//this.write(new byte[] { 0x00, 0x06, 0x06, 0x02, 0x00, this.Bool2Byte(levelCollection[PortType.port1]), 0xAA, 0xAA });
@@ -164,7 +164,7 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(0x06, 0x02),
 				PresetData = ModbusData.bytes2int(0x00, this.Bool2Byte(levelCollection[PortType.port1])),
 			};
-			Arduino.ModbusSerial.Write(query);
+			this.Write(query);
 
 			// Wire.endTransmission();		// 送信
 			//this.write(new byte[] { 0x00, 0x06, 0x06, 0x03, 0x00, 0x00, 0xAA, 0xAA });
@@ -175,7 +175,7 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(0x06, 0x03),
 				PresetData = ModbusData.bytes2int(0x00, 0x00),
 			};
-			Arduino.ModbusSerial.Write(query);
+			this.Write(query);
 		}
 		
 		byte Bool2Byte(List<bool> list)
@@ -195,6 +195,18 @@ namespace SoftwareDebuggerSolution
 			}
 
 			return ret;
+		}
+
+		private void Write(Query_x06 query)
+		{
+			byte[] buffer = query.GetBytes();
+			Console.Write("送信：");
+			for (int i = 0; i < buffer.Length; i++)
+			{
+				Console.Write(buffer[i] + ",");
+			}
+			Console.WriteLine();
+			Arduino.ModbusSerial.Write(query);
 		}
 
 	}

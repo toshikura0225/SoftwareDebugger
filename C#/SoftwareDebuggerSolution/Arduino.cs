@@ -49,11 +49,13 @@ namespace SoftwareDebuggerSolution
 
 			ModbusSerial.ModbusDataReceived += (s, e) =>
 				{
+					Console.Write("受信：");
 					byte[] buf = e.ReadData.GetBytes();
 					for (int i = 0; i < buf.Length; i++ )
 					{
 						Console.Write(buf[i] + ",");
 					}
+					Console.WriteLine();
 				};
 		}
 

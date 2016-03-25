@@ -35,7 +35,7 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(0x00, (byte)this.latchPin),
 				PresetData = ModbusData.bytes2int(0x01, 0x00),
 			};
-			Arduino.ModbusSerial.Write(query);
+			this.Write(query);
 
 			//// initialize SPI:
 			//SPI.begin();
@@ -47,7 +47,7 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(0x05, 0x00),
 				PresetData = ModbusData.bytes2int(0x00, 0x00),
 			};
-			Arduino.ModbusSerial.Write(query);
+			this.Write(query);
 
 			//SPI.setDataMode(SPI_MODE0);
 			//SPI.setClockDivider(SPI_CLOCK_DIV32);
@@ -59,7 +59,7 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(0x05, 0x01),
 				PresetData = ModbusData.bytes2int(0x00, 0x06),
 			};
-			Arduino.ModbusSerial.Write(query);
+			this.Write(query);
 		}
 
 		/// <summary>
@@ -87,7 +87,7 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(0x01, (byte)this.latchPin),
 				PresetData = ModbusData.bytes2int(0x00, 0x00),
 			};
-			Arduino.ModbusSerial.Write(query);
+			this.Write(query);
 
 			////  send in the address and value via SPI:
 			//SPI.transfer(address);
@@ -99,7 +99,7 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(0x05, 0x02),
 				PresetData = ModbusData.bytes2int(0x00, (byte)pinType),
 			};
-			Arduino.ModbusSerial.Write(query);
+			this.Write(query);
 
 			//SPI.transfer(value);
 			//this.write(new byte[] { 0x00, 0x06, 0x05, 0x02, 0x00, outputValue, 0xAA, 0xAA });
@@ -110,7 +110,7 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(0x05, 0x02),
 				PresetData = ModbusData.bytes2int(0x00, outputValue),
 			};
-			Arduino.ModbusSerial.Write(query);
+			this.Write(query);
 
 			//// take the SS pin high to de-select the chip:
 			//digitalWrite(slaveSelectPin, HIGH);
@@ -122,8 +122,22 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(0x01, (byte)this.latchPin),
 				PresetData = ModbusData.bytes2int(0x00, 0x01),
 			};
+			this.Write(query);
+		}
+
+
+		private void Write(Query_x06 query)
+		{
+			byte[] buffer = query.GetBytes();
+			Console.Write("送信：");
+			for (int i = 0; i < buffer.Length; i++)
+			{
+				Console.Write(buffer[i] + ",");
+			}
+			Console.WriteLine();
 			Arduino.ModbusSerial.Write(query);
 		}
+
 
 	}
 }

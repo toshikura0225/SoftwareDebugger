@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 
@@ -73,7 +74,7 @@ namespace SharedLibrary.SerialPort.Modbus
 						byte[] buf2 = new byte[len];
 						Buffer.BlockCopy(buf1, 0, buf2, 0, len);
 						this.readDataList.AddRange(buf2);
-						Console.WriteLine(string.Format("serialPort1_DataReceived:{0}", string.Join(",", buf2)));
+						//Console.WriteLine(string.Format("serialPort1_DataReceived:{0}", string.Join(",", buf2)));
 
 					}
 					else
