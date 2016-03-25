@@ -83,8 +83,8 @@ namespace SoftwareDebuggerSolution
 
 		private void COM_Click(object sender, EventArgs e)
 		{
-			Arduino.Serial.PortName = this.comboBox1.Text;
-			Arduino.Serial.Open();
+			Arduino.ModbusSerial.PortName = this.comboBox1.Text;
+			Arduino.ModbusSerial.Open();
 		}
 
 

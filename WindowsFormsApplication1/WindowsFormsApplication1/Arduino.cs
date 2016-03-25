@@ -34,29 +34,28 @@ namespace SoftwareDebuggerSolution
 			pina5,
 		}
 
-		public static SerialPort Serial;
+		public static ModbusSerialPort ModbusSerial;
 
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
 		public Arduino()
 		{
-			Serial = new SerialPort()
+			ModbusSerial = new ModbusSerialPort()
 			{
 				BaudRate = 9600,
 				Handshake = System.IO.Ports.Handshake.None,
 			};
 
-			Serial.DataReceived += (s, e) =>
+			ModbusSerial.ModbusDataReceived += (s, e) =>
 				{
-					byte[] buf = new byte[Serial.ReadBufferSize];
-					int len = Serial.Read(buf, 0, Serial.ReadBufferSize);
-
-					for(var index = 0; index < len; index++)
+					Console.Write("受信：");
+					byte[] buf = e.ReadData.GetBytes();
+					for (int i = 0; i < buf.Length; i++ )
 					{
-						Console.Write(buf[index] + ",");
+						Console.Write(buf[i] + ",");
 					}
-
+					Console.WriteLine();
 					Console.WriteLine();
 				};
 		}

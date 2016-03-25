@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 
@@ -12,18 +13,6 @@ namespace SharedLibrary.SerialPort.Modbus
 {
 	public partial class ModbusSerialPort : Component
 	{
-
-		/// <summary>
-		/// 送信完了を検知するタイマー
-		/// </summary>
-		protected System.Timers.Timer timeoutTimer = new System.Timers.Timer();
-
-		/// <summary>
-		/// 受信してから受信イベントを発生させる時間（msec）
-		/// 最後にデータを受信したタイミングから指定時間後に受信完了と判断して受信イベントが発生する
-		/// </summary>
-		public int DataReceivedDelay { get; set; }
-
 		// 概要:
 		//     ModbusSerialPort オブジェクトのデータ受信イベントを処理するメソッドを表します。
 		public event ModbusDataReceivedEventHandler ModbusDataReceived;
@@ -40,11 +29,9 @@ namespace SharedLibrary.SerialPort.Modbus
 		/// </summary>
 		protected virtual void InitializeComponent2()
 		{
-			// データ受信完了イベント（データ受信してから○○経過して受信完了とする）
-			this.timeoutTimer.Elapsed += timeoutTimer_Elapsed;
-
 			// タイムアウト値がないとデータなしのDataReceivedイベントによりlock(this)でデッドロックする対策
 			this.serialPort1.ReadTimeout = 1;
+
 		}
 
 
@@ -59,92 +46,59 @@ namespace SharedLibrary.SerialPort.Modbus
 			{
 				try
 				{
-					// 受信データ数をチェック
-					if (this.readDataList.Count < 10000)
-					{
-						// 受信完了タイマスタート
-						this.timeoutTimer.AutoReset = false;
-						this.timeoutTimer.Interval = this.DataReceivedDelay;
-						this.timeoutTimer.Enabled = true;
+					// 受信バッファ内のデータを受信済みデータとして追加
+					byte[] buf1 = new byte[this.serialPort1.ReadBufferSize];
+					int len = this.serialPort1.Read(buf1, 0, buf1.Length);
+					byte[] buf2 = new byte[len];
+					Buffer.BlockCopy(buf1, 0, buf2, 0, len);
+					this.readDataList.AddRange(buf2);
 
-						// 受信バッファ内のデータを受信済みデータとして追加
-						byte[] buf1 = new byte[this.serialPort1.ReadBufferSize];
-						int len = this.serialPort1.Read(buf1, 0, buf1.Length);
-						byte[] buf2 = new byte[len];
-						Buffer.BlockCopy(buf1, 0, buf2, 0, len);
-						this.readDataList.AddRange(buf2);
-						Console.WriteLine(string.Format("serialPort1_DataReceived:{0}", string.Join(",", buf2)));
-
-					}
-					else
+					if (this.readDataList.Count >= 8)
 					{
-						Console.WriteLine("▲受信データ数オーバー");
-						this.serialPort1.DiscardInBuffer();
+						// ModbusDataReceivedイベントとして渡すイベント引数
+						ModbusDataReceivedEventArgs modbusData = new ModbusDataReceivedEventArgs();
+
+						// ファンクションコード別にチェック
+						switch (this.readDataList[1])
+						{
+							case 0x03:
+								modbusData.ReadData = this.GetQuery_x03();
+								this.readDataList.RemoveRange(0, 8);
+								break;
+
+							case 0x06:
+								modbusData.ReadData = this.GetQuery_x06();
+								this.readDataList.RemoveRange(0, 8);
+								break;
+
+							case 0x08:
+								modbusData.ReadData = this.GetQuery_x08();
+								this.readDataList.RemoveRange(0, 8);
+								break;
+
+							case 0x10:
+								if (this.readDataList.Count >= (this.readDataList[6] + 7))
+								{
+									modbusData.ReadData = this.GetQuery_x10();
+									this.readDataList.RemoveRange(0, this.readDataList[6] + 7);
+								}
+								break;
+
+							default:
+								this.readDataList.Clear();
+								break;
+						}
+
+						// 受信イベントを発行
+						if (this.ModbusDataReceived != null) this.ModbusDataReceived(sender, modbusData);
 					}
+
 				}
 				catch { }
 			}
 
 		}
 
-		/// <summary>
-		/// 受信イベントが発生して＊＊秒受信がないとデータ受信完了とする
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		protected virtual void timeoutTimer_Elapsed(object sender, ElapsedEventArgs e)
-		{
-			//Console.WriteLine(string.Format("timeoutTimer_Elapsed:{0}{1}{1}", string.Join(",", this.readDataList), Environment.NewLine));
-			lock (this)
-			{
-				// 受信データ長をチェック
-				if (this.CheckReadDataLength())
-				{
-					// ModbusDataReceivedイベントとして渡すイベント引数
-					ModbusDataReceivedEventArgs modbusData = new ModbusDataReceivedEventArgs();
-
-					// ファンクションコード別にチェック
-					switch (this.readDataList[1])
-					{
-						case 0x03:
-							modbusData.ReadData = this.GetQuery_x03();
-							break;
-
-						case 0x06:
-							modbusData.ReadData = this.GetQuery_x06();
-							break;
-
-						case 0x08:
-							modbusData.ReadData = this.GetQuery_x08();
-							break;
-
-						case 0x10:
-							modbusData.ReadData = this.GetQuery_x10();
-							break;
-
-						default:
-
-							modbusData.ReadData = new ModbusData()
-							{
-								DeviceAddress = this.readDataList[0],
-								FunctionCode = (byte)(this.readDataList[1] + 0x80),
-							};
-							break;
-					}
-
-					// 受信イベントを発行
-					if (this.ModbusDataReceived != null) this.ModbusDataReceived(sender, modbusData);
-
-				}
-				else
-				{
-					Console.WriteLine("▲受信データ長エラー");
-				}
-
-
-				this.readDataList = new List<byte>();	// 受信データを初期化
-			}
-		}
 
 		/// <summary>
 		/// 受信データからModbusデータ形式のデータを取得する
@@ -251,54 +205,13 @@ namespace SharedLibrary.SerialPort.Modbus
 			return retFlag;
 		}
 
-
-		/// <summary>
-		/// ファンクションコード0x03のデータを送信する
-		/// </summary>
-		/// <param name="response"></param>
-		public virtual void Write(Response_x03 response)
-		{
-			byte[] buffer = response.GetBytes();
-			this.Write(buffer, 0, buffer.Length);
-		}
-
-		/// <summary>
-		/// ファンクションコード0x06のデータを送信する
-		/// </summary>
-		/// <param name="response"></param>
-		public virtual void Write(Response_x06 response)
-		{
-			byte[] buffer = response.GetBytes();
-			this.Write(buffer, 0, buffer.Length);
-		}
-
-		/// <summary>
-		/// ファンクションコード0x06のデータを送信する
-		/// </summary>
-		/// <param name="response"></param>
-		public virtual void Write(Response_x08 response)
-		{
-			byte[] buffer = response.GetBytes();
-			this.Write(buffer, 0, buffer.Length);
-		}
-
-		/// <summary>
-		/// ファンクションコード0x10のデータを送信する
-		/// </summary>
-		/// <param name="response"></param>
-		public virtual void Write(Response_x10 response)
-		{
-			byte[] buffer = response.GetBytes();
-			this.Write(buffer, 0, buffer.Length);
-		}
-
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="response"></param>
-		public virtual void Write(ErrorResponse response)
+		public virtual void Write(ModbusData modbus)
 		{
-			byte[] buffer = response.GetBytes();
+			byte[] buffer = modbus.GetBytes();
 			this.Write(buffer, 0, buffer.Length);
 		}
 
