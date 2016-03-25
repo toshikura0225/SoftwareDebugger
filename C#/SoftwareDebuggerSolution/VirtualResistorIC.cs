@@ -70,10 +70,12 @@ namespace SoftwareDebuggerSolution
 			this.write(new byte[] { 0x00, 0x06, 0x01, (byte)this.latchPin, 0x00, 0x01, 0xAA, 0xAA });
 		}
 
-		async void write(byte[] buf)
+		//async void write(byte[] buf)
+		void write(byte[] buf)
 		{
 			Arduino.Serial.Write(buf, 0, 8);
-			await Task.Run(() => Thread.Sleep(10));
+			//await Task.Run(() => Thread.Sleep(10));
+			//Task.Run(() => Thread.Sleep(10));
 		}
 
 		
