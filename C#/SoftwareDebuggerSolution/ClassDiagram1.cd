@@ -1,45 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
-  <Class Name="SoftwareDebuggerSolution.Form1">
-    <Position X="0.5" Y="0.5" Width="2.5" />
+  <Class Name="SoftwareDebuggerSolution.SerialI2C">
+    <Position X="8" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAAAACAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Form1.cs</FileName>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAGAAAA=</HashCode>
+      <FileName>SerialI2C.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
-  <Class Name="SoftwareDebuggerSolution.Resistor">
-    <Position X="0.5" Y="3.25" Width="4.5" />
-    <NestedTypes>
-      <Enum Name="SoftwareDebuggerSolution.Resistor.ResistorPinType" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Resistor.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
+  <Class Name="SoftwareDebuggerSolution.SerialSPI">
+    <Position X="7.5" Y="3.75" Width="3.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
-      <FileName>Resistor.cs</FileName>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAEAGAAAA=</HashCode>
+      <FileName>SerialSPI.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
-  <Class Name="SoftwareDebuggerSolution.Transistor">
-    <Position X="5.75" Y="3.25" Width="3.5" />
-    <NestedTypes>
-      <Enum Name="SoftwareDebuggerSolution.Transistor.PinType" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Transistor.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAQAA=</HashCode>
-      <FileName>Transistor.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SoftwareDebuggerSolution.VirtualResistorIC">
-    <Position X="0.5" Y="5.75" Width="4" />
+  <Class Name="SoftwareDebuggerSolution.AD5206">
+    <Position X="3.75" Y="1" Width="2.75" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
+    <NestedTypes>
+      <Enum Name="SoftwareDebuggerSolution.AD5206.PinType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>AD5206.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAEEAAAAIAAAAQAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>AD5206.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SoftwareDebuggerSolution.VirtualResistorIC">
+    <Position X="0.75" Y="5.25" Width="4.25" />
     <NestedTypes>
       <Enum Name="SoftwareDebuggerSolution.VirtualResistorIC.PinType" Collapsed="true">
         <TypeIdentifier>
@@ -48,48 +43,30 @@
       </Enum>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAACAAEAAAA=</HashCode>
       <FileName>VirtualResistorIC.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SoftwareDebuggerSolution.VirtualTransistorIC">
-    <Position X="5.75" Y="5.75" Width="6.25" />
-    <Compartments>
-      <Compartment Name="Nested Types" Collapsed="false" />
-    </Compartments>
-    <NestedTypes>
-      <Enum Name="SoftwareDebuggerSolution.VirtualTransistorIC.PinType" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>VirtualTransistorIC.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-      <Enum Name="SoftwareDebuggerSolution.VirtualTransistorIC.PortType" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>VirtualTransistorIC.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
+  <Class Name="SoftwareDebuggerSolution.MAX335">
+    <Position X="6" Y="6" Width="3.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAACIAAAAAA=</HashCode>
-      <FileName>VirtualTransistorIC.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>MAX335.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SoftwareDebuggerSolution.Arduino">
-    <Position X="3.5" Y="0.5" Width="1.75" />
-    <Compartments>
-      <Compartment Name="Nested Types" Collapsed="false" />
-    </Compartments>
-    <NestedTypes>
-      <Enum Name="SoftwareDebuggerSolution.Arduino.PinType" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Arduino.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
+  <Interface Name="SoftwareDebuggerSolution.IVirtualI2C">
+    <Position X="12" Y="2.5" Width="3.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Arduino.cs</FileName>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAGAAAA=</HashCode>
+      <FileName>IVirtualI2C.cs</FileName>
     </TypeIdentifier>
-  </Class>
+  </Interface>
+  <Interface Name="SoftwareDebuggerSolution.IVirtualSPI&lt;TPort&gt;">
+    <Position X="12" Y="4.75" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAEAGAAAA=</HashCode>
+      <FileName>IVirtualSPI.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Font Name="メイリオ" Size="9" />
 </ClassDiagram>
