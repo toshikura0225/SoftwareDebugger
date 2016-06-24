@@ -5,15 +5,8 @@ using System.Text;
 
 namespace SoftwareDebuggerSolution
 {
-	public class AD5206 : System.ComponentModel.Component
+	public class AD5206 : SerialSPI<AD5206.PinType>
 	{
-		protected SPIModeType spiMode = SPIModeType.SPI_MODE0;
-
-		public SPIModeType SPIMode { get; set; }
-		
-
-		public Arduino.PinType LatchPin { get; set; }
-
 		public enum PinType
 		{
 			pin1,
@@ -24,12 +17,6 @@ namespace SoftwareDebuggerSolution
 			pin6,
 		}
 
-		protected SerialSPI serialSPI;
-
-		public bool SetRegistor(AD5206.PinType pin, byte data)
-		{
-			return true;
-		}
 
 
 	}

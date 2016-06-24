@@ -5,14 +5,12 @@ using System.Text;
 
 namespace SoftwareDebuggerSolution
 {
-	public interface IVirtualSPI<TPort>
+	public interface IVirtualSPI<TLatchPinType>
 	{
 		void Open();
 		void Close();
-		void Write(TPort port, byte data);
+		void Write(TLatchPinType port, byte data);
 		void setDataMode(SPIModeType modeType);
-
-
 	}
 
 	public enum SPIModeType

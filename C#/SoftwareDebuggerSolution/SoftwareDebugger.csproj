@@ -54,7 +54,6 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="IVirtualI2C.cs" />
     <Compile Include="IVirtualSPI.cs" />
     <Compile Include="MAX335.cs" />
     <Compile Include="ModbusData.cs" />

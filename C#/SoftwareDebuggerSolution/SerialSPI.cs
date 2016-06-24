@@ -5,8 +5,15 @@ using System.Text;
 
 namespace SoftwareDebuggerSolution
 {
-	public class SerialSPI : IVirtualSPI<Arduino.PinType>
+	public abstract class SerialSPI<TICPinType> : System.ComponentModel.Component
 	{
+		protected SPIModeType spiMode = SPIModeType.SPI_MODE0;
+
+		public SPIModeType SPIMode { get; set; }
+
+
+		public Arduino.PinType LatchPin { get; set; }
+
 		public void Open()
 		{
 			throw new NotImplementedException();
@@ -26,6 +33,9 @@ namespace SoftwareDebuggerSolution
 		{
 			throw new NotImplementedException();
 		}
+
+		public abstract bool SetRegistor(TICPinType pin, byte data);
+
 	}
 
 }

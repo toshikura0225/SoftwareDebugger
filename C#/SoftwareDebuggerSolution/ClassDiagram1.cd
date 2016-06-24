@@ -1,20 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
   <Class Name="SoftwareDebuggerSolution.SerialI2C">
-    <Position X="8" Y="1" Width="1.5" />
+    <Position X="12" Y="1" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAGAAAA=</HashCode>
+      <HashCode>AIAQAAAAAAAAAAAAACAABAAAAAAAAQAAIEAAAAEAAAA=</HashCode>
       <FileName>SerialI2C.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
-  <Class Name="SoftwareDebuggerSolution.SerialSPI">
+  <Class Name="SoftwareDebuggerSolution.SerialSPI&lt;TICPinType&gt;">
     <Position X="7.5" Y="3.75" Width="3.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAEAGAAAA=</HashCode>
+      <HashCode>AAAAAAEEAAAAIAAAAQAAAAAAAAAAAAAAAAAAEAGAAAA=</HashCode>
       <FileName>SerialSPI.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="SoftwareDebuggerSolution.AD5206">
     <Position X="3.75" Y="1" Width="2.75" />
@@ -29,7 +27,7 @@
       </Enum>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAAEEAAAAIAAAAQAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>AD5206.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -48,20 +46,20 @@
     </TypeIdentifier>
   </Class>
   <Class Name="SoftwareDebuggerSolution.MAX335">
-    <Position X="6" Y="6" Width="3.5" />
+    <Position X="7.5" Y="8" Width="3.75" />
+    <NestedTypes>
+      <Enum Name="SoftwareDebuggerSolution.MAX335.PinType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>MAX335.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>MAX335.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Interface Name="SoftwareDebuggerSolution.IVirtualI2C">
-    <Position X="12" Y="2.5" Width="3.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAGAAAA=</HashCode>
-      <FileName>IVirtualI2C.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="SoftwareDebuggerSolution.IVirtualSPI&lt;TPort&gt;">
+  <Interface Name="SoftwareDebuggerSolution.IVirtualSPI&lt;TLatchPinType&gt;">
     <Position X="12" Y="4.75" Width="3.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAEAGAAAA=</HashCode>
