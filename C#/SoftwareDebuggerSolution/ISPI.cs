@@ -10,11 +10,11 @@ namespace SoftwareDebuggerSolution
 		/// <summary>
 		/// SPIバスを初期化します。SCK、MOSI、SSの各ピンは出力に設定され、SCKとMOSIはlowに、SSはhighとなります。
 		/// </summary>
-		void begin();
+		void begin(byte latchPin);
 		/// <summary>
 		/// SPIバスを通じて1バイトを転送します。
 		/// </summary>
-		void transfer();
+		void transfer(List<byte> dataList);
 		/// <summary>
 		/// SPIバスを無効にします。各ピンの設定は変更されません。
 		/// </summary>

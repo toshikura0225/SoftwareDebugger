@@ -7,6 +7,8 @@ using System.IO.Ports;
 
 namespace SoftwareDebuggerSolution
 {
+
+
 	public class VirtualArduino : II2C, ISPI
 	{
 		protected static byte ADDRESS_I2C = 0x06;
@@ -17,8 +19,8 @@ namespace SoftwareDebuggerSolution
 
 		public enum PinType
 		{
-			pin0 = 0,	// RX
-			pin1,		// TX
+			pin0 = 0,   // RX
+			pin1,       // TX
 			pin2,
 			pin3,
 			pin4,
@@ -56,7 +58,7 @@ namespace SoftwareDebuggerSolution
 				{
 					Console.Write("受信：");
 					byte[] buf = e.ReadData.GetBytes();
-					for (int i = 0; i < buf.Length; i++ )
+					for (int i = 0; i < buf.Length; i++)
 					{
 						Console.Write(buf[i] + ",");
 					}
@@ -64,19 +66,52 @@ namespace SoftwareDebuggerSolution
 					Console.WriteLine();
 				};
 		}
-
+		
 
 		/// <summary>
 		/// SPIバスを初期化します。SCK、MOSI、SSの各ピンは出力に設定され、SCKとMOSIはlowに、SSはhighとなります。
 		/// </summary>
-		void ISPI.begin()
+		void ISPI.begin(byte latchPin)
 		{
+			//pinMode(slaveSelectPin, OUTPUT);
+			//VirtualArduino.ModbusSerial.Write(new byte[] { 0x00, 0x06, 0x00, (byte)this.latchPin, 0x01, 0x00, 0xAA, 0xAA});
+			Query_x06 query = new Query_x06()
+			{
+				DeviceAddress = 0x00,
+				FunctionCode = 0x06,
+				RegisterAddress = ModbusData.bytes2int(0x00, latchPin),
+				PresetData = ModbusData.bytes2int(0x01, 0x00),
+			};
+			VirtualArduino.ModbusSerial.Write(query);
 
+			//// initialize SPI:
+			//SPI.begin();
+			//VirtualArduino.ModbusSerial.Write(new byte[] { 0x00, 0x06, 0x05, 0x00, 0x00, 0x00, 0xAA, 0xAA });
+			query = new Query_x06()
+			{
+				DeviceAddress = 0x00,
+				FunctionCode = 0x06,
+				RegisterAddress = ModbusData.bytes2int(0x05, 0x00),
+				PresetData = ModbusData.bytes2int(0x00, 0x00),
+			};
+			VirtualArduino.ModbusSerial.Write(query);
+
+			//SPI.setDataMode(SPI_MODE0);
+			//SPI.setClockDivider(SPI_CLOCK_DIV32);
+			//VirtualArduino.ModbusSerial.Write(new byte[] { 0x00, 0x06, 0x05, 0x01, 0x00, 0x06, 0xAA, 0xAA });
+			query = new Query_x06()
+			{
+				DeviceAddress = 0x00,
+				FunctionCode = 0x06,
+				RegisterAddress = ModbusData.bytes2int(0x05, 0x01),
+				PresetData = ModbusData.bytes2int(0x00, 0x06),
+			};
+			VirtualArduino.ModbusSerial.Write(query);
 		}
 		/// <summary>
 		/// SPIバスを通じて1バイトを転送します。
 		/// </summary>
-		void ISPI.transfer()
+		void ISPI.transfer(List<byte> dataList)
 		{
 
 		}
@@ -122,9 +157,17 @@ namespace SoftwareDebuggerSolution
 		/// <summary>
 		/// マスタがスレーブに送信するデータをキューに入れるときに使用します
 		/// </summary>
-		void II2C.write(List<byte> data)
+		void II2C.write(List<byte> dataList)
 		{
-
+			// Wire.write(0x06);
+			Query_x06 query = new Query_x06()
+			{
+				DeviceAddress = 0x00,
+				FunctionCode = 0x06,
+				RegisterAddress = ModbusData.bytes2int(0x06, 0x02),
+				PresetData = ModbusData.bytes2int(0x00, 0x06),
+			};
+			VirtualArduino.ModbusSerial.Write(query);
 		}
 		/// <summary>
 		/// スレーブデバイスに対する送信を完了します。

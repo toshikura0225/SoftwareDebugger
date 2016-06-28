@@ -18,7 +18,7 @@ namespace SoftwareDebuggerSolution
 		/// <summary>
 		/// マスタがスレーブに送信するデータをキューに入れるときに使用します
 		/// </summary>
-		void write(List<byte> data);
+		void write(List<byte> dataList);
 		/// <summary>
 		/// スレーブデバイスに対する送信を完了します。
 		/// </summary>
