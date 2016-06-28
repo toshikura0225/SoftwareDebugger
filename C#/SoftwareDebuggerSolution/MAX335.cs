@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SoftwareDebuggerSolution
 {
-	public class MAX335 : SerialSPI<MAX335.PinType>
+	public class MAX335<TSPI> where TSPI : ISPI, new()
 	{
 
 		public enum PinType

@@ -22,7 +22,7 @@ namespace SoftwareDebuggerSolution
 			pin6,
 		}
 
-		Arduino.PinType latchPin;
+		VirtualArduino.PinType latchPin;
 
 		public void Init()
 		{
@@ -66,7 +66,7 @@ namespace SoftwareDebuggerSolution
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="latchPin"></param>
-		public VirtualResistorIC(Arduino.PinType latchPin)
+		public VirtualResistorIC(VirtualArduino.PinType latchPin)
 		{
 			this.latchPin = latchPin;
 		}
@@ -135,7 +135,7 @@ namespace SoftwareDebuggerSolution
 				Console.Write(buffer[i] + ",");
 			}
 			Console.WriteLine();
-			Arduino.ModbusSerial.Write(query);
+			VirtualArduino.ModbusSerial.Write(query);
 		}
 
 

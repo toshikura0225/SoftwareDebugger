@@ -12,7 +12,7 @@ namespace SoftwareDebuggerSolution
 		public SPIModeType SPIMode { get; set; }
 
 
-		public Arduino.PinType LatchPin { get; set; }
+		public VirtualArduino.PinType LatchPin { get; set; }
 
 		public void Open()
 		{
@@ -29,7 +29,7 @@ namespace SoftwareDebuggerSolution
 			throw new NotImplementedException();
 		}
 
-		public void Write(Arduino.PinType port, byte data)
+		public void Write(VirtualArduino.PinType port, byte data)
 		{
 			throw new NotImplementedException();
 		}

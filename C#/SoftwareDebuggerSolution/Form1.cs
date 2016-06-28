@@ -13,11 +13,11 @@ namespace SoftwareDebuggerSolution
 {
 	public partial class Form1 : Form
 	{
-		Arduino arduino = new Arduino();
+		VirtualArduino arduino = new VirtualArduino();
 		VirtualTransistorIC virtualTransistor = new VirtualTransistorIC(0x20);
 
-		VirtualResistorIC virtualResistor_0 = new VirtualResistorIC(Arduino.PinType.pin10);
-		VirtualResistorIC virtualResistor_1 = new VirtualResistorIC(Arduino.PinType.pin8);
+		VirtualResistorIC virtualResistor_0 = new VirtualResistorIC(VirtualArduino.PinType.pin10);
+		VirtualResistorIC virtualResistor_1 = new VirtualResistorIC(VirtualArduino.PinType.pin8);
 
 		public Form1()
 		{
@@ -83,8 +83,8 @@ namespace SoftwareDebuggerSolution
 
 		private void COM_Click(object sender, EventArgs e)
 		{
-			Arduino.ModbusSerial.PortName = this.comboBox1.Text;
-			Arduino.ModbusSerial.Open();
+			VirtualArduino.ModbusSerial.PortName = this.comboBox1.Text;
+			VirtualArduino.ModbusSerial.Open();
 		}
 
 

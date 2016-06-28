@@ -206,7 +206,7 @@ namespace SoftwareDebuggerSolution
 				Console.Write(buffer[i] + ",");
 			}
 			Console.WriteLine();
-			Arduino.ModbusSerial.Write(query);
+			VirtualArduino.ModbusSerial.Write(query);
 
 		}
 

@@ -28,7 +28,7 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(ADDRESS_I2C, ADDRESS_BEGIN),
 				PresetData = ModbusData.bytes2int(0x00, 0x00),	// 値は常に無効
 			};
-			Arduino.ModbusSerial.Write(query);
+			VirtualArduino.ModbusSerial.Write(query);
 		}
 		
 
@@ -44,7 +44,7 @@ namespace SoftwareDebuggerSolution
 					RegisterAddress = ModbusData.bytes2int(ADDRESS_I2C, ADDRESS_WRITE),
 					PresetData = ModbusData.bytes2int(0x00, data),
 				};
-				Arduino.ModbusSerial.Write(query);
+				VirtualArduino.ModbusSerial.Write(query);
 			}
 		}
 
@@ -58,7 +58,7 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(ADDRESS_I2C, ADDRESS_BEGIN_TRANSMISSION),
 				PresetData = ModbusData.bytes2int(0x00, deviceAddress),
 			};
-			Arduino.ModbusSerial.Write(query);
+			VirtualArduino.ModbusSerial.Write(query);
 		}
 
 		protected void endTransmission()
@@ -71,7 +71,7 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(ADDRESS_I2C, ADDRESS_BEGIN_TRANSMISSION),
 				PresetData = ModbusData.bytes2int(0x00, 0x00),	// 値は無効
 			};
-			Arduino.ModbusSerial.Write(query);
+			VirtualArduino.ModbusSerial.Write(query);
 		}
 
 	}

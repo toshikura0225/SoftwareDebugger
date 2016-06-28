@@ -7,7 +7,7 @@ using System.IO.Ports;
 
 namespace SoftwareDebuggerSolution
 {
-	public class Arduino
+	public class VirtualArduino
 	{
 		
 		public enum PinType
@@ -39,7 +39,7 @@ namespace SoftwareDebuggerSolution
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
-		public Arduino()
+		public VirtualArduino()
 		{
 			ModbusSerial = new ModbusSerialPort()
 			{

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SoftwareDebuggerSolution
 {
-	public class AD5206 : SerialSPI<AD5206.PinType>
+	public class AD5206<TSPI> where TSPI : ISPI, new()
 	{
 		public enum PinType
 		{
