@@ -22,9 +22,6 @@ namespace SoftwareDebuggerSolution
 		/// <summary>
 		/// スレーブデバイスに対する送信を完了します。
 		/// </summary>
-		/// <returns>
-		/// true：成功 false：失敗
-		/// </returns>
-		bool endTransmission();
+		void endTransmission();
 	}
 }

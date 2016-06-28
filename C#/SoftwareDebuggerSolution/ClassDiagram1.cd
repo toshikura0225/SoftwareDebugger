@@ -1,19 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
-  <Class Name="SoftwareDebuggerSolution.SerialI2C">
-    <Position X="12" Y="1" Width="2.75" />
-    <TypeIdentifier>
-      <HashCode>AIAQAAAAAAAAAAAAACAABAAAAAAAAQAAIEAAAAEAAAA=</HashCode>
-      <FileName>SerialI2C.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SoftwareDebuggerSolution.SerialSPI&lt;TICPinType&gt;">
-    <Position X="7.5" Y="3.75" Width="3.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAEEAAAAIAAAAQAAAAAAAAAAAAAAAAAAEAGAAAA=</HashCode>
-      <FileName>SerialSPI.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="SoftwareDebuggerSolution.AD5206&lt;TSPI&gt;">
     <Position X="6.25" Y="1" Width="2.75" />
     <Compartments>

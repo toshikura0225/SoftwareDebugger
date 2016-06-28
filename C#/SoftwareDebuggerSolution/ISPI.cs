@@ -14,7 +14,7 @@ namespace SoftwareDebuggerSolution
 		/// <summary>
 		/// SPIバスを通じて1バイトを転送します。
 		/// </summary>
-		byte transfer();
+		void transfer();
 		/// <summary>
 		/// SPIバスを無効にします。各ピンの設定は変更されません。
 		/// </summary>

@@ -65,10 +65,8 @@
     <Compile Include="PCAL9555A.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SerialI2C.cs" />
-    <Compile Include="SerialSPI.cs" />
     <Compile Include="NewFolder1\VirtualResistorIC.cs" />
-    <Compile Include="VirtualTransistorIC.cs" />
+    <Compile Include="NewFolder1\VirtualTransistorIC.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
