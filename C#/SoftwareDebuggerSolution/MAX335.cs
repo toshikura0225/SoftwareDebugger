@@ -6,10 +6,12 @@ using System.Text;
 
 namespace SoftwareDebuggerSolution
 {
-	public class MAX335
+	public class MAX335<TPinType>
 	{
 
-		public ISPI spi { get; set; }
+		protected ISPI spi { get; set; }
+
+		protected IDigitalOutput<TPinType> digitalOutput { get; set; }
 
 		public enum PinType
 		{
@@ -34,11 +36,11 @@ namespace SoftwareDebuggerSolution
 
 		}
 
-		public MAX335(ISPI spi)
+		public MAX335(ISPI spi, IDigitalOutput<TPinType> digitalouput)
 		{
 			this.spi = spi;
 
-			
+			this.digitalOutput = digitalOutput;
 		}
 
 

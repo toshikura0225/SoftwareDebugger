@@ -25,9 +25,7 @@ namespace SoftwareDebuggerSolution
 			this.comboBox1.Items.AddRange(SerialPort.GetPortNames());
 
 
-			MAX335 max = new MAX335(this.virtualArduino1);
-			
-
+			MAX335<VirtualArduino.PinType> max = new MAX335<VirtualArduino.PinType>(this.arduino, this.arduino);
 		}
 
 

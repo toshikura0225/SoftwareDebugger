@@ -10,11 +10,13 @@ namespace SoftwareDebuggerSolution
 {
 
 
-	public class VirtualArduino : II2C, ISPI
+	public class VirtualArduino : II2C, ISPI, IDigitalOutput<VirtualArduino.PinType>
 	{
 
 		ModbusSerialPort modbus = new ModbusSerialPort();
 		public string PortName { get; set; }
+
+		public PinType PinName { get; set; }
 
 		protected static byte ADDRESS_I2C = 0x06;
 		protected static byte ADDRESS_BEGIN = 0x00;
@@ -76,23 +78,23 @@ namespace SoftwareDebuggerSolution
 		/// <summary>
 		/// SPIバスを初期化します。SCK、MOSI、SSの各ピンは出力に設定され、SCKとMOSIはlowに、SSはhighとなります。
 		/// </summary>
-		void ISPI.begin(byte latchPin)
+		void ISPI.begin()
 		{
-			//pinMode(slaveSelectPin, OUTPUT);
-			//VirtualArduino.ModbusSerial.Write(new byte[] { 0x00, 0x06, 0x00, (byte)this.latchPin, 0x01, 0x00, 0xAA, 0xAA});
-			Query_x06 query = new Query_x06()
-			{
-				DeviceAddress = 0x00,
-				FunctionCode = 0x06,
-				RegisterAddress = ModbusData.bytes2int(0x00, latchPin),
-				PresetData = ModbusData.bytes2int(0x01, 0x00),
-			};
-			VirtualArduino.ModbusSerial.Write(query);
+			////pinMode(slaveSelectPin, OUTPUT);
+			////VirtualArduino.ModbusSerial.Write(new byte[] { 0x00, 0x06, 0x00, (byte)this.latchPin, 0x01, 0x00, 0xAA, 0xAA});
+			//Query_x06 query = new Query_x06()
+			//{
+			//	DeviceAddress = 0x00,
+			//	FunctionCode = 0x06,
+			//	RegisterAddress = ModbusData.bytes2int(0x00, latchPin),
+			//	PresetData = ModbusData.bytes2int(0x01, 0x00),
+			//};
+			//VirtualArduino.ModbusSerial.Write(query);
 
 			//// initialize SPI:
 			//SPI.begin();
 			//VirtualArduino.ModbusSerial.Write(new byte[] { 0x00, 0x06, 0x05, 0x00, 0x00, 0x00, 0xAA, 0xAA });
-			query = new Query_x06()
+			Query_x06 query = new Query_x06()
 			{
 				DeviceAddress = 0x00,
 				FunctionCode = 0x06,
@@ -192,6 +194,16 @@ namespace SoftwareDebuggerSolution
 			};
 			VirtualArduino.ModbusSerial.Write(query);
 
+		}
+
+		public void SetDirection(bool direction)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void SetLevel(bool level)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
