@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SoftwareDebuggerSolution
 {
-	public class MAX335<TSPI> where TSPI : ISPI, new()
+	public class MAX335
 	{
 
 		public enum PinType
@@ -18,6 +18,12 @@ namespace SoftwareDebuggerSolution
 			pin5,
 			pin6,
 			pin7,
+		}
+
+		ISPI spi;
+		public MAX335(ISPI spi)
+		{
+			this.spi = spi;
 		}
 	}
 }

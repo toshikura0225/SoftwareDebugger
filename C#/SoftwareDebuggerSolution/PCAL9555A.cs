@@ -5,8 +5,12 @@ using System.Text;
 
 namespace SoftwareDebuggerSolution
 {
-	public class PCAL9555A<TI2C> where TI2C : II2C, new()
+	public class PCAL9555A
 	{
-
+		II2C i2c;
+		public PCAL9555A(II2C i2c)
+		{
+			this.i2c = i2c;
+		}
 	}
 }

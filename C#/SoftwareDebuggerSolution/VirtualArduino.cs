@@ -4,13 +4,18 @@ using System.Linq;
 using System.Text;
 using SharedLibrary.SerialPort.Modbus;
 using System.IO.Ports;
+using System.ComponentModel;
 
 namespace SoftwareDebuggerSolution
 {
 
 
-	public class VirtualArduino : II2C, ISPI
+	public class VirtualArduino : Component, II2C, ISPI
 	{
+
+		ModbusSerialPort modbus = new ModbusSerialPort();
+		public string PortName { get; set; }
+
 		protected static byte ADDRESS_I2C = 0x06;
 		protected static byte ADDRESS_BEGIN = 0x00;
 		protected static byte ADDRESS_BEGIN_TRANSMISSION = 0x01;
