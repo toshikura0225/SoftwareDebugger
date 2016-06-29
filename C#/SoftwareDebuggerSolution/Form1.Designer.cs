@@ -38,8 +38,6 @@
 			this.button8 = new System.Windows.Forms.Button();
 			this.button9 = new System.Windows.Forms.Button();
 			this.comboBox1 = new System.Windows.Forms.ComboBox();
-			this.virtualArduino1 = new SoftwareDebuggerSolution.VirtualArduino();
-			this.maX3351 = new SoftwareDebuggerSolution.MAX335();
 			this.SuspendLayout();
 			// 
 			// button1
@@ -140,14 +138,6 @@
 			this.comboBox1.Size = new System.Drawing.Size(121, 20);
 			this.comboBox1.TabIndex = 6;
 			// 
-			// virtualArduino1
-			// 
-			this.virtualArduino1.PortName = "COM1";
-			// 
-			// maX3351
-			// 
-			this.maX3351.spi = this.virtualArduino1;
-			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -181,8 +171,6 @@
 		private System.Windows.Forms.Button button8;
 		private System.Windows.Forms.Button button9;
 		private System.Windows.Forms.ComboBox comboBox1;
-		private VirtualArduino virtualArduino1;
-		private MAX335 maX3351;
 	}
 }
 

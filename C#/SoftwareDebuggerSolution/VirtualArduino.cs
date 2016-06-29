@@ -10,7 +10,7 @@ namespace SoftwareDebuggerSolution
 {
 
 
-	public class VirtualArduino : Component, II2C, ISPI
+	public class VirtualArduino : II2C, ISPI
 	{
 
 		ModbusSerialPort modbus = new ModbusSerialPort();

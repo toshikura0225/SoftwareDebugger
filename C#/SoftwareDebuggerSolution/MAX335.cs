@@ -6,10 +6,10 @@ using System.Text;
 
 namespace SoftwareDebuggerSolution
 {
-	public class MAX335 : Component
+	public class MAX335
 	{
 
-		public ISPI spi{ get; set; }
+		public ISPI spi { get; set; }
 
 		public enum PinType
 		{
@@ -22,7 +22,13 @@ namespace SoftwareDebuggerSolution
 			pin6,
 			pin7,
 		}
-		
+
+		public enum SwitchType
+		{
+			ON,
+			OFF,
+		}
+
 		public MAX335()
 		{
 
@@ -31,6 +37,14 @@ namespace SoftwareDebuggerSolution
 		public MAX335(ISPI spi)
 		{
 			this.spi = spi;
+
+			
+		}
+
+
+		public void SetSwitch(PinType pin, SwitchType state)
+		{
+			this.spi.transfer(new List<byte>() { 0x00 });
 		}
 	}
 }
