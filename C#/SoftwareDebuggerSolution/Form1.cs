@@ -23,6 +23,17 @@ namespace SoftwareDebuggerSolution
 		{
 			InitializeComponent();
 			this.comboBox1.Items.AddRange(SerialPort.GetPortNames());
+
+
+
+			ISPI max335 = (ISPI)new MAX335<VirtualArduino>();
+			max335.begin((byte)VirtualArduino.PinType.pin0);
+
+			VirtualArduino arduino = new VirtualArduino();
+
+
+
+
 		}
 
 
