@@ -8,21 +8,27 @@ using System.ComponentModel;
 
 namespace SoftwareDebuggerSolution
 {
+	public static class VirtualArduinoAddress
+	{
+		public static byte ADDRESS_I2C = 0x06;
+		public static byte ADDRESS_BEGIN = 0x00;
+		public static byte ADDRESS_BEGIN_TRANSMISSION = 0x01;
+		public static byte ADDRESS_WRITE = 0x02;
+		public static byte ADDRESS_END_TRANSMISSION = 0x03;
+	}
 
-
-	public class VirtualArduino : II2C, ISPI, IDigitalOutput<VirtualArduino.PinType>
+	public class VirtualArduino
 	{
 
-		ModbusSerialPort modbus = new ModbusSerialPort();
+		ModbusSerialPort modbusSerialPort = new ModbusSerialPort();
+
 		public string PortName { get; set; }
 
-		public PinType PinName { get; set; }
 
-		protected static byte ADDRESS_I2C = 0x06;
-		protected static byte ADDRESS_BEGIN = 0x00;
-		protected static byte ADDRESS_BEGIN_TRANSMISSION = 0x01;
-		protected static byte ADDRESS_WRITE = 0x02;
-		protected static byte ADDRESS_END_TRANSMISSION = 0x03;
+		public II2C i2c;
+		public ISPI spi;
+		public IDigitalOutput<PinType> io;
+
 
 		public enum PinType
 		{
@@ -72,13 +78,105 @@ namespace SoftwareDebuggerSolution
 					Console.WriteLine();
 					Console.WriteLine();
 				};
+
+
+			this.i2c = (II2C)new VirtualI2C(this.modbusSerialPort);
+			this.spi = (ISPI)new VirtualSPI(this.modbusSerialPort);
+			this.io = (IDigitalOutput<PinType>)new VirtualGPIO(this.modbusSerialPort);
 		}
 		
+	}
+
+	public class VirtualI2C : II2C
+	{
+		ModbusSerialPort modbusSerialPort;
+		public VirtualI2C(ModbusSerialPort modbusSerialPort)
+		{
+			this.modbusSerialPort = modbusSerialPort;
+		}
+
+		/// <summary>
+		/// Wireライブラリを初期化し、I2Cバスにマスタとして接続します
+		/// </summary>
+		public void begin()
+		{
+			// Wire.begin();
+			Query_x06 query = new Query_x06()
+			{
+				DeviceAddress = 0x00,
+				FunctionCode = 0x06,
+				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.ADDRESS_I2C, VirtualArduinoAddress.ADDRESS_BEGIN),
+				PresetData = ModbusData.bytes2int(0x00, 0x00),  // 値は常に無効
+			};
+			VirtualArduino.ModbusSerial.Write(query);
+		}
+
+		/// <summary>
+		/// 指定したアドレスのI2Cスレーブに対して送信処理を始めます。この関数の実行後、write()でデータをキューへ送り、endTransmission()で送信を実行します。
+		/// </summary>
+		public void beginTransmission(byte i2cAddress)
+		{
+			// Wire.beginTransmission(valueL);
+			Query_x06 query = new Query_x06()
+			{
+				DeviceAddress = 0x00,
+				FunctionCode = 0x06,
+				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.ADDRESS_I2C, VirtualArduinoAddress.ADDRESS_BEGIN_TRANSMISSION),
+				PresetData = ModbusData.bytes2int(0x00, i2cAddress),
+			};
+			VirtualArduino.ModbusSerial.Write(query);
+		}
+		/// <summary>
+		/// マスタがスレーブに送信するデータをキューに入れるときに使用します
+		/// </summary>
+		public void write(List<byte> dataList)
+		{
+			// Wire.write(0x06);
+			Query_x06 query = new Query_x06()
+			{
+				DeviceAddress = 0x00,
+				FunctionCode = 0x06,
+				RegisterAddress = ModbusData.bytes2int(0x06, 0x02),
+				PresetData = ModbusData.bytes2int(0x00, 0x06),
+			};
+			VirtualArduino.ModbusSerial.Write(query);
+		}
+		/// <summary>
+		/// スレーブデバイスに対する送信を完了します。
+		/// </summary>
+		/// <returns>
+		/// true：成功 false：失敗
+		/// </returns>
+		public void endTransmission()
+		{
+			// Wire.endTransmission();
+			Query_x06 query = new Query_x06()
+			{
+				DeviceAddress = 0x00,
+				FunctionCode = 0x06,
+				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.ADDRESS_I2C, VirtualArduinoAddress.ADDRESS_BEGIN_TRANSMISSION),
+				PresetData = ModbusData.bytes2int(0x00, 0x00),  // 値は無効
+			};
+			VirtualArduino.ModbusSerial.Write(query);
+
+		}
+
+	}
+
+
+	public class VirtualSPI : ISPI
+	{
+		ModbusSerialPort modbusSerialPort;
+
+		public VirtualSPI(ModbusSerialPort modbusSerialPort)
+		{
+			this.modbusSerialPort = modbusSerialPort;
+		}
 
 		/// <summary>
 		/// SPIバスを初期化します。SCK、MOSI、SSの各ピンは出力に設定され、SCKとMOSIはlowに、SSはhighとなります。
 		/// </summary>
-		void ISPI.begin()
+		public void begin()
 		{
 			////pinMode(slaveSelectPin, OUTPUT);
 			////VirtualArduino.ModbusSerial.Write(new byte[] { 0x00, 0x06, 0x00, (byte)this.latchPin, 0x01, 0x00, 0xAA, 0xAA});
@@ -118,83 +216,31 @@ namespace SoftwareDebuggerSolution
 		/// <summary>
 		/// SPIバスを通じて1バイトを転送します。
 		/// </summary>
-		void ISPI.transfer(List<byte> dataList)
+		public void transfer(List<byte> dataList)
 		{
 
 		}
 		/// <summary>
 		/// SPIバスを無効にします。各ピンの設定は変更されません。
 		/// </summary>
-		void ISPI.end()
+		public void end()
 		{
 
 		}
 
-		/// <summary>
-		/// Wireライブラリを初期化し、I2Cバスにマスタとして接続します
-		/// </summary>
-		void II2C.begin()
+	}
+
+	public class VirtualGPIO : IDigitalOutput<VirtualArduino.PinType>
+	{
+		public VirtualArduino.PinType PinName { get; set; }
+
+		ModbusSerialPort modbusSerialPort = new ModbusSerialPort();
+
+		public VirtualGPIO(ModbusSerialPort modbusSerialPort)
 		{
-			// Wire.begin();
-			Query_x06 query = new Query_x06()
-			{
-				DeviceAddress = 0x00,
-				FunctionCode = 0x06,
-				RegisterAddress = ModbusData.bytes2int(ADDRESS_I2C, ADDRESS_BEGIN),
-				PresetData = ModbusData.bytes2int(0x00, 0x00),  // 値は常に無効
-			};
-			VirtualArduino.ModbusSerial.Write(query);
+			this.modbusSerialPort = modbusSerialPort;
 		}
 
-		/// <summary>
-		/// 指定したアドレスのI2Cスレーブに対して送信処理を始めます。この関数の実行後、write()でデータをキューへ送り、endTransmission()で送信を実行します。
-		/// </summary>
-		void II2C.beginTransmission(byte i2cAddress)
-		{
-			// Wire.beginTransmission(valueL);
-			Query_x06 query = new Query_x06()
-			{
-				DeviceAddress = 0x00,
-				FunctionCode = 0x06,
-				RegisterAddress = ModbusData.bytes2int(ADDRESS_I2C, ADDRESS_BEGIN_TRANSMISSION),
-				PresetData = ModbusData.bytes2int(0x00, i2cAddress),
-			};
-			VirtualArduino.ModbusSerial.Write(query);
-		}
-		/// <summary>
-		/// マスタがスレーブに送信するデータをキューに入れるときに使用します
-		/// </summary>
-		void II2C.write(List<byte> dataList)
-		{
-			// Wire.write(0x06);
-			Query_x06 query = new Query_x06()
-			{
-				DeviceAddress = 0x00,
-				FunctionCode = 0x06,
-				RegisterAddress = ModbusData.bytes2int(0x06, 0x02),
-				PresetData = ModbusData.bytes2int(0x00, 0x06),
-			};
-			VirtualArduino.ModbusSerial.Write(query);
-		}
-		/// <summary>
-		/// スレーブデバイスに対する送信を完了します。
-		/// </summary>
-		/// <returns>
-		/// true：成功 false：失敗
-		/// </returns>
-		void II2C.endTransmission()
-		{
-			// Wire.endTransmission();
-			Query_x06 query = new Query_x06()
-			{
-				DeviceAddress = 0x00,
-				FunctionCode = 0x06,
-				RegisterAddress = ModbusData.bytes2int(ADDRESS_I2C, ADDRESS_BEGIN_TRANSMISSION),
-				PresetData = ModbusData.bytes2int(0x00, 0x00),  // 値は無効
-			};
-			VirtualArduino.ModbusSerial.Write(query);
-
-		}
 
 		public void SetDirection(bool direction)
 		{
