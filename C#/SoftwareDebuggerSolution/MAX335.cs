@@ -6,12 +6,12 @@ using System.Text;
 
 namespace SoftwareDebuggerSolution
 {
-	public class MAX335<TPinType>
+	public class MAX335<TLatchPinType> : LatchingSPI<TLatchPinType>
 	{
-
-		protected ISPI spi { get; set; }
-
-		protected IDigitalOutput<TPinType> digitalOutput { get; set; }
+		public MAX335(ISPI spi, IDigitalOutput<TLatchPinType> digitalouput) : base(spi, digitalouput)
+		{
+			// コンストラクタ
+		}
 
 		public enum PinType
 		{
@@ -31,22 +31,10 @@ namespace SoftwareDebuggerSolution
 			OFF,
 		}
 
-		public MAX335()
+		public void SetSwitch(MAX335<TLatchPinType>.PinType pin, SwitchType state)
 		{
-
-		}
-
-		public MAX335(ISPI spi, IDigitalOutput<TPinType> digitalouput)
-		{
-			this.spi = spi;
-
-			this.digitalOutput = digitalOutput;
-		}
-
-
-		public void SetSwitch(PinType pin, SwitchType state)
-		{
-			this.spi.transfer(new List<byte>() { 0x00 });
+			// データ転送
+			this.Transfer(new List<byte>() { 0x00 });
 		}
 	}
 }

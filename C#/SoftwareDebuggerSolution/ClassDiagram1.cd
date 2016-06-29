@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
-  <Class Name="SoftwareDebuggerSolution.AD5206&lt;TSPI&gt;">
+  <Class Name="SoftwareDebuggerSolution.AD5206&lt;TLatchPinType&gt;">
     <Position X="6.25" Y="1" Width="2.75" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <NestedTypes>
-      <Enum Name="SoftwareDebuggerSolution.AD5206&lt;TSPI&gt;.PinType" Collapsed="true">
+      <Enum Name="SoftwareDebuggerSolution.AD5206&lt;TLatchPinType&gt;.PinType" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>AD5206.cs</NewMemberFileName>
         </TypeIdentifier>
       </Enum>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>AD5206.cs</FileName>
     </TypeIdentifier>
   </Class>

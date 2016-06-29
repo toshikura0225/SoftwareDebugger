@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="AD5206.cs" />
     <Compile Include="IDigitalOutput.cs" />
+    <Compile Include="LatchingSPI.cs" />
     <Compile Include="VirtualArduino.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
