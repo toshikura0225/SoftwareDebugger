@@ -5,12 +5,22 @@ using System.Text;
 
 namespace SoftwareDebuggerSolution
 {
-	public class PCAL9555A
+	public class PCAL9555A : AddressingI2C
 	{
-		II2C i2c;
-		public PCAL9555A(II2C i2c)
+		public PCAL9555A(II2C i2c, byte address) : base(i2c, address)
 		{
-			this.i2c = i2c;
+		}
+
+		public enum PinType
+		{
+			pin1,
+			pin2,
+			pin3,
+		}
+
+		public void SetLevel(PinType pin, bool level)
+		{
+			this.write(new List<byte>() { });
 		}
 	}
 }

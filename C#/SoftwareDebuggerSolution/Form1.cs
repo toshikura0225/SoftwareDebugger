@@ -19,13 +19,25 @@ namespace SoftwareDebuggerSolution
 		VirtualResistorIC virtualResistor_0 = new VirtualResistorIC(VirtualArduino.PinType.pin10);
 		VirtualResistorIC virtualResistor_1 = new VirtualResistorIC(VirtualArduino.PinType.pin8);
 
+		public MAX335<VirtualArduino.PinType> max;
+		public AD5206<VirtualArduino.PinType> ad;
+		public PCAL9555A io;
+
 		public Form1()
 		{
 			InitializeComponent();
 			this.comboBox1.Items.AddRange(SerialPort.GetPortNames());
 
 
-			MAX335<VirtualArduino.PinType> max = new MAX335<VirtualArduino.PinType>(this.arduino.spi, this.arduino.io);
+			max = new MAX335<VirtualArduino.PinType>(this.arduino.spi, this.arduino.io);
+			max.SetSwitch(MAX335<VirtualArduino.PinType>.PinType.pin0, MAX335<VirtualArduino.PinType>.SwitchType.OFF);
+
+			ad = new AD5206<VirtualArduino.PinType>(this.arduino.spi, this.arduino.io);
+			ad.SetRegister(AD5206<VirtualArduino.PinType>.PinType.pin1, 125);
+
+			io = new PCAL9555A(this.arduino.i2c, 0x41);
+			io.SetLevel(PCAL9555A.PinType.pin1, true);
+			
 		}
 
 

@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AD5206.cs" />
+    <Compile Include="AddressingI2C.cs" />
     <Compile Include="IDigitalOutput.cs" />
     <Compile Include="LatchingSPI.cs" />
     <Compile Include="VirtualArduino.cs" />
