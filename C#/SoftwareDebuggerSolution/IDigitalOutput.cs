@@ -5,9 +5,9 @@ using System.Text;
 
 namespace SoftwareDebuggerSolution
 {
-	public interface IDigitalOutput<TPinType>
+	public interface IDigitalOutput<TPinName>
 	{
-		TPinType PinName { get; set; }
+		TPinName PinName { get; set; }
 
 		void SetDirection(bool direction);
 		void SetLevel(bool level);

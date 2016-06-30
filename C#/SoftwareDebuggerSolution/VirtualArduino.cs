@@ -27,10 +27,10 @@ namespace SoftwareDebuggerSolution
 
 		public II2C i2c;
 		public ISPI spi;
-		public IDigitalOutput<PinType> io;
+		public IDigitalOutput<PinName> io;
 
 
-		public enum PinType
+		public enum PinName
 		{
 			pin0 = 0,   // RX
 			pin1,       // TX
@@ -82,7 +82,7 @@ namespace SoftwareDebuggerSolution
 
 			this.i2c = (II2C)new VirtualI2C(this.modbusSerialPort);
 			this.spi = (ISPI)new VirtualSPI(this.modbusSerialPort);
-			this.io = (IDigitalOutput<PinType>)new VirtualGPIO(this.modbusSerialPort);
+			this.io = (IDigitalOutput<PinName>)new VirtualGPIO(this.modbusSerialPort);
 		}
 		
 	}
@@ -230,9 +230,9 @@ namespace SoftwareDebuggerSolution
 
 	}
 
-	public class VirtualGPIO : IDigitalOutput<VirtualArduino.PinType>
+	public class VirtualGPIO : IDigitalOutput<VirtualArduino.PinName>
 	{
-		public VirtualArduino.PinType PinName { get; set; }
+		public VirtualArduino.PinName PinName { get; set; }
 
 		ModbusSerialPort modbusSerialPort = new ModbusSerialPort();
 

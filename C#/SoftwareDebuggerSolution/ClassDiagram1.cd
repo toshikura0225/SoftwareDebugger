@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
-  <Class Name="SoftwareDebuggerSolution.AD5206&lt;TLatchPinType&gt;">
+  <Class Name="SoftwareDebuggerSolution.AD5206&lt;TLatchPinName&gt;">
     <Position X="6.5" Y="11.75" Width="4.75" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <NestedTypes>
-      <Enum Name="SoftwareDebuggerSolution.AD5206&lt;TLatchPinType&gt;.PinType" Collapsed="true">
+      <Enum Name="SoftwareDebuggerSolution.AD5206&lt;TLatchPinName&gt;.PinName" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>AD5206.cs</NewMemberFileName>
         </TypeIdentifier>
@@ -17,18 +17,18 @@
       <FileName>AD5206.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SoftwareDebuggerSolution.MAX335&lt;TLatchPinType&gt;">
+  <Class Name="SoftwareDebuggerSolution.MAX335&lt;TLatchPinName&gt;">
     <Position X="1" Y="11.75" Width="4.75" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <NestedTypes>
-      <Enum Name="SoftwareDebuggerSolution.MAX335&lt;TLatchPinType&gt;.PinType" Collapsed="true">
+      <Enum Name="SoftwareDebuggerSolution.MAX335&lt;TLatchPinName&gt;.PinName" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>MAX335.cs</NewMemberFileName>
         </TypeIdentifier>
       </Enum>
-      <Enum Name="SoftwareDebuggerSolution.MAX335&lt;TLatchPinType&gt;.SwitchType">
+      <Enum Name="SoftwareDebuggerSolution.MAX335&lt;TLatchPinName&gt;.SwitchType">
         <TypeIdentifier>
           <NewMemberFileName>MAX335.cs</NewMemberFileName>
         </TypeIdentifier>
@@ -42,7 +42,7 @@
   <Class Name="SoftwareDebuggerSolution.PCAL9555A">
     <Position X="13.25" Y="11.75" Width="3" />
     <NestedTypes>
-      <Enum Name="SoftwareDebuggerSolution.PCAL9555A.PinType" Collapsed="true">
+      <Enum Name="SoftwareDebuggerSolution.PCAL9555A.PinName" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>PCAL9555A.cs</NewMemberFileName>
         </TypeIdentifier>
@@ -66,7 +66,7 @@
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <NestedTypes>
-      <Enum Name="SoftwareDebuggerSolution.VirtualArduino.PinType" Collapsed="true">
+      <Enum Name="SoftwareDebuggerSolution.VirtualArduino.PinName" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>VirtualArduino.cs</NewMemberFileName>
         </TypeIdentifier>
@@ -106,7 +106,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="SoftwareDebuggerSolution.LatchingSPI&lt;TLatchPinType&gt;">
+  <Class Name="SoftwareDebuggerSolution.LatchingSPI&lt;TLatchPinName&gt;">
     <Position X="3.75" Y="8.25" Width="4.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAgAAAgAAAAAA=</HashCode>
@@ -149,7 +149,7 @@
       <FileName>ISPI.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="SoftwareDebuggerSolution.IDigitalOutput&lt;TPinType&gt;">
+  <Interface Name="SoftwareDebuggerSolution.IDigitalOutput&lt;TPinName&gt;">
     <Position X="0.75" Y="1.25" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAgAAAAAAAAAAAAAAQAAAAAAAAAAAAAACAAAAAAAA=</HashCode>

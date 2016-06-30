@@ -12,7 +12,7 @@ namespace SoftwareDebuggerSolution
 	public class VirtualResistorIC
 	{
 		
-		public enum PinType
+		public enum PinName
 		{
 			pin1 = 0,
 			pin2,
@@ -22,7 +22,7 @@ namespace SoftwareDebuggerSolution
 			pin6,
 		}
 
-		VirtualArduino.PinType latchPin;
+		VirtualArduino.PinName latchPin;
 
 		public void Init()
 		{
@@ -66,7 +66,7 @@ namespace SoftwareDebuggerSolution
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="latchPin"></param>
-		public VirtualResistorIC(VirtualArduino.PinType latchPin)
+		public VirtualResistorIC(VirtualArduino.PinName latchPin)
 		{
 			this.latchPin = latchPin;
 		}
@@ -74,9 +74,9 @@ namespace SoftwareDebuggerSolution
 		/// <summary>
 		/// 抵抗値をセットする
 		/// </summary>
-		/// <param name="pinType">ピン</param>
+		/// <param name="PinName">ピン</param>
 		/// <param name="outputValue">出力値（０～２５５）</param>
-		public void SetResistor(PinType pinType, byte outputValue)
+		public void SetResistor(PinName PinName, byte outputValue)
 		{
 			//digitalWrite(slaveSelectPin, LOW);
 			//this.write(new byte[] { 0x00, 0x06, 0x01, (byte)this.latchPin, 0x00, 0x00, 0xAA, 0xAA });
@@ -91,13 +91,13 @@ namespace SoftwareDebuggerSolution
 
 			////  send in the address and value via SPI:
 			//SPI.transfer(address);
-			//this.write(new byte[] { 0x00, 0x06, 0x05, 0x02, 0x00, (byte)pinType, 0xAA, 0xAA });
+			//this.write(new byte[] { 0x00, 0x06, 0x05, 0x02, 0x00, (byte)PinName, 0xAA, 0xAA });
 			query = new Query_x06()
 			{
 				DeviceAddress = 0x00,
 				FunctionCode = 0x06,
 				RegisterAddress = ModbusData.bytes2int(0x05, 0x02),
-				PresetData = ModbusData.bytes2int(0x00, (byte)pinType),
+				PresetData = ModbusData.bytes2int(0x00, (byte)PinName),
 			};
 			this.Write(query);
 

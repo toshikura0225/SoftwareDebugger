@@ -16,7 +16,7 @@ namespace SoftwareDebuggerSolution
 			port1,
 		}
 
-		public enum PinType
+		public enum PinName
 		{
 			pin1,
 			pin2,

@@ -6,14 +6,14 @@ using System.Text;
 
 namespace SoftwareDebuggerSolution
 {
-	public class AD5206<TLatchPinType> : LatchingSPI<TLatchPinType>
+	public class AD5206<TLatchPinName> : LatchingSPI<TLatchPinName>
 	{
-		public AD5206(ISPI spi, IDigitalOutput<TLatchPinType> digitalouput) : base(spi, digitalouput)
+		public AD5206(ISPI spi, IDigitalOutput<TLatchPinName> digitalouput) : base(spi, digitalouput)
 		{
 			// コンストラクタ
 		}
 
-		public enum PinType
+		public enum PinName
 		{
 			pin1,
 			pin2,
@@ -23,7 +23,7 @@ namespace SoftwareDebuggerSolution
 			pin6,
 		}
 
-		public void SetRegister(AD5206<TLatchPinType>.PinType pin, byte outputValue)
+		public void SetRegister(AD5206<TLatchPinName>.PinName pin, byte outputValue)
 		{
 			// データ転送
 			this.Transfer(new List<byte>() { (byte)pin, outputValue });

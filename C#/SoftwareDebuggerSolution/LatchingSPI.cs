@@ -6,14 +6,14 @@ using System.Text;
 
 namespace SoftwareDebuggerSolution
 {
-	public class LatchingSPI<TLatchPinType>
+	public class LatchingSPI<TLatchPinName>
 	{
 		protected ISPI spi { get; set; }
 
-		protected IDigitalOutput<TLatchPinType> digitalOutput { get; set; }
+		protected IDigitalOutput<TLatchPinName> digitalOutput { get; set; }
 
 
-		public LatchingSPI(ISPI spi, IDigitalOutput<TLatchPinType> digitalouput)
+		public LatchingSPI(ISPI spi, IDigitalOutput<TLatchPinName> digitalouput)
 		{
 			this.spi = spi;
 

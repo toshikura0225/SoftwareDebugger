@@ -16,11 +16,11 @@ namespace SoftwareDebuggerSolution
 		VirtualArduino arduino = new VirtualArduino();
 		VirtualTransistorIC virtualTransistor = new VirtualTransistorIC(0x20);
 
-		VirtualResistorIC virtualResistor_0 = new VirtualResistorIC(VirtualArduino.PinType.pin10);
-		VirtualResistorIC virtualResistor_1 = new VirtualResistorIC(VirtualArduino.PinType.pin8);
+		VirtualResistorIC virtualResistor_0 = new VirtualResistorIC(VirtualArduino.PinName.pin10);
+		VirtualResistorIC virtualResistor_1 = new VirtualResistorIC(VirtualArduino.PinName.pin8);
 
-		public MAX335<VirtualArduino.PinType> max;
-		public AD5206<VirtualArduino.PinType> ad;
+		public MAX335<VirtualArduino.PinName> max;
+		public AD5206<VirtualArduino.PinName> ad;
 		public PCAL9555A io;
 
 		public Form1()
@@ -29,14 +29,14 @@ namespace SoftwareDebuggerSolution
 			this.comboBox1.Items.AddRange(SerialPort.GetPortNames());
 
 
-			max = new MAX335<VirtualArduino.PinType>(this.arduino.spi, this.arduino.io);
-			max.SetSwitch(MAX335<VirtualArduino.PinType>.PinType.pin0, MAX335<VirtualArduino.PinType>.SwitchType.OFF);
+			max = new MAX335<VirtualArduino.PinName>(this.arduino.spi, this.arduino.io);
+			max.SetSwitch(MAX335<VirtualArduino.PinName>.PinName.pin0, MAX335<VirtualArduino.PinName>.SwitchType.OFF);
 
-			ad = new AD5206<VirtualArduino.PinType>(this.arduino.spi, this.arduino.io);
-			ad.SetRegister(AD5206<VirtualArduino.PinType>.PinType.pin1, 125);
+			ad = new AD5206<VirtualArduino.PinName>(this.arduino.spi, this.arduino.io);
+			ad.SetRegister(AD5206<VirtualArduino.PinName>.PinName.pin1, 125);
 
 			io = new PCAL9555A(this.arduino.i2c, 0x41);
-			io.SetLevel(PCAL9555A.PinType.pin1, true);
+			io.SetLevel(PCAL9555A.PinName.pin1, true);
 			
 		}
 
@@ -80,20 +80,20 @@ namespace SoftwareDebuggerSolution
 
 		private void button7_Click(object sender, EventArgs e)
 		{
-			virtualResistor_0.SetResistor(VirtualResistorIC.PinType.pin5, 100);
-			virtualResistor_1.SetResistor(VirtualResistorIC.PinType.pin5, 200);
+			virtualResistor_0.SetResistor(VirtualResistorIC.PinName.pin5, 100);
+			virtualResistor_1.SetResistor(VirtualResistorIC.PinName.pin5, 200);
 		}
 
 		private void button8_Click(object sender, EventArgs e)
 		{
-			virtualResistor_0.SetResistor(VirtualResistorIC.PinType.pin5, 200);
-			virtualResistor_1.SetResistor(VirtualResistorIC.PinType.pin5, 100);
+			virtualResistor_0.SetResistor(VirtualResistorIC.PinName.pin5, 200);
+			virtualResistor_1.SetResistor(VirtualResistorIC.PinName.pin5, 100);
 		}
 
 		private void button9_Click(object sender, EventArgs e)
 		{
-			virtualResistor_0.SetResistor(VirtualResistorIC.PinType.pin5, 255);
-			virtualResistor_1.SetResistor(VirtualResistorIC.PinType.pin5, 255);
+			virtualResistor_0.SetResistor(VirtualResistorIC.PinName.pin5, 255);
+			virtualResistor_1.SetResistor(VirtualResistorIC.PinName.pin5, 255);
 		}
 
 		private void COM_Click(object sender, EventArgs e)
