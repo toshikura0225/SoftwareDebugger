@@ -22,6 +22,12 @@ namespace SoftwareDebuggerSolution
 			pin5,
 			pin6,
 		}
+		public enum SwitchType
+		{
+			ON,
+			OFF,
+		}
+
 
 		public void SetRegister(AD5206<TLatchPinName>.PinName pin, byte outputValue)
 		{

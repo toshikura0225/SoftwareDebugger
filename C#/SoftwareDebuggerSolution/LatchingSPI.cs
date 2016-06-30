@@ -39,6 +39,18 @@ namespace SoftwareDebuggerSolution
 			// スレーブに適用
 			this.digitalOutput.SetLevel(true);
 		}
+
+		protected void Transfer(byte data)
+		{
+			// スレーブ選択
+			this.digitalOutput.SetLevel(false);
+
+			// データ転送
+			this.spi.transfer(new List<byte>() { data });
+
+			// スレーブに適用
+			this.digitalOutput.SetLevel(true);
+		}
 	}
 
 
