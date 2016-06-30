@@ -7,8 +7,8 @@ namespace SoftwareDebuggerSolution
 {
 	public class AddressingI2C
 	{
-		II2C i2c;
-		byte deviceAddress;
+		protected II2C i2c;
+		protected byte deviceAddress;
 
 		public AddressingI2C(II2C i2c, byte address)
 		{

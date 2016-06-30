@@ -36,8 +36,8 @@ namespace SoftwareDebuggerSolution
 			ad.SetRegister(AD5206<VirtualArduino.PinName>.PinName.AW1, 125);
 
 			io = new PCAL9555A(this.arduino.i2c, 0x41);
-			io.SetLevel(PCAL9555A.PinName.pin1, true);
-			
+			io.SetLevel(new Dictionary<PCAL9555A.PinName, bool > () { });
+
 		}
 
 
