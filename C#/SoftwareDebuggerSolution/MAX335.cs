@@ -31,8 +31,22 @@ namespace SoftwareDebuggerSolution
 			CLOSE,
 		}
 
+		/// <summary>
+		/// MAX335の各ポートのスイッチをセットする
+		/// </summary>
+		/// <param name="outputTable">各ポートのスイッチ状態（デフォルトはOPEN）</param>
 		public void SetSwitch(Dictionary<MAX335<TLatchPinName>.PinName, SwitchType> outputTable)
 		{
+			// デフォルト値をセット
+			foreach (PinName COM in Enum.GetValues(typeof(PinName)))
+			{
+				if (outputTable.ContainsKey(COM) == false)
+				{
+					outputTable[COM] = SwitchType.OPEN;
+				}
+			}
+
+
 			byte outputValue = 0;	// 送信するデータ
 
 			outputValue |= (outputTable[PinName.COM0] == SwitchType.OPEN) ? (byte)0 : (byte)1;		// COM0

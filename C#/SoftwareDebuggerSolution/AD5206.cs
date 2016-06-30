@@ -15,20 +15,19 @@ namespace SoftwareDebuggerSolution
 
 		public enum PinName
 		{
-			pin1,
-			pin2,
-			pin3,
-			pin4,
-			pin5,
-			pin6,
-		}
-		public enum SwitchType
-		{
-			ON,
-			OFF,
+			AW1 = 0,
+			AW2,
+			AW3,
+			AW4,
+			AW5,
+			AW6,
 		}
 
-
+		/// <summary>
+		/// AD値をセットする
+		/// </summary>
+		/// <param name="pin"></param>
+		/// <param name="adValue"></param>
 		public void SetRegister(AD5206<TLatchPinName>.PinName pin, byte outputValue)
 		{
 			// データ転送

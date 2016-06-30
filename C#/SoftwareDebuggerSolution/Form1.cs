@@ -30,10 +30,10 @@ namespace SoftwareDebuggerSolution
 
 
 			max = new MAX335<VirtualArduino.PinName>(this.arduino.spi, this.arduino.io);
-			max.SetSwitch(MAX335<VirtualArduino.PinName>.PinName.COM0, MAX335<VirtualArduino.PinName>.SwitchType.OFF);
+			max.SetSwitch(new Dictionary<MAX335<VirtualArduino.PinName>.PinName, MAX335<VirtualArduino.PinName>.SwitchType>() { });
 
 			ad = new AD5206<VirtualArduino.PinName>(this.arduino.spi, this.arduino.io);
-			ad.SetRegister(AD5206<VirtualArduino.PinName>.PinName.pin1, 125);
+			ad.SetRegister(AD5206<VirtualArduino.PinName>.PinName.AW1, 125);
 
 			io = new PCAL9555A(this.arduino.i2c, 0x41);
 			io.SetLevel(PCAL9555A.PinName.pin1, true);
