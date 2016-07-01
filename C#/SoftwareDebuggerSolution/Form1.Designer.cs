@@ -38,6 +38,7 @@
 			this.button8 = new System.Windows.Forms.Button();
 			this.button9 = new System.Windows.Forms.Button();
 			this.comboBox1 = new System.Windows.Forms.ComboBox();
+			this.button10 = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// button1
@@ -112,21 +113,21 @@
 			// 
 			// button8
 			// 
-			this.button8.Location = new System.Drawing.Point(313, 161);
+			this.button8.Location = new System.Drawing.Point(212, 161);
 			this.button8.Name = "button8";
-			this.button8.Size = new System.Drawing.Size(75, 23);
+			this.button8.Size = new System.Drawing.Size(135, 23);
 			this.button8.TabIndex = 4;
-			this.button8.Text = "button8";
+			this.button8.Text = "max335[MAX335.PinName.COM2]";
 			this.button8.UseVisualStyleBackColor = true;
 			this.button8.Click += new System.EventHandler(this.button8_Click);
 			// 
 			// button9
 			// 
-			this.button9.Location = new System.Drawing.Point(367, 199);
+			this.button9.Location = new System.Drawing.Point(212, 208);
 			this.button9.Name = "button9";
-			this.button9.Size = new System.Drawing.Size(75, 23);
+			this.button9.Size = new System.Drawing.Size(244, 23);
 			this.button9.TabIndex = 5;
-			this.button9.Text = "button9";
+			this.button9.Text = "ad5206[AD5206.PinName.AW3] = 0x30";
 			this.button9.UseVisualStyleBackColor = true;
 			this.button9.Click += new System.EventHandler(this.button9_Click);
 			// 
@@ -138,11 +139,22 @@
 			this.comboBox1.Size = new System.Drawing.Size(121, 20);
 			this.comboBox1.TabIndex = 6;
 			// 
+			// button10
+			// 
+			this.button10.Location = new System.Drawing.Point(212, 257);
+			this.button10.Name = "button10";
+			this.button10.Size = new System.Drawing.Size(230, 23);
+			this.button10.TabIndex = 7;
+			this.button10.Text = "pcal9555a[PCAL9555A.PinName.P0_7]";
+			this.button10.UseVisualStyleBackColor = true;
+			this.button10.Click += new System.EventHandler(this.button10_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(501, 262);
+			this.ClientSize = new System.Drawing.Size(501, 297);
+			this.Controls.Add(this.button10);
 			this.Controls.Add(this.comboBox1);
 			this.Controls.Add(this.button9);
 			this.Controls.Add(this.button8);
@@ -171,6 +183,7 @@
 		private System.Windows.Forms.Button button8;
 		private System.Windows.Forms.Button button9;
 		private System.Windows.Forms.ComboBox comboBox1;
+		private System.Windows.Forms.Button button10;
 	}
 }
 

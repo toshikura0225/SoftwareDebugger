@@ -67,18 +67,24 @@ namespace SoftwareDebuggerSolution
 
 		private void button8_Click(object sender, EventArgs e)
 		{
-
+			max335[MAX335.PinName.COM2] = SwitchState.CLOSE;
 		}
 
 		private void button9_Click(object sender, EventArgs e)
 		{
+			ad5206[AD5206.PinName.AW3] = 0x30;
+		}
 
+		private void button10_Click(object sender, EventArgs e)
+		{
+			pcal9555a[PCAL9555A.PinName.P0_7] = VoltageLevel.HIGH;
 		}
 
 		private void COM_Click(object sender, EventArgs e)
 		{
 			this.arduino = new VirtualArduino(this.comboBox1.Text);
 		}
+
 	}
 
 

@@ -67,11 +67,16 @@ namespace VirtualComponent.IC
 			this.digitalOutput.SetLevel(this.latchPinName, false);
 
 			// 送信
-			this.spi.transfer(argTable.Select(s => s.Value).ToList());
+			List<byte> dataList = new List<byte>();
+			foreach(var key_pair in argTable)
+			{
+				dataList.Add((byte)key_pair.Key);
+				dataList.Add(key_pair.Value);
+			}
+			this.spi.transfer(dataList);
 
 			// スレーブに適用
 			this.digitalOutput.SetLevel(this.latchPinName, true);
-
 		}
 
 	}

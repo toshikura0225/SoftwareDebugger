@@ -146,28 +146,28 @@ namespace VirtualComponent.IC
 		protected byte getOutputValue_p0()
 		{
 			byte outputValue_0 = 0;
-			outputValue_0 |= (this.outputTable[PinName.P0_0] == VoltageLevel.HIGH) ? (byte)0 : (byte)1;      // P0_0
-			outputValue_0 |= (this.outputTable[PinName.P0_1] == VoltageLevel.HIGH) ? (byte)0 : (byte)2;      // P0_1
-			outputValue_0 |= (this.outputTable[PinName.P0_2] == VoltageLevel.HIGH) ? (byte)0 : (byte)4;      // P0_2
-			outputValue_0 |= (this.outputTable[PinName.P0_3] == VoltageLevel.HIGH) ? (byte)0 : (byte)8;      // P0_3
-			outputValue_0 |= (this.outputTable[PinName.P0_4] == VoltageLevel.HIGH) ? (byte)0 : (byte)16;     // P0_4
-			outputValue_0 |= (this.outputTable[PinName.P0_5] == VoltageLevel.HIGH) ? (byte)0 : (byte)32;     // P0_5
-			outputValue_0 |= (this.outputTable[PinName.P0_6] == VoltageLevel.HIGH) ? (byte)0 : (byte)64;     // P0_6
-			outputValue_0 |= (this.outputTable[PinName.P0_7] == VoltageLevel.HIGH) ? (byte)0 : (byte)128;    // P0_7
+			outputValue_0 |= (this.outputTable[PinName.P0_0] == VoltageLevel.LOW) ? (byte)0 : (byte)1;      // P0_0
+			outputValue_0 |= (this.outputTable[PinName.P0_1] == VoltageLevel.LOW) ? (byte)0 : (byte)2;      // P0_1
+			outputValue_0 |= (this.outputTable[PinName.P0_2] == VoltageLevel.LOW) ? (byte)0 : (byte)4;      // P0_2
+			outputValue_0 |= (this.outputTable[PinName.P0_3] == VoltageLevel.LOW) ? (byte)0 : (byte)8;      // P0_3
+			outputValue_0 |= (this.outputTable[PinName.P0_4] == VoltageLevel.LOW) ? (byte)0 : (byte)16;     // P0_4
+			outputValue_0 |= (this.outputTable[PinName.P0_5] == VoltageLevel.LOW) ? (byte)0 : (byte)32;     // P0_5
+			outputValue_0 |= (this.outputTable[PinName.P0_6] == VoltageLevel.LOW) ? (byte)0 : (byte)64;     // P0_6
+			outputValue_0 |= (this.outputTable[PinName.P0_7] == VoltageLevel.LOW) ? (byte)0 : (byte)128;    // P0_7
 			return outputValue_0;
 		}
 
 		protected byte getOutputValue_p1()
 		{
 			byte outputValue_1 = 0;
-			outputValue_1 |= (this.outputTable[PinName.P1_0] == VoltageLevel.HIGH) ? (byte)0 : (byte)1;      // P1_0
-			outputValue_1 |= (this.outputTable[PinName.P1_1] == VoltageLevel.HIGH) ? (byte)0 : (byte)2;      // P1_1
-			outputValue_1 |= (this.outputTable[PinName.P1_2] == VoltageLevel.HIGH) ? (byte)0 : (byte)4;      // P1_2
-			outputValue_1 |= (this.outputTable[PinName.P1_3] == VoltageLevel.HIGH) ? (byte)0 : (byte)8;      // P1_3
-			outputValue_1 |= (this.outputTable[PinName.P1_4] == VoltageLevel.HIGH) ? (byte)0 : (byte)16;     // P1_4
-			outputValue_1 |= (this.outputTable[PinName.P1_5] == VoltageLevel.HIGH) ? (byte)0 : (byte)32;     // P1_5
-			outputValue_1 |= (this.outputTable[PinName.P1_6] == VoltageLevel.HIGH) ? (byte)0 : (byte)64;     // P1_6
-			outputValue_1 |= (this.outputTable[PinName.P1_7] == VoltageLevel.HIGH) ? (byte)0 : (byte)128;    // P1_7
+			outputValue_1 |= (this.outputTable[PinName.P1_0] == VoltageLevel.LOW) ? (byte)0 : (byte)1;      // P1_0
+			outputValue_1 |= (this.outputTable[PinName.P1_1] == VoltageLevel.LOW) ? (byte)0 : (byte)2;      // P1_1
+			outputValue_1 |= (this.outputTable[PinName.P1_2] == VoltageLevel.LOW) ? (byte)0 : (byte)4;      // P1_2
+			outputValue_1 |= (this.outputTable[PinName.P1_3] == VoltageLevel.LOW) ? (byte)0 : (byte)8;      // P1_3
+			outputValue_1 |= (this.outputTable[PinName.P1_4] == VoltageLevel.LOW) ? (byte)0 : (byte)16;     // P1_4
+			outputValue_1 |= (this.outputTable[PinName.P1_5] == VoltageLevel.LOW) ? (byte)0 : (byte)32;     // P1_5
+			outputValue_1 |= (this.outputTable[PinName.P1_6] == VoltageLevel.LOW) ? (byte)0 : (byte)64;     // P1_6
+			outputValue_1 |= (this.outputTable[PinName.P1_7] == VoltageLevel.LOW) ? (byte)0 : (byte)128;    // P1_7
 			return outputValue_1;
 		}
 	}
