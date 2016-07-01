@@ -32,13 +32,13 @@ namespace VirtualComponent.IC
 
 			this.write(new List<byte>()
 			{
-				(byte)Command.OutputPort_0,
+				(byte)Command.ConfigurationPort_0,
 				0,	// 出力
 			});
 
 			this.write(new List<byte>()
 			{
-				(byte)Command.OutputPort_1,
+				(byte)Command.ConfigurationPort_1,
 				0,	// 出力
 			});
 

@@ -33,7 +33,7 @@ namespace SoftwareDebuggerSolution
 		{
 			max335.SetSwitch(new Dictionary<MAX335.PinName, MAX335.SwitchType>()
 			{
-				{ MAX335.PinName.COM0, MAX335.SwitchType.CLOSE }
+				{ MAX335.PinName.COM2, MAX335.SwitchType.CLOSE }
 			});
 		}
 
@@ -44,7 +44,7 @@ namespace SoftwareDebuggerSolution
 
 		private void button4_Click(object sender, EventArgs e)
 		{
-			ad5206.SetRegister(AD5206.PinName.AW1, 125);
+			ad5206.SetRegister(AD5206.PinName.AW3, 125);
 		}
 
 
@@ -55,7 +55,11 @@ namespace SoftwareDebuggerSolution
 
 		private void button7_Click(object sender, EventArgs e)
 		{
-			pcal9555a.SetLevel(new Dictionary<PCAL9555A.PinName, bool>() { });
+			pcal9555a.SetLevel(new Dictionary<PCAL9555A.PinName, bool>()
+			{
+				{PCAL9555A.PinName.P0_7, true },
+				{PCAL9555A.PinName.P1_1, true },
+			});
 		}
 
 		private void button8_Click(object sender, EventArgs e)

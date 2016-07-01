@@ -174,15 +174,19 @@ namespace VirtualComponent.Arduino
 		/// </summary>
 		public void write(List<byte> dataList)
 		{
-			// Wire.write(0x06);
+			// Wire.write(0x**);
 			Query_x06 query = new Query_x06()
 			{
 				DeviceAddress = 0x00,
 				FunctionCode = 0x06,
 				RegisterAddress = ModbusData.bytes2int(0x06, 0x02),
-				PresetData = ModbusData.bytes2int(0x00, 0x06),
+				//PresetData = ModbusData.bytes2int(0x00, 0x06),
 			};
-			this.modbusSerialPort.Write(query);
+			foreach (var data in dataList)
+			{
+				query.PresetData = data;
+				this.modbusSerialPort.Write(query);
+			}
 		}
 		/// <summary>
 		/// スレーブデバイスに対する送信を完了します。
@@ -197,7 +201,7 @@ namespace VirtualComponent.Arduino
 			{
 				DeviceAddress = 0x00,
 				FunctionCode = 0x06,
-				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.I2C, VirtualArduinoAddress.I2C_BEGIN_TRANSMISSION),
+				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.I2C, VirtualArduinoAddress.I2C_END_TRANSMISSION),
 				PresetData = ModbusData.bytes2int(0x00, 0x00),  // 値は無効
 			};
 			this.modbusSerialPort.Write(query);
