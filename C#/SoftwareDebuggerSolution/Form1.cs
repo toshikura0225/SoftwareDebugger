@@ -20,48 +20,42 @@ namespace SoftwareDebuggerSolution
 		{
 			InitializeComponent();
 			this.comboBox1.Items.AddRange(SerialPort.GetPortNames());
-
-
-			max335 = new MAX335(this.arduino.spi, this.arduino.io);
-			max335.SetSwitch(new Dictionary<MAX335.PinName, MAX335.SwitchType>() { });
-
-			ad5206 = new AD5206(this.arduino.spi, this.arduino.io);
-			ad5206.SetRegister(AD5206.PinName.AW1, 125);
-
-			pcal9555a = new PCAL9555A(this.arduino.i2c, 0x41);
-			pcal9555a.SetLevel(new Dictionary<PCAL9555A.PinName, bool> () { });
 		}
 
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-
+			max335 = new MAX335(this.arduino.spi, this.arduino.io);
+			
 		}
 
 		private void button2_Click(object sender, EventArgs e)
 		{
-
+			max335.SetSwitch(new Dictionary<MAX335.PinName, MAX335.SwitchType>()
+			{
+				{ MAX335.PinName.COM0, MAX335.SwitchType.CLOSE }
+			});
 		}
 
 		private void button3_Click(object sender, EventArgs e)
 		{
-
+			ad5206 = new AD5206(this.arduino.spi, this.arduino.io);
 		}
 
 		private void button4_Click(object sender, EventArgs e)
 		{
-
+			ad5206.SetRegister(AD5206.PinName.AW1, 125);
 		}
 
 
 		private void button6_Click(object sender, EventArgs e)
 		{
-
+			pcal9555a = new PCAL9555A(this.arduino.i2c, 0x41);
 		}
 
 		private void button7_Click(object sender, EventArgs e)
 		{
-
+			pcal9555a.SetLevel(new Dictionary<PCAL9555A.PinName, bool>() { });
 		}
 
 		private void button8_Click(object sender, EventArgs e)
@@ -90,6 +84,4 @@ namespace SoftwareDebuggerSolution
 	{
 		public AD5206(ISPI spi, IDigitalOutput<VirtualArduino.PinName> digitalouput) : base(spi, digitalouput) { }
 	}
-
-
 }

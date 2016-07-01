@@ -117,6 +117,7 @@ namespace VirtualComponent.Arduino
 				Console.WriteLine();
 			};
 
+			this.modbusSerialPort.Open();
 
 			this.i2c = (II2C)new VirtualI2C(this.modbusSerialPort);
 			this.spi = (ISPI)new VirtualSPI(this.modbusSerialPort);

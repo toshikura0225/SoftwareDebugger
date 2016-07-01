@@ -16,7 +16,7 @@ namespace VirtualComponent
 
 		protected IDigitalOutput<TLatchPinName> digitalOutput { get; set; }
 		
-		public LatchingSPI(ISPI spi, IDigitalOutput<TLatchPinName> digitalouput)
+		public LatchingSPI(ISPI spi, IDigitalOutput<TLatchPinName> digitalOutput)
 		{
 			this.spi = spi;
 
