@@ -8,6 +8,9 @@ using System.ComponentModel;
 
 namespace SoftwareDebuggerSolution
 {
+	/// <summary>
+	/// Arduinoの各種機能のアドレス
+	/// </summary>
 	public static class VirtualArduinoAddress
 	{
 		public static byte ADDRESS_I2C = 0x06;
@@ -17,19 +20,29 @@ namespace SoftwareDebuggerSolution
 		public static byte ADDRESS_END_TRANSMISSION = 0x03;
 	}
 
+	/// <summary>
+	/// シリアル通信を使用してArduinoを制御する
+	/// </summary>
 	public class VirtualArduino
 	{
-
-		ModbusSerialPort modbusSerialPort = new ModbusSerialPort();
-
-		public string PortName { get; set; }
-
-
+		/// <summary>
+		/// ArduinoのI2C機能
+		/// </summary>
 		public II2C i2c;
+		
+		/// <summary>
+		/// ArduinoのSPI機能
+		/// </summary>
 		public ISPI spi;
+		
+		/// <summary>
+		/// Arduinoの入出力機能
+		/// </summary>
 		public IDigitalOutput<PinName> io;
 
-
+		/// <summary>
+		/// ArduinoのCPU(ATMEGA328P)のピン名
+		/// </summary>
 		public enum PinName
 		{
 			pin0 = 0,   // RX
@@ -54,30 +67,37 @@ namespace SoftwareDebuggerSolution
 			pina5,
 		}
 
-		public static ModbusSerialPort ModbusSerial;
 
+		/// <summary>
+		/// Arduinoと通信するためのModbus通信
+		/// </summary>
+		ModbusSerialPort modbusSerialPort = new ModbusSerialPort();
+		
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
-		public VirtualArduino()
+		/// <param name="portName">COMポート名</param>
+		public VirtualArduino(string portName)
 		{
-			ModbusSerial = new ModbusSerialPort()
+			this.modbusSerialPort.PortName = portName;
+
+			this.modbusSerialPort = new ModbusSerialPort()
 			{
 				BaudRate = 9600,
 				Handshake = System.IO.Ports.Handshake.None,
 			};
 
-			ModbusSerial.ModbusDataReceived += (s, e) =>
+			this.modbusSerialPort.ModbusDataReceived += (s, e) =>
+			{
+				Console.Write("受信：");
+				byte[] buf = e.ReadData.GetBytes();
+				for (int i = 0; i < buf.Length; i++)
 				{
-					Console.Write("受信：");
-					byte[] buf = e.ReadData.GetBytes();
-					for (int i = 0; i < buf.Length; i++)
-					{
-						Console.Write(buf[i] + ",");
-					}
-					Console.WriteLine();
-					Console.WriteLine();
-				};
+					Console.Write(buf[i] + ",");
+				}
+				Console.WriteLine();
+				Console.WriteLine();
+			};
 
 
 			this.i2c = (II2C)new VirtualI2C(this.modbusSerialPort);
@@ -87,9 +107,13 @@ namespace SoftwareDebuggerSolution
 		
 	}
 
-	public class VirtualI2C : II2C
+	/// <summary>
+	/// ArduinoのI2C通信機能の実装
+	/// </summary>
+	internal class VirtualI2C : II2C
 	{
 		ModbusSerialPort modbusSerialPort;
+
 		public VirtualI2C(ModbusSerialPort modbusSerialPort)
 		{
 			this.modbusSerialPort = modbusSerialPort;
@@ -108,7 +132,7 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.ADDRESS_I2C, VirtualArduinoAddress.ADDRESS_BEGIN),
 				PresetData = ModbusData.bytes2int(0x00, 0x00),  // 値は常に無効
 			};
-			VirtualArduino.ModbusSerial.Write(query);
+			this.modbusSerialPort.Write(query);
 		}
 
 		/// <summary>
@@ -124,7 +148,7 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.ADDRESS_I2C, VirtualArduinoAddress.ADDRESS_BEGIN_TRANSMISSION),
 				PresetData = ModbusData.bytes2int(0x00, i2cAddress),
 			};
-			VirtualArduino.ModbusSerial.Write(query);
+			this.modbusSerialPort.Write(query);
 		}
 		/// <summary>
 		/// マスタがスレーブに送信するデータをキューに入れるときに使用します
@@ -139,7 +163,7 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(0x06, 0x02),
 				PresetData = ModbusData.bytes2int(0x00, 0x06),
 			};
-			VirtualArduino.ModbusSerial.Write(query);
+			this.modbusSerialPort.Write(query);
 		}
 		/// <summary>
 		/// スレーブデバイスに対する送信を完了します。
@@ -157,17 +181,19 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.ADDRESS_I2C, VirtualArduinoAddress.ADDRESS_BEGIN_TRANSMISSION),
 				PresetData = ModbusData.bytes2int(0x00, 0x00),  // 値は無効
 			};
-			VirtualArduino.ModbusSerial.Write(query);
+			this.modbusSerialPort.Write(query);
 
 		}
 
 	}
 
-
-	public class VirtualSPI : ISPI
+	/// <summary>
+	/// ArduinoのSPI通信機能の実装
+	/// </summary>
+	internal class VirtualSPI : ISPI
 	{
 		ModbusSerialPort modbusSerialPort;
-
+		
 		public VirtualSPI(ModbusSerialPort modbusSerialPort)
 		{
 			this.modbusSerialPort = modbusSerialPort;
@@ -179,7 +205,7 @@ namespace SoftwareDebuggerSolution
 		public void begin()
 		{
 			////pinMode(slaveSelectPin, OUTPUT);
-			////VirtualArduino.ModbusSerial.Write(new byte[] { 0x00, 0x06, 0x00, (byte)this.latchPin, 0x01, 0x00, 0xAA, 0xAA});
+			////this.modbusSerial.PortName.Write(new byte[] { 0x00, 0x06, 0x00, (byte)this.latchPin, 0x01, 0x00, 0xAA, 0xAA});
 			//Query_x06 query = new Query_x06()
 			//{
 			//	DeviceAddress = 0x00,
@@ -187,11 +213,11 @@ namespace SoftwareDebuggerSolution
 			//	RegisterAddress = ModbusData.bytes2int(0x00, latchPin),
 			//	PresetData = ModbusData.bytes2int(0x01, 0x00),
 			//};
-			//VirtualArduino.ModbusSerial.Write(query);
+			//this.modbusSerial.PortName.Write(query);
 
 			//// initialize SPI:
 			//SPI.begin();
-			//VirtualArduino.ModbusSerial.Write(new byte[] { 0x00, 0x06, 0x05, 0x00, 0x00, 0x00, 0xAA, 0xAA });
+			//this.modbusSerial.PortName.Write(new byte[] { 0x00, 0x06, 0x05, 0x00, 0x00, 0x00, 0xAA, 0xAA });
 			Query_x06 query = new Query_x06()
 			{
 				DeviceAddress = 0x00,
@@ -199,11 +225,11 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(0x05, 0x00),
 				PresetData = ModbusData.bytes2int(0x00, 0x00),
 			};
-			VirtualArduino.ModbusSerial.Write(query);
+			this.modbusSerialPort.Write(query);
 
 			//SPI.setDataMode(SPI_MODE0);
 			//SPI.setClockDivider(SPI_CLOCK_DIV32);
-			//VirtualArduino.ModbusSerial.Write(new byte[] { 0x00, 0x06, 0x05, 0x01, 0x00, 0x06, 0xAA, 0xAA });
+			//this.modbusSerial.PortName.Write(new byte[] { 0x00, 0x06, 0x05, 0x01, 0x00, 0x06, 0xAA, 0xAA });
 			query = new Query_x06()
 			{
 				DeviceAddress = 0x00,
@@ -211,26 +237,31 @@ namespace SoftwareDebuggerSolution
 				RegisterAddress = ModbusData.bytes2int(0x05, 0x01),
 				PresetData = ModbusData.bytes2int(0x00, 0x06),
 			};
-			VirtualArduino.ModbusSerial.Write(query);
+			this.modbusSerialPort.Write(query);
+
+			throw new NotImplementedException();
 		}
 		/// <summary>
 		/// SPIバスを通じて1バイトを転送します。
 		/// </summary>
 		public void transfer(List<byte> dataList)
 		{
-
+			throw new NotImplementedException();
 		}
 		/// <summary>
 		/// SPIバスを無効にします。各ピンの設定は変更されません。
 		/// </summary>
 		public void end()
 		{
-
+			throw new NotImplementedException();
 		}
 
 	}
 
-	public class VirtualGPIO : IDigitalOutput<VirtualArduino.PinName>
+	/// <summary>
+	/// Arduinoの入出力機能の実装
+	/// </summary>
+	internal class VirtualGPIO : IDigitalOutput<VirtualArduino.PinName>
 	{
 		public VirtualArduino.PinName PinName { get; set; }
 
@@ -240,8 +271,7 @@ namespace SoftwareDebuggerSolution
 		{
 			this.modbusSerialPort = modbusSerialPort;
 		}
-
-
+		
 		public void SetDirection(bool direction)
 		{
 			throw new NotImplementedException();

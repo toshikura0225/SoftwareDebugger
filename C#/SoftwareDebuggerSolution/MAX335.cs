@@ -6,6 +6,10 @@ using System.Text;
 
 namespace SoftwareDebuggerSolution
 {
+	/// <summary>
+	/// スイッチIC「MAX335」の機能を処理する
+	/// </summary>
+	/// <typeparam name="TLatchPinName"></typeparam>
 	public class MAX335<TLatchPinName> : LatchingSPI<TLatchPinName>
 	{
 		public MAX335(ISPI spi, IDigitalOutput<TLatchPinName> digitalouput) : base(spi, digitalouput)
@@ -46,8 +50,8 @@ namespace SoftwareDebuggerSolution
 				}
 			}
 
-
-			byte outputValue = 0;	// 送信するデータ
+			// 送信するデータ
+			byte outputValue = 0;
 
 			outputValue |= (outputTable[PinName.COM0] == SwitchType.OPEN) ? (byte)0 : (byte)1;		// COM0
 			outputValue |= (outputTable[PinName.COM1] == SwitchType.OPEN) ? (byte)0 : (byte)2;		// COM1

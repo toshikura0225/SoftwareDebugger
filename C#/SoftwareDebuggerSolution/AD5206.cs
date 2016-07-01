@@ -6,6 +6,10 @@ using System.Text;
 
 namespace SoftwareDebuggerSolution
 {
+	/// <summary>
+	/// デジタルポテンショメータIC「AD5206」の機能を実装する
+	/// </summary>
+	/// <typeparam name="TLatchPinName"></typeparam>
 	public class AD5206<TLatchPinName> : LatchingSPI<TLatchPinName>
 	{
 		public AD5206(ISPI spi, IDigitalOutput<TLatchPinName> digitalouput) : base(spi, digitalouput)

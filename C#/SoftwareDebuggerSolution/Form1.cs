@@ -33,7 +33,6 @@ namespace SoftwareDebuggerSolution
 
 			pcal9555a = new PCAL9555A(this.arduino.i2c, 0x41);
 			pcal9555a.SetLevel(new Dictionary<PCAL9555A.PinName, bool> () { });
-
 		}
 
 
@@ -80,11 +79,8 @@ namespace SoftwareDebuggerSolution
 
 		private void COM_Click(object sender, EventArgs e)
 		{
-			VirtualArduino.ModbusSerial.PortName = this.comboBox1.Text;
-			VirtualArduino.ModbusSerial.Open();
+			this.arduino.PortName = this.comboBox1.Text;
 		}
-
-
 	}
 
 	public class MAX335 : MAX335<VirtualArduino.PinName>

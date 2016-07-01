@@ -5,6 +5,9 @@ using System.Text;
 
 namespace SoftwareDebuggerSolution
 {
+	/// <summary>
+	/// I2C通信のインターフェース
+	/// </summary>
 	public interface II2C
 	{
 		/// <summary>

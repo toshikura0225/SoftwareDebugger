@@ -5,6 +5,9 @@ using System.Text;
 
 namespace SoftwareDebuggerSolution
 {
+	/// <summary>
+	/// SPI通信のインターフェース
+	/// </summary>
 	public interface ISPI
 	{
 		/// <summary>

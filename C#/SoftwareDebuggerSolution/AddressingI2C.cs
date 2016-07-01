@@ -5,6 +5,9 @@ using System.Text;
 
 namespace SoftwareDebuggerSolution
 {
+	/// <summary>
+	/// I2C通信の機能を処理する
+	/// </summary>
 	public class AddressingI2C
 	{
 		protected II2C i2c;

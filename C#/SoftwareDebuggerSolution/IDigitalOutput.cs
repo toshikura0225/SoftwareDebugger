@@ -5,6 +5,10 @@ using System.Text;
 
 namespace SoftwareDebuggerSolution
 {
+	/// <summary>
+	/// GPIOのインターフェース
+	/// </summary>
+	/// <typeparam name="TPinName"></typeparam>
 	public interface IDigitalOutput<TPinName>
 	{
 		TPinName PinName { get; set; }
