@@ -44,7 +44,10 @@ namespace SoftwareDebuggerSolution
 
 		private void button4_Click(object sender, EventArgs e)
 		{
-			ad5206.SetRegister(AD5206.PinName.AW3, 125);
+			ad5206.SetRegister(new Dictionary<AD5206<VirtualArduino.PinName>.PinName, byte>()
+			{
+				{  AD5206.PinName.AW3, 0x30 }
+			});
 		}
 
 

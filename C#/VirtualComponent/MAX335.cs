@@ -56,11 +56,11 @@ namespace VirtualComponent.IC
 		/// <summary>
 		/// MAX335の各ポートのスイッチをセットする
 		/// </summary>
-		/// <param name="outputTable">各ポートのスイッチ状態（デフォルトはOPEN）</param>
-		public void SetSwitch(Dictionary<PinName, SwitchState> outputTable)
+		/// <param name="argTable">各ポートのスイッチ状態</param>
+		public void SetSwitch(Dictionary<PinName, SwitchState> argTable)
 		{
 			// 指定値を変数に代入
-			foreach(var key_pair in outputTable)
+			foreach(var key_pair in argTable)
 			{
 				this.switchTable[key_pair.Key] = key_pair.Value;
 			}

@@ -15,6 +15,12 @@ namespace VirtualComponent.IC
 		public AD5206(ISPI spi, IGPIO<TLatchPinName> digitalouput, TLatchPinName latchPinName) : base(spi, digitalouput, latchPinName)
 		{
 			// コンストラクタ
+
+			// デフォルト値として128をセット
+			//foreach (PinName AW in Enum.GetValues(typeof(PinName)))
+			//{
+			//	adTable[AW] = 128;
+			//}
 		}
 
 		public enum PinName
@@ -27,15 +33,45 @@ namespace VirtualComponent.IC
 			AW6,
 		}
 
+
+		//protected Dictionary<PinName, byte> adTable = new Dictionary<PinName, byte>();
+
+		/// <summary>
+		/// スイッチ状態をセットする
+		/// </summary>
+		/// <param name="pinName"></param>
+		/// <returns></returns>
+		public byte this[PinName pinName]
+		{
+			set
+			{
+				//this.adTable[pinName] = value;
+				this.Transfer(new List<byte>() { (byte)pinName, value });
+			}
+		}
+
 		/// <summary>
 		/// AD値をセットする
 		/// </summary>
 		/// <param name="pin"></param>
 		/// <param name="adValue"></param>
-		public void SetRegister(AD5206<TLatchPinName>.PinName pin, byte outputValue)
+		public void SetRegister(Dictionary<AD5206<TLatchPinName>.PinName, byte> argTable)
 		{
-			// データ転送
-			this.Transfer(new List<byte>() { (byte)pin, outputValue });
+			// 変数に保持
+			//foreach (var key_pair in argTable)
+			//{
+			//	this.adTable[key_pair.Key] = key_pair.Value;
+			//}
+
+			// スレーブ選択
+			this.digitalOutput.SetLevel(this.latchPinName, false);
+
+			// 送信
+			this.spi.transfer(argTable.Select(s => s.Value).ToList());
+
+			// スレーブに適用
+			this.digitalOutput.SetLevel(this.latchPinName, true);
+
 		}
 
 	}

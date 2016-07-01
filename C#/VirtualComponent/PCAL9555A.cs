@@ -42,10 +42,10 @@ namespace VirtualComponent.IC
 				0,	// 出力
 			});
 
-			// デフォルト値をセット
-			foreach (PinName COM in Enum.GetValues(typeof(PinName)))
+			// デフォルト値としてLOWをセット
+			foreach (PinName P in Enum.GetValues(typeof(PinName)))
 			{
-				outputTable[COM] = VoltageLevel.LOW;
+				outputTable[P] = VoltageLevel.LOW;
 			}
 		}
 
@@ -123,13 +123,13 @@ namespace VirtualComponent.IC
 
 
 		/// <summary>
-		/// 各ポートの出力値をセットする。（デフォルトは0V出力）
+		/// 各ポートの出力値をセットする。
 		/// </summary>
-		/// <param name="outputTable"></param>
-		public void SetLevel(Dictionary<PinName, VoltageLevel> outputTable)
+		/// <param name="argTable"></param>
+		public void SetLevel(Dictionary<PinName, VoltageLevel> argTable)
 		{
 			// 指定値を変数に代入
-			foreach (var key_pair in outputTable)
+			foreach (var key_pair in argTable)
 			{
 				this.outputTable[key_pair.Key] = key_pair.Value;
 			}
