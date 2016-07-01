@@ -13,7 +13,7 @@ namespace SoftwareDebuggerSolution
 {
 	public partial class Form1 : Form
 	{
-		VirtualArduino arduino = new VirtualArduino();
+		VirtualArduino arduino;
 
 		public MAX335 max335;
 		public AD5206 ad5206;
@@ -79,7 +79,7 @@ namespace SoftwareDebuggerSolution
 
 		private void COM_Click(object sender, EventArgs e)
 		{
-			this.arduino.PortName = this.comboBox1.Text;
+			this.arduino = new VirtualArduino(this.comboBox1.Text);
 		}
 	}
 

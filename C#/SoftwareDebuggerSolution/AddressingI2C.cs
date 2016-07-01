@@ -13,6 +13,11 @@ namespace SoftwareDebuggerSolution
 		protected II2C i2c;
 		protected byte deviceAddress;
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
+		/// <param name="i2c">I2Cのオブジェクト</param>
+		/// <param name="address">スレーブのデバイスアドレス</param>
 		public AddressingI2C(II2C i2c, byte address)
 		{
 			this.deviceAddress = address;
