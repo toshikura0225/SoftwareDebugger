@@ -13,11 +13,28 @@ namespace SoftwareDebuggerSolution
 	/// </summary>
 	public static class VirtualArduinoAddress
 	{
-		public static byte ADDRESS_I2C = 0x06;
-		public static byte ADDRESS_BEGIN = 0x00;
-		public static byte ADDRESS_BEGIN_TRANSMISSION = 0x01;
-		public static byte ADDRESS_WRITE = 0x02;
-		public static byte ADDRESS_END_TRANSMISSION = 0x03;
+		// デジタルIO関連
+		public static byte DIO_MODE = 0x00;
+		public static byte DIO_MODE_INPUT = 0x00;
+		public static byte DIO_MODE_OUTPUT = 0x01;
+		public static byte DIO_MODE_INPUT_PULLUP = 0x02;
+		public static byte DIO_MODE_DIGITAL = 0x00;
+		public static byte DIO_MODE_ANALOG = 0x01;
+		public static byte DIO_VALUE = 0x01;
+
+		// SPI関連
+		public static byte SPI = 0x05;
+		public static byte SPI_BEGIN = 0x00;
+		public static byte SPI_MODE = 0x01;
+		public static byte SPI_TRANSFER = 0x02;
+		public static byte SPI_END = 0x03;
+
+		// I2C関連
+		public static byte I2C = 0x06;
+		public static byte I2C_BEGIN = 0x00;
+		public static byte I2C_BEGIN_TRANSMISSION = 0x01;
+		public static byte I2C_WRITE = 0x02;
+		public static byte I2C_END_TRANSMISSION = 0x03;
 	}
 
 	/// <summary>
@@ -129,7 +146,7 @@ namespace SoftwareDebuggerSolution
 			{
 				DeviceAddress = 0x00,
 				FunctionCode = 0x06,
-				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.ADDRESS_I2C, VirtualArduinoAddress.ADDRESS_BEGIN),
+				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.I2C, VirtualArduinoAddress.I2C_BEGIN),
 				PresetData = ModbusData.bytes2int(0x00, 0x00),  // 値は常に無効
 			};
 			this.modbusSerialPort.Write(query);
@@ -145,7 +162,7 @@ namespace SoftwareDebuggerSolution
 			{
 				DeviceAddress = 0x00,
 				FunctionCode = 0x06,
-				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.ADDRESS_I2C, VirtualArduinoAddress.ADDRESS_BEGIN_TRANSMISSION),
+				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.I2C, VirtualArduinoAddress.I2C_BEGIN_TRANSMISSION),
 				PresetData = ModbusData.bytes2int(0x00, i2cAddress),
 			};
 			this.modbusSerialPort.Write(query);
@@ -178,7 +195,7 @@ namespace SoftwareDebuggerSolution
 			{
 				DeviceAddress = 0x00,
 				FunctionCode = 0x06,
-				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.ADDRESS_I2C, VirtualArduinoAddress.ADDRESS_BEGIN_TRANSMISSION),
+				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.I2C, VirtualArduinoAddress.I2C_BEGIN_TRANSMISSION),
 				PresetData = ModbusData.bytes2int(0x00, 0x00),  // 値は無効
 			};
 			this.modbusSerialPort.Write(query);
@@ -204,17 +221,6 @@ namespace SoftwareDebuggerSolution
 		/// </summary>
 		public void begin()
 		{
-			////pinMode(slaveSelectPin, OUTPUT);
-			////this.modbusSerial.PortName.Write(new byte[] { 0x00, 0x06, 0x00, (byte)this.latchPin, 0x01, 0x00, 0xAA, 0xAA});
-			//Query_x06 query = new Query_x06()
-			//{
-			//	DeviceAddress = 0x00,
-			//	FunctionCode = 0x06,
-			//	RegisterAddress = ModbusData.bytes2int(0x00, latchPin),
-			//	PresetData = ModbusData.bytes2int(0x01, 0x00),
-			//};
-			//this.modbusSerial.PortName.Write(query);
-
 			//// initialize SPI:
 			//SPI.begin();
 			//this.modbusSerial.PortName.Write(new byte[] { 0x00, 0x06, 0x05, 0x00, 0x00, 0x00, 0xAA, 0xAA });
@@ -222,7 +228,7 @@ namespace SoftwareDebuggerSolution
 			{
 				DeviceAddress = 0x00,
 				FunctionCode = 0x06,
-				RegisterAddress = ModbusData.bytes2int(0x05, 0x00),
+				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.SPI, VirtualArduinoAddress.SPI_BEGIN),
 				PresetData = ModbusData.bytes2int(0x00, 0x00),
 			};
 			this.modbusSerialPort.Write(query);
@@ -234,25 +240,47 @@ namespace SoftwareDebuggerSolution
 			{
 				DeviceAddress = 0x00,
 				FunctionCode = 0x06,
-				RegisterAddress = ModbusData.bytes2int(0x05, 0x01),
+				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.SPI, VirtualArduinoAddress.SPI_MODE),
 				PresetData = ModbusData.bytes2int(0x00, 0x06),
 			};
 			this.modbusSerialPort.Write(query);
-
-			throw new NotImplementedException();
 		}
 		/// <summary>
 		/// SPIバスを通じて1バイトを転送します。
 		/// </summary>
 		public void transfer(List<byte> dataList)
 		{
-			throw new NotImplementedException();
+			// SPI.transfer(valueL);
+			Query_x06 query = new Query_x06()
+			{
+				DeviceAddress = 0x00,
+				FunctionCode = 0x06,
+				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.SPI, VirtualArduinoAddress.I2C_WRITE),
+				//PresetData = ModbusData.bytes2int(0x00, 0x00),
+			};
+
+			foreach(var data in dataList)
+			{
+				query.PresetData = ModbusData.bytes2int(0x00, data);
+				this.modbusSerialPort.Write(query);
+			}
+
 		}
 		/// <summary>
 		/// SPIバスを無効にします。各ピンの設定は変更されません。
 		/// </summary>
 		public void end()
 		{
+			// ▲Arduino側が未実装
+			Query_x06 query = new Query_x06()
+			{
+				DeviceAddress = 0x00,
+				FunctionCode = 0x06,
+				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.SPI, VirtualArduinoAddress.SPI_END),
+				PresetData = ModbusData.bytes2int(0x00, 0x00),
+			};
+			this.modbusSerialPort.Write(query);
+
 			throw new NotImplementedException();
 		}
 
@@ -272,14 +300,36 @@ namespace SoftwareDebuggerSolution
 			this.modbusSerialPort = modbusSerialPort;
 		}
 		
+		/// <summary>
+		/// デジタル入出力方向をセットする
+		/// </summary>
+		/// <param name="direction"></param>
 		public void SetDirection(bool direction)
 		{
-			throw new NotImplementedException();
+			Query_x06 query = new Query_x06()
+			{
+				DeviceAddress = 0x00,
+				FunctionCode = 0x06,
+				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.DIO_MODE, (byte)this.PinName),
+				PresetData = ModbusData.bytes2int(0x00, VirtualArduinoAddress.DIO_MODE_DIGITAL),
+			};
+			this.modbusSerialPort.Write(query);
 		}
 
+		/// <summary>
+		/// デジタル出力値をセットする
+		/// </summary>
+		/// <param name="level"></param>
 		public void SetLevel(bool level)
 		{
-			throw new NotImplementedException();
+			Query_x06 query = new Query_x06()
+			{
+				DeviceAddress = 0x00,
+				FunctionCode = 0x06,
+				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.DIO_MODE, (byte)this.PinName),
+				PresetData = ModbusData.bytes2int(0x00, (level ? (byte)1 : (byte)0)),
+			};
+			this.modbusSerialPort.Write(query);
 		}
 	}
 }
