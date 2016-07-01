@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
+using VirtualComponent.Arduino;
+using VirtualComponent.IC;
+using VirtualComponent;
 
 namespace SoftwareDebuggerSolution
 {
@@ -83,6 +80,7 @@ namespace SoftwareDebuggerSolution
 		}
 	}
 
+
 	public class MAX335 : MAX335<VirtualArduino.PinName>
 	{
 		public MAX335(ISPI spi, IDigitalOutput<VirtualArduino.PinName> digitalouput) : base(spi, digitalouput) { }
@@ -92,5 +90,6 @@ namespace SoftwareDebuggerSolution
 	{
 		public AD5206(ISPI spi, IDigitalOutput<VirtualArduino.PinName> digitalouput) : base(spi, digitalouput) { }
 	}
-	
+
+
 }

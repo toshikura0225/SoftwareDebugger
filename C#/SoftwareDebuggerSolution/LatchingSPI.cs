@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SoftwareDebuggerSolution
+namespace VirtualComponent
 {
 	/// <summary>
 	/// SPI通信機能を処理する

@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
-namespace SoftwareDebuggerSolution
+namespace VirtualComponent.IC
 {
 	/// <summary>
 	/// スイッチIC「MAX335」の機能を処理する

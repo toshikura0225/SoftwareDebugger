@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SoftwareDebuggerSolution
+namespace VirtualComponent.IC
 {
 	/// <summary>
 	/// GPIOモジュール「PCAL9555A」の機能を処理する。入出力機能はすべて出力。

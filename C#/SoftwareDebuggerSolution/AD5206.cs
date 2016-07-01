@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SoftwareDebuggerSolution
+namespace VirtualComponent.IC
 {
 	/// <summary>
 	/// デジタルポテンショメータIC「AD5206」の機能を実装する

@@ -5,8 +5,9 @@ using System.Text;
 using SharedLibrary.SerialPort.Modbus;
 using System.IO.Ports;
 using System.ComponentModel;
+using VirtualComponent.IC;
 
-namespace SoftwareDebuggerSolution
+namespace VirtualComponent.Arduino
 {
 	/// <summary>
 	/// Arduinoの各種機能のアドレス
