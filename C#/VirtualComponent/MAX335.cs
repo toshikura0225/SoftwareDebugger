@@ -12,7 +12,7 @@ namespace VirtualComponent.IC
 	/// <typeparam name="TLatchPinName"></typeparam>
 	public class MAX335<TLatchPinName> : LatchingSPI<TLatchPinName>
 	{
-		public MAX335(ISPI spi, IDigitalOutput<TLatchPinName> digitalouput) : base(spi, digitalouput)
+		public MAX335(ISPI spi, IGPIO<TLatchPinName> digitalouput, TLatchPinName latchPinName) : base(spi, digitalouput, latchPinName)
 		{
 			// コンストラクタ
 		}

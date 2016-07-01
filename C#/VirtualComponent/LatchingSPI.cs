@@ -14,16 +14,18 @@ namespace VirtualComponent
 	{
 		protected ISPI spi { get; set; }
 
-		protected IDigitalOutput<TLatchPinName> digitalOutput { get; set; }
-		
-		public LatchingSPI(ISPI spi, IDigitalOutput<TLatchPinName> digitalOutput)
+		protected IGPIO<TLatchPinName> digitalOutput { get; set; }
+
+		protected TLatchPinName latchPinName;
+
+		public LatchingSPI(ISPI spi, IGPIO<TLatchPinName> digitalOutput, TLatchPinName latchPinName)
 		{
 			this.spi = spi;
-
 			this.digitalOutput = digitalOutput;
+			this.latchPinName = latchPinName;
 
 			this.spi.begin();
-			this.digitalOutput.SetDirection(true);
+			this.digitalOutput.SetDirection(this.latchPinName, true);
 		}
 
 		/// <summary>
@@ -41,13 +43,13 @@ namespace VirtualComponent
 		protected void Transfer(List<byte> dataList)
 		{
 			// スレーブ選択
-			this.digitalOutput.SetLevel(false);
+			this.digitalOutput.SetLevel(this.latchPinName, false);
 
 			// データ転送
 			this.spi.transfer(dataList);
 
 			// スレーブに適用
-			this.digitalOutput.SetLevel(true);
+			this.digitalOutput.SetLevel(this.latchPinName, true);
 		}
 
 		/// <summary>
@@ -57,13 +59,13 @@ namespace VirtualComponent
 		protected void Transfer(byte data)
 		{
 			// スレーブ選択
-			this.digitalOutput.SetLevel(false);
+			this.digitalOutput.SetLevel(this.latchPinName, false);
 
 			// データ転送
 			this.spi.transfer(new List<byte>() { data });
 
 			// スレーブに適用
-			this.digitalOutput.SetLevel(true);
+			this.digitalOutput.SetLevel(this.latchPinName, true);
 		}
 	}
 

@@ -25,7 +25,7 @@ namespace SoftwareDebuggerSolution
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-			max335 = new MAX335(this.arduino.spi, this.arduino.io);
+			max335 = new MAX335(this.arduino.spi, this.arduino.io, VirtualArduino.PinName.pin8);
 			
 		}
 
@@ -39,7 +39,7 @@ namespace SoftwareDebuggerSolution
 
 		private void button3_Click(object sender, EventArgs e)
 		{
-			ad5206 = new AD5206(this.arduino.spi, this.arduino.io);
+			ad5206 = new AD5206(this.arduino.spi, this.arduino.io, VirtualArduino.PinName.pin9);
 		}
 
 		private void button4_Click(object sender, EventArgs e)
@@ -77,11 +77,11 @@ namespace SoftwareDebuggerSolution
 
 	public class MAX335 : MAX335<VirtualArduino.PinName>
 	{
-		public MAX335(ISPI spi, IDigitalOutput<VirtualArduino.PinName> digitalouput) : base(spi, digitalouput) { }
+		public MAX335(ISPI spi, IGPIO<VirtualArduino.PinName> digitalouput, VirtualArduino.PinName latchPinName) : base(spi, digitalouput, latchPinName) { }
 	}
 
 	public class AD5206 : AD5206<VirtualArduino.PinName>
 	{
-		public AD5206(ISPI spi, IDigitalOutput<VirtualArduino.PinName> digitalouput) : base(spi, digitalouput) { }
+		public AD5206(ISPI spi, IGPIO<VirtualArduino.PinName> digitalouput, VirtualArduino.PinName latchPinName) : base(spi, digitalouput, latchPinName) { }
 	}
 }

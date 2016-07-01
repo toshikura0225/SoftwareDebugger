@@ -9,12 +9,9 @@ namespace VirtualComponent
 	/// GPIOのインターフェース
 	/// </summary>
 	/// <typeparam name="TPinName"></typeparam>
-	public interface IDigitalOutput<TPinName>
+	public interface IGPIO<TPinName>
 	{
-		TPinName PinName { get; set; }
-
-		void SetDirection(bool direction);
-		void SetLevel(bool level);
-
+		void SetDirection(TPinName pinName, bool direction);
+		void SetLevel(TPinName pinName, bool level);
 	}
 }

@@ -12,7 +12,7 @@ namespace VirtualComponent.IC
 	/// <typeparam name="TLatchPinName"></typeparam>
 	public class AD5206<TLatchPinName> : LatchingSPI<TLatchPinName>
 	{
-		public AD5206(ISPI spi, IDigitalOutput<TLatchPinName> digitalouput) : base(spi, digitalouput)
+		public AD5206(ISPI spi, IGPIO<TLatchPinName> digitalouput, TLatchPinName latchPinName) : base(spi, digitalouput, latchPinName)
 		{
 			// コンストラクタ
 		}
