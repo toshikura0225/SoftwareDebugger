@@ -31,9 +31,9 @@ namespace SoftwareDebuggerSolution
 
 		private void button2_Click(object sender, EventArgs e)
 		{
-			max335.SetSwitch(new Dictionary<MAX335.PinName, MAX335.SwitchType>()
+			max335.SetSwitch(new Dictionary<MAX335.PinName, SwitchState>()
 			{
-				{ MAX335.PinName.COM2, MAX335.SwitchType.CLOSE }
+				{ MAX335.PinName.COM2, SwitchState.CLOSE }
 			});
 		}
 
@@ -57,8 +57,8 @@ namespace SoftwareDebuggerSolution
 		{
 			pcal9555a.SetLevel(new Dictionary<PCAL9555A.PinName, bool>()
 			{
-				{PCAL9555A.PinName.P0_7, true },
-				{PCAL9555A.PinName.P1_1, true },
+				{PCAL9555A.PinName.P0_7, true},
+				{PCAL9555A.PinName.P1_1, true},
 			});
 		}
 

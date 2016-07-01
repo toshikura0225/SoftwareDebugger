@@ -15,6 +15,12 @@ namespace VirtualComponent.IC
 		public MAX335(ISPI spi, IGPIO<TLatchPinName> digitalouput, TLatchPinName latchPinName) : base(spi, digitalouput, latchPinName)
 		{
 			// コンストラクタ
+
+			// スイッチ状態のデフォルト値をセット
+			foreach (PinName COM in Enum.GetValues(typeof(PinName)))
+			{
+				switchTable[COM] = SwitchState.OPEN;
+			}
 		}
 
 		public enum PinName
@@ -29,41 +35,56 @@ namespace VirtualComponent.IC
 			COM7,
 		}
 
-		public enum SwitchType
-		{
-			OPEN,
-			CLOSE,
-		}
 
+		protected Dictionary<MAX335<TLatchPinName>.PinName, SwitchState> switchTable = new Dictionary<IC.MAX335<TLatchPinName>.PinName, SwitchState>();
+
+		/// <summary>
+		/// スイッチ状態をセットする
+		/// </summary>
+		/// <param name="pinName"></param>
+		/// <returns></returns>
+		public SwitchState this[MAX335<TLatchPinName>.PinName pinName]
+		{
+			set
+			{
+				this.switchTable[pinName] = value;
+				this.Transfer(this.getOutputValue());
+			}
+		}
+		
+				
 		/// <summary>
 		/// MAX335の各ポートのスイッチをセットする
 		/// </summary>
 		/// <param name="outputTable">各ポートのスイッチ状態（デフォルトはOPEN）</param>
-		public void SetSwitch(Dictionary<MAX335<TLatchPinName>.PinName, SwitchType> outputTable)
+		public void SetSwitch(Dictionary<MAX335<TLatchPinName>.PinName, SwitchState> outputTable)
 		{
-			// デフォルト値をセット
-			foreach (PinName COM in Enum.GetValues(typeof(PinName)))
+			// 指定値を変数に代入
+			foreach(var key_pair in outputTable)
 			{
-				if (outputTable.ContainsKey(COM) == false)
-				{
-					outputTable[COM] = SwitchType.OPEN;
-				}
+				this.switchTable[key_pair.Key] = key_pair.Value;
 			}
 
+			// 代入された変数の設定値を適用
+			this.Transfer(this.getOutputValue());
+		}
+
+		protected byte getOutputValue()
+		{
 			// 送信するデータ
 			byte outputValue = 0;
 
-			outputValue |= (outputTable[PinName.COM0] == SwitchType.OPEN) ? (byte)0 : (byte)1;		// COM0
-			outputValue |= (outputTable[PinName.COM1] == SwitchType.OPEN) ? (byte)0 : (byte)2;		// COM1
-			outputValue |= (outputTable[PinName.COM2] == SwitchType.OPEN) ? (byte)0 : (byte)4;		// COM2
-			outputValue |= (outputTable[PinName.COM3] == SwitchType.OPEN) ? (byte)0 : (byte)8;		// COM3
-			outputValue |= (outputTable[PinName.COM4] == SwitchType.OPEN) ? (byte)0 : (byte)16;		// COM4
-			outputValue |= (outputTable[PinName.COM5] == SwitchType.OPEN) ? (byte)0 : (byte)32;		// COM5
-			outputValue |= (outputTable[PinName.COM6] == SwitchType.OPEN) ? (byte)0 : (byte)64;		// COM6
-			outputValue |= (outputTable[PinName.COM7] == SwitchType.OPEN) ? (byte)0 : (byte)128;	// COM7
+			outputValue |= (this.switchTable[PinName.COM0] == SwitchState.OPEN) ? (byte)0 : (byte)1;      // COM0
+			outputValue |= (this.switchTable[PinName.COM1] == SwitchState.OPEN) ? (byte)0 : (byte)2;      // COM1
+			outputValue |= (this.switchTable[PinName.COM2] == SwitchState.OPEN) ? (byte)0 : (byte)4;      // COM2
+			outputValue |= (this.switchTable[PinName.COM3] == SwitchState.OPEN) ? (byte)0 : (byte)8;      // COM3
+			outputValue |= (this.switchTable[PinName.COM4] == SwitchState.OPEN) ? (byte)0 : (byte)16;     // COM4
+			outputValue |= (this.switchTable[PinName.COM5] == SwitchState.OPEN) ? (byte)0 : (byte)32;     // COM5
+			outputValue |= (this.switchTable[PinName.COM6] == SwitchState.OPEN) ? (byte)0 : (byte)64;     // COM6
+			outputValue |= (this.switchTable[PinName.COM7] == SwitchState.OPEN) ? (byte)0 : (byte)128;    // COM7
 
-			// SPI通信で転送
-			this.Transfer(outputValue);
+			return outputValue;
 		}
+
 	}
 }
