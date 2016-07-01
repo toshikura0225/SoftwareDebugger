@@ -273,7 +273,6 @@ namespace VirtualComponent.Arduino
 		/// </summary>
 		public void end()
 		{
-			// ▲Arduino側が未実装
 			Query_x06 query = new Query_x06()
 			{
 				DeviceAddress = 0x00,
@@ -282,8 +281,6 @@ namespace VirtualComponent.Arduino
 				PresetData = ModbusData.bytes2int(0x00, 0x00),
 			};
 			this.modbusSerialPort.Write(query);
-
-			throw new NotImplementedException();
 		}
 
 	}
