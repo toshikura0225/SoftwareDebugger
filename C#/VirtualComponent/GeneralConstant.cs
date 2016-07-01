@@ -12,6 +12,11 @@ namespace VirtualComponent
 		CLOSE,
 	}
 
+	public enum VoltageLevel
+	{
+		LOW,
+		HIGH,
+	}
 	
 
 	class GeneralConstant

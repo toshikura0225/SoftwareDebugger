@@ -55,10 +55,10 @@ namespace SoftwareDebuggerSolution
 
 		private void button7_Click(object sender, EventArgs e)
 		{
-			pcal9555a.SetLevel(new Dictionary<PCAL9555A.PinName, bool>()
+			pcal9555a.SetLevel(new Dictionary<PCAL9555A.PinName, VoltageLevel>()
 			{
-				{PCAL9555A.PinName.P0_7, true},
-				{PCAL9555A.PinName.P1_1, true},
+				{PCAL9555A.PinName.P0_7, VoltageLevel.HIGH},
+				{PCAL9555A.PinName.P1_1, VoltageLevel.HIGH},
 			});
 		}
 

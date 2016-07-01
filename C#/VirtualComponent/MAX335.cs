@@ -36,14 +36,14 @@ namespace VirtualComponent.IC
 		}
 
 
-		protected Dictionary<MAX335<TLatchPinName>.PinName, SwitchState> switchTable = new Dictionary<IC.MAX335<TLatchPinName>.PinName, SwitchState>();
+		protected Dictionary<PinName, SwitchState> switchTable = new Dictionary<PinName, SwitchState>();
 
 		/// <summary>
 		/// スイッチ状態をセットする
 		/// </summary>
 		/// <param name="pinName"></param>
 		/// <returns></returns>
-		public SwitchState this[MAX335<TLatchPinName>.PinName pinName]
+		public SwitchState this[PinName pinName]
 		{
 			set
 			{
@@ -57,7 +57,7 @@ namespace VirtualComponent.IC
 		/// MAX335の各ポートのスイッチをセットする
 		/// </summary>
 		/// <param name="outputTable">各ポートのスイッチ状態（デフォルトはOPEN）</param>
-		public void SetSwitch(Dictionary<MAX335<TLatchPinName>.PinName, SwitchState> outputTable)
+		public void SetSwitch(Dictionary<PinName, SwitchState> outputTable)
 		{
 			// 指定値を変数に代入
 			foreach(var key_pair in outputTable)
