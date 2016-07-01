@@ -7,8 +7,8 @@
     <ProjectGuid>{6563A8A4-DD7C-4576-BFD8-DDD39D56AD12}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SoftwareDebuggerSolution</RootNamespace>
-    <AssemblyName>SoftwareDebuggerSolution</AssemblyName>
+    <RootNamespace>SoftwareDebugger</RootNamespace>
+    <AssemblyName>SoftwareDebugger</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
