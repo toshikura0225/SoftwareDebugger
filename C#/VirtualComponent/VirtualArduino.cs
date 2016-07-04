@@ -89,7 +89,7 @@ namespace VirtualComponent.Arduino
 		/// <summary>
 		/// Arduinoと通信するためのModbus通信
 		/// </summary>
-		ModbusSerialPort modbusSerialPort = new ModbusSerialPort();
+		ModbusSerialPort modbusSerialPort;
 		
 		/// <summary>
 		/// コンストラクタ
@@ -97,13 +97,14 @@ namespace VirtualComponent.Arduino
 		/// <param name="portName">COMポート名</param>
 		public VirtualArduino(string portName)
 		{
-			this.modbusSerialPort.PortName = portName;
-
 			this.modbusSerialPort = new ModbusSerialPort()
 			{
 				BaudRate = 9600,
 				Handshake = System.IO.Ports.Handshake.None,
 			};
+
+			this.modbusSerialPort.PortName = portName;
+
 
 			this.modbusSerialPort.ModbusDataReceived += (s, e) =>
 			{
@@ -294,7 +295,7 @@ namespace VirtualComponent.Arduino
 	/// </summary>
 	internal class VirtualGPIO : IGPIO<VirtualArduino.PinName>
 	{
-		ModbusSerialPort modbusSerialPort = new ModbusSerialPort();
+		ModbusSerialPort modbusSerialPort;
 
 		public VirtualGPIO(ModbusSerialPort modbusSerialPort)
 		{

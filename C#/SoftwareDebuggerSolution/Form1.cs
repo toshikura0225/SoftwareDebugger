@@ -53,7 +53,7 @@ namespace SoftwareDebuggerSolution
 
 		private void button6_Click(object sender, EventArgs e)
 		{
-			pcal9555a = new PCAL9555A(this.arduino.i2c, 0x41);
+			pcal9555a = new PCAL9555A(this.arduino.i2c, 0x20);
 		}
 
 		private void button7_Click(object sender, EventArgs e)
@@ -77,7 +77,7 @@ namespace SoftwareDebuggerSolution
 
 		private void button10_Click(object sender, EventArgs e)
 		{
-			pcal9555a[PCAL9555A.PinName.P0_7] = VoltageLevel.HIGH;
+			pcal9555a[PCAL9555A.PinName.P1_0] = VoltageLevel.HIGH;
 		}
 
 		private void COM_Click(object sender, EventArgs e)

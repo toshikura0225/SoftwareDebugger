@@ -224,6 +224,11 @@ namespace SharedLibrary.SerialPort.Modbus
 		public virtual void Write(byte[] buffer, int offset, int count)
 		{
 			this.serialPort1.Write(buffer, offset, count);
+			foreach(var b in buffer)
+			{
+				Console.Write(string.Format("[{0}]", b));
+			}
+			Console.WriteLine();
 		}
 
 
