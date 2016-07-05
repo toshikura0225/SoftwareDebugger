@@ -30,6 +30,15 @@ namespace VirtualComponent.Arduino
 		public static byte SPI_TRANSFER = 0x02;
 		public static byte SPI_END = 0x03;
 
+
+		public static byte SPI_CLOCK_DIV4 = 0x00;
+		public static byte SPI_CLOCK_DIV16 = 0x01;
+		public static byte SPI_CLOCK_DIV64 = 0x02;
+		public static byte SPI_CLOCK_DIV128 = 0x03;
+		public static byte SPI_CLOCK_DIV2 = 0x04;
+		public static byte SPI_CLOCK_DIV8 = 0x05;
+		public static byte SPI_CLOCK_DIV32 = 0x06;
+
 		// I2C関連
 		public static byte I2C = 0x06;
 		public static byte I2C_BEGIN = 0x00;
@@ -248,7 +257,7 @@ namespace VirtualComponent.Arduino
 				DeviceAddress = 0x00,
 				FunctionCode = 0x06,
 				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.SPI, VirtualArduinoAddress.SPI_MODE),
-				PresetData = ModbusData.bytes2int(0x00, 0x06),
+				PresetData = ModbusData.bytes2int(0x00, VirtualArduinoAddress.SPI_CLOCK_DIV32),
 			};
 			this.modbusSerialPort.Write(query);
 		}

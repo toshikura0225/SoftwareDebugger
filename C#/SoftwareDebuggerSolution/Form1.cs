@@ -68,7 +68,6 @@ namespace SoftwareDebuggerSolution
 		private void button8_Click(object sender, EventArgs e)
 		{
 			max335[MAX335.PinName.COM4] = SwitchState.OPEN;
-			max335[MAX335.PinName.COM4] = SwitchState.CLOSE;
 		}
 
 		private void button9_Click(object sender, EventArgs e)

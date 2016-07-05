@@ -32,7 +32,7 @@
 
 
 // set pin 10 as the slave select for the digital pot:
-const int slaveSelectPin = 10;
+const int slaveSelectPin = 7;
 
 void setup() {
   // set the slaveSelectPin as an output:
@@ -41,6 +41,7 @@ void setup() {
   SPI.begin();
   SPI.setDataMode(SPI_MODE0);
   SPI.setClockDivider(SPI_CLOCK_DIV32);
+  //SPI.setClockDivider(SPI_CLOCK_DIV2);
 }
 
 void loop() {
@@ -62,13 +63,17 @@ void loop() {
   }
   */
 
-  digitalPotWrite(4, 100);
+  digitalPotWrite(4, 16);
 
-  delay(3000);
+  delay(1000);
 
-  digitalPotWrite(4, 200);
+  digitalPotWrite(4, 0);
 
-  delay(3000);
+  delay(1000);
+  
+  digitalPotWrite(4, 0xFF);
+
+  delay(1000);
   
 
 }
@@ -76,8 +81,9 @@ void loop() {
 void digitalPotWrite(int address, int value) {
   // take the SS pin low to select the chip:
   digitalWrite(slaveSelectPin, LOW);
+  delay(100);
   //  send in the address and value via SPI:
-  SPI.transfer(address);
+  //SPI.transfer(address);
   SPI.transfer(value);
   // take the SS pin high to de-select the chip:
   digitalWrite(slaveSelectPin, HIGH);
