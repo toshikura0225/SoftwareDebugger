@@ -25,7 +25,7 @@ namespace SoftwareDebuggerSolution
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-			max335 = new MAX335(this.arduino.spi, this.arduino.io, VirtualArduino.PinName.pin8);
+			max335 = new MAX335(this.arduino.spi, this.arduino.io, VirtualArduino.PinName.pin7);
 			
 		}
 
@@ -33,20 +33,20 @@ namespace SoftwareDebuggerSolution
 		{
 			max335.SetSwitch(new Dictionary<MAX335.PinName, SwitchState>()
 			{
-				{ MAX335.PinName.COM2, SwitchState.CLOSE }
+				{ MAX335.PinName.COM4, SwitchState.CLOSE }
 			});
 		}
 
 		private void button3_Click(object sender, EventArgs e)
 		{
-			ad5206 = new AD5206(this.arduino.spi, this.arduino.io, VirtualArduino.PinName.pin9);
+			ad5206 = new AD5206(this.arduino.spi, this.arduino.io, VirtualArduino.PinName.pin8);
 		}
 
 		private void button4_Click(object sender, EventArgs e)
 		{
 			ad5206.SetRegister(new Dictionary<AD5206<VirtualArduino.PinName>.PinName, byte>()
 			{
-				{  AD5206.PinName.AW3, 0x30 }
+				{  AD5206.PinName.BW4, 0x30 }
 			});
 		}
 
@@ -67,12 +67,13 @@ namespace SoftwareDebuggerSolution
 
 		private void button8_Click(object sender, EventArgs e)
 		{
-			max335[MAX335.PinName.COM2] = SwitchState.CLOSE;
+			max335[MAX335.PinName.COM4] = SwitchState.OPEN;
+			max335[MAX335.PinName.COM4] = SwitchState.CLOSE;
 		}
 
 		private void button9_Click(object sender, EventArgs e)
 		{
-			ad5206[AD5206.PinName.AW3] = 0x30;
+			ad5206[AD5206.PinName.BW4] = 0xF0;
 		}
 
 		private void button10_Click(object sender, EventArgs e)

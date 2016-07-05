@@ -313,7 +313,7 @@ namespace VirtualComponent.Arduino
 				DeviceAddress = 0x00,
 				FunctionCode = 0x06,
 				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.DIO_MODE, (byte)pinName),
-				PresetData = ModbusData.bytes2int(0x00, VirtualArduinoAddress.DIO_MODE_DIGITAL),
+				PresetData = ModbusData.bytes2int((direction ? (byte)0x01 : (byte)0x00), VirtualArduinoAddress.DIO_MODE_DIGITAL),
 			};
 			this.modbusSerialPort.Write(query);
 		}
@@ -328,7 +328,7 @@ namespace VirtualComponent.Arduino
 			{
 				DeviceAddress = 0x00,
 				FunctionCode = 0x06,
-				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.DIO_MODE, (byte)pinName),
+				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.DIO_VALUE, (byte)pinName),
 				PresetData = ModbusData.bytes2int(0x00, (level ? (byte)1 : (byte)0)),
 			};
 			this.modbusSerialPort.Write(query);

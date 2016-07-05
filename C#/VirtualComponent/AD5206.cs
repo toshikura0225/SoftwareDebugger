@@ -25,12 +25,12 @@ namespace VirtualComponent.IC
 
 		public enum PinName
 		{
-			AW1 = 0,
-			AW2,
-			AW3,
-			AW4,
-			AW5,
-			AW6,
+			BW1 = 0,
+			BW2,
+			BW3,
+			BW4,
+			BW5,
+			BW6,
 		}
 
 
