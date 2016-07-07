@@ -25,8 +25,7 @@ namespace SoftwareDebuggerSolution
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-			max335 = new MAX335(this.arduino.spi, this.arduino.io, VirtualArduino.PinName.pin7);
-			
+			max335 = new MAX335(this.arduino.spi, pcal9555a, PCAL9555A.PinName.P0_0);
 		}
 
 		private void button2_Click(object sender, EventArgs e)
@@ -39,12 +38,12 @@ namespace SoftwareDebuggerSolution
 
 		private void button3_Click(object sender, EventArgs e)
 		{
-			ad5206 = new AD5206(this.arduino.spi, this.arduino.io, VirtualArduino.PinName.pin8);
+			ad5206 = new AD5206(this.arduino.spi, pcal9555a, PCAL9555A.PinName.P0_1);
 		}
 
 		private void button4_Click(object sender, EventArgs e)
 		{
-			ad5206.SetRegister(new Dictionary<AD5206<VirtualArduino.PinName>.PinName, byte>()
+			ad5206.SetRegister(new Dictionary<AD5206<PCAL9555A.PinName>.PinName, byte>()
 			{
 				{  AD5206.PinName.BW4, 0x30 }
 			});
@@ -88,13 +87,13 @@ namespace SoftwareDebuggerSolution
 	}
 
 
-	public class MAX335 : MAX335<VirtualArduino.PinName>
+	public class MAX335 : MAX335<PCAL9555A.PinName>
 	{
-		public MAX335(ISPI spi, IGPIO<VirtualArduino.PinName> digitalouput, VirtualArduino.PinName latchPinName) : base(spi, digitalouput, latchPinName) { }
+		public MAX335(ISPI spi, IGPIO<PCAL9555A.PinName> digitalouput, PCAL9555A.PinName latchPinName) : base(spi, digitalouput, latchPinName) { }
 	}
 
-	public class AD5206 : AD5206<VirtualArduino.PinName>
+	public class AD5206 : AD5206<PCAL9555A.PinName>
 	{
-		public AD5206(ISPI spi, IGPIO<VirtualArduino.PinName> digitalouput, VirtualArduino.PinName latchPinName) : base(spi, digitalouput, latchPinName) { }
+		public AD5206(ISPI spi, IGPIO<PCAL9555A.PinName> digitalouput, PCAL9555A.PinName latchPinName) : base(spi, digitalouput, latchPinName) { }
 	}
 }
