@@ -64,7 +64,7 @@ namespace VirtualComponent.IC
 			//}
 
 			// スレーブ選択
-			this.digitalOutput.SetLevel(this.latchPinName, false);
+			this.digitalOutput.SetLevel(this.latchPinName, VoltageLevel.LOW);
 
 			// 送信
 			List<byte> dataList = new List<byte>();
@@ -76,7 +76,7 @@ namespace VirtualComponent.IC
 			this.spi.transfer(dataList);
 
 			// スレーブに適用
-			this.digitalOutput.SetLevel(this.latchPinName, true);
+			this.digitalOutput.SetLevel(this.latchPinName, VoltageLevel.HIGH);
 		}
 
 	}

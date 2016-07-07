@@ -304,13 +304,29 @@ namespace VirtualComponent.Arduino
 	/// </summary>
 	internal class VirtualGPIO : IGPIO<VirtualArduino.PinName>
 	{
-		ModbusSerialPort modbusSerialPort;
+		protected ModbusSerialPort modbusSerialPort;
+
+		protected Dictionary<VirtualArduino.PinName, VoltageLevel> outputTable = new Dictionary<VirtualArduino.PinName, VoltageLevel>();
+
 
 		public VirtualGPIO(ModbusSerialPort modbusSerialPort)
 		{
 			this.modbusSerialPort = modbusSerialPort;
 		}
-		
+
+		/// <summary>
+		/// 出力状態をセットする
+		/// </summary>
+		/// <param name="pinName"></param>
+		/// <returns></returns>
+		public VoltageLevel this[VirtualArduino.PinName pinName]
+		{
+			set
+			{
+				this.outputTable[pinName] = value;
+			}
+		}
+
 		/// <summary>
 		/// デジタル入出力方向をセットする
 		/// </summary>
@@ -328,17 +344,29 @@ namespace VirtualComponent.Arduino
 		}
 
 		/// <summary>
+		/// デジタル入出力の出力方向をセットする
+		/// </summary>
+		/// <param name="argTable"></param>
+		public void SetLevel(Dictionary<VirtualArduino.PinName, VoltageLevel> argTable)
+		{
+			foreach(var pair in argTable)
+			{
+				this.SetLevel(pair.Key, pair.Value);
+			}
+		}
+
+		/// <summary>
 		/// デジタル出力値をセットする
 		/// </summary>
 		/// <param name="level"></param>
-		public void SetLevel(VirtualArduino.PinName pinName, bool level)
+		public void SetLevel(VirtualArduino.PinName pinName, VoltageLevel level)
 		{
 			Query_x06 query = new Query_x06()
 			{
 				DeviceAddress = 0x00,
 				FunctionCode = 0x06,
 				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.DIO_VALUE, (byte)pinName),
-				PresetData = ModbusData.bytes2int(0x00, (level ? (byte)1 : (byte)0)),
+				PresetData = ModbusData.bytes2int(0x00, (level == VoltageLevel.HIGH ? (byte)1 : (byte)0)),
 			};
 			this.modbusSerialPort.Write(query);
 		}

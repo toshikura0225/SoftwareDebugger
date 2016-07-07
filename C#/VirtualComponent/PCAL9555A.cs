@@ -8,7 +8,7 @@ namespace VirtualComponent.IC
 	/// <summary>
 	/// GPIOモジュール「PCAL9555A」の機能を処理する。入出力機能はすべて出力。
 	/// </summary>
-	public class PCAL9555A : AddressingI2C
+	public class PCAL9555A : AddressingI2C, IGPIO<PCAL9555A.PinName>
 	{
 		/// <summary>
 		/// PCAL9555Aのコマンドコード（データシート参照）
@@ -74,7 +74,7 @@ namespace VirtualComponent.IC
 		protected Dictionary<PinName, VoltageLevel> outputTable = new Dictionary<PinName, VoltageLevel>();
 
 		/// <summary>
-		/// スイッチ状態をセットする
+		/// 出力状態をセットする
 		/// </summary>
 		/// <param name="pinName"></param>
 		/// <returns></returns>
@@ -84,39 +84,7 @@ namespace VirtualComponent.IC
 			{
 				this.outputTable[pinName] = value;
 
-				switch(pinName)
-				{
-					case PinName.P0_0:
-					case PinName.P0_1:
-					case PinName.P0_2:
-					case PinName.P0_3:
-					case PinName.P0_4:
-					case PinName.P0_5:
-					case PinName.P0_6:
-					case PinName.P0_7:
-						this.write(new List<byte>()
-						{
-							(byte)Command.OutputPort_0,	// 送信するコマンド
-							this.getOutputValue_p0(),	// 送信するデータ（P0_0～P0_7）
-						});
-
-						break;
-
-					case PinName.P1_0:
-					case PinName.P1_1:
-					case PinName.P1_2:
-					case PinName.P1_3:
-					case PinName.P1_4:
-					case PinName.P1_5:
-					case PinName.P1_6:
-					case PinName.P1_7:
-						this.write(new List<byte>()
-						{
-							(byte)Command.OutputPort_1,	// 送信するコマンド
-							this.getOutputValue_p1(),	// 送信するデータ（P0_0～P0_7）
-						});
-						break;
-				}
+				this.SetLevel(pinName, value);
 			}
 		}
 
@@ -169,6 +137,54 @@ namespace VirtualComponent.IC
 			outputValue_1 |= (this.outputTable[PinName.P1_6] == VoltageLevel.LOW) ? (byte)0 : (byte)64;     // P1_6
 			outputValue_1 |= (this.outputTable[PinName.P1_7] == VoltageLevel.LOW) ? (byte)0 : (byte)128;    // P1_7
 			return outputValue_1;
+		}
+
+		/// <summary>
+		/// 出力方向をセットする（未対応機能）
+		/// </summary>
+		/// <param name="pinName"></param>
+		/// <param name="direction"></param>
+		public void SetDirection(PinName pinName, bool direction)
+		{
+			// 未対応機能
+			throw new NotImplementedException();
+		}
+
+		public void SetLevel(PinName pinName, VoltageLevel level)
+		{
+			switch (pinName)
+			{
+				case PinName.P0_0:
+				case PinName.P0_1:
+				case PinName.P0_2:
+				case PinName.P0_3:
+				case PinName.P0_4:
+				case PinName.P0_5:
+				case PinName.P0_6:
+				case PinName.P0_7:
+					this.write(new List<byte>()
+						{
+							(byte)Command.OutputPort_0,	// 送信するコマンド
+							this.getOutputValue_p0(),	// 送信するデータ（P0_0～P0_7）
+						});
+
+					break;
+
+				case PinName.P1_0:
+				case PinName.P1_1:
+				case PinName.P1_2:
+				case PinName.P1_3:
+				case PinName.P1_4:
+				case PinName.P1_5:
+				case PinName.P1_6:
+				case PinName.P1_7:
+					this.write(new List<byte>()
+						{
+							(byte)Command.OutputPort_1,	// 送信するコマンド
+							this.getOutputValue_p1(),	// 送信するデータ（P0_0～P0_7）
+						});
+					break;
+			}
 		}
 	}
 }

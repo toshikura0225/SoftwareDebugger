@@ -43,13 +43,13 @@ namespace VirtualComponent
 		protected void Transfer(List<byte> dataList)
 		{
 			// スレーブ選択
-			this.digitalOutput.SetLevel(this.latchPinName, false);
+			this.digitalOutput.SetLevel(this.latchPinName, VoltageLevel.LOW);
 
 			// データ転送
 			this.spi.transfer(dataList);
 
 			// スレーブに適用
-			this.digitalOutput.SetLevel(this.latchPinName, true);
+			this.digitalOutput.SetLevel(this.latchPinName, VoltageLevel.HIGH);
 		}
 
 		/// <summary>
@@ -59,13 +59,13 @@ namespace VirtualComponent
 		protected void Transfer(byte data)
 		{
 			// スレーブ選択
-			this.digitalOutput.SetLevel(this.latchPinName, false);
+			this.digitalOutput.SetLevel(this.latchPinName, VoltageLevel.LOW);
 
 			// データ転送
 			this.spi.transfer(new List<byte>() { data });
 
 			// スレーブに適用
-			this.digitalOutput.SetLevel(this.latchPinName, true);
+			this.digitalOutput.SetLevel(this.latchPinName, VoltageLevel.HIGH);
 		}
 	}
 
