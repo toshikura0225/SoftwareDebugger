@@ -82,8 +82,6 @@ namespace VirtualComponent.IC
 		{
 			set
 			{
-				this.outputTable[pinName] = value;
-
 				this.SetLevel(pinName, value);
 			}
 		}
@@ -146,12 +144,26 @@ namespace VirtualComponent.IC
 		/// <param name="direction"></param>
 		public void SetDirection(PinName pinName, bool direction)
 		{
-			// 未対応機能
-			throw new NotImplementedException();
+			// 未対応機能→すべて出力ピンとする
+
+			this.write(new List<byte>()
+			{
+				(byte)Command.ConfigurationPort_0,
+				0,	// 出力
+			});
+
+			this.write(new List<byte>()
+			{
+				(byte)Command.ConfigurationPort_1,
+				0,	// 出力
+			});
+
 		}
 
 		public void SetLevel(PinName pinName, VoltageLevel level)
 		{
+			this.outputTable[pinName] = level;
+
 			switch (pinName)
 			{
 				case PinName.P0_0:

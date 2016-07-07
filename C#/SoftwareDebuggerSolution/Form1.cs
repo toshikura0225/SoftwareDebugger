@@ -38,7 +38,7 @@ namespace SoftwareDebuggerSolution
 
 		private void button3_Click(object sender, EventArgs e)
 		{
-			ad5206 = new AD5206(this.arduino.spi, pcal9555a, PCAL9555A.PinName.P0_1);
+			ad5206 = new AD5206(this.arduino.spi, pcal9555a, PCAL9555A.PinName.P0_6);
 		}
 
 		private void button4_Click(object sender, EventArgs e)
@@ -60,7 +60,7 @@ namespace SoftwareDebuggerSolution
 			pcal9555a.SetLevel(new Dictionary<PCAL9555A.PinName, VoltageLevel>()
 			{
 				{PCAL9555A.PinName.P0_7, VoltageLevel.HIGH},
-				{PCAL9555A.PinName.P1_1, VoltageLevel.HIGH},
+				{PCAL9555A.PinName.P1_0, VoltageLevel.LOW},
 			});
 		}
 
@@ -76,6 +76,7 @@ namespace SoftwareDebuggerSolution
 
 		private void button10_Click(object sender, EventArgs e)
 		{
+			pcal9555a[PCAL9555A.PinName.P0_7] = VoltageLevel.LOW;
 			pcal9555a[PCAL9555A.PinName.P1_0] = VoltageLevel.HIGH;
 		}
 
