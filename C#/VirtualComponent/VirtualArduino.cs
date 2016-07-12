@@ -108,7 +108,8 @@ namespace VirtualComponent.Arduino
 		{
 			this.modbusSerialPort = new ModbusSerialPort()
 			{
-				BaudRate = 9600,
+				//BaudRate = 9600,
+				BaudRate = 57600,
 				Handshake = System.IO.Ports.Handshake.None,
 			};
 
