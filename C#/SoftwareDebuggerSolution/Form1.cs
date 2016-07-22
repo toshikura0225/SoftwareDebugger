@@ -20,76 +20,81 @@ namespace SoftwareDebuggerSolution
 		{
 			InitializeComponent();
 			this.comboBox1.Items.AddRange(SerialPort.GetPortNames());
-
-
-			max335 = new MAX335(this.arduino.spi, this.arduino.io);
-			max335.SetSwitch(new Dictionary<MAX335.PinName, MAX335.SwitchType>() { });
-
-			ad5206 = new AD5206(this.arduino.spi, this.arduino.io);
-			ad5206.SetRegister(AD5206.PinName.AW1, 125);
-
-			pcal9555a = new PCAL9555A(this.arduino.i2c, 0x41);
-			pcal9555a.SetLevel(new Dictionary<PCAL9555A.PinName, bool> () { });
 		}
 
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-
+			max335 = new MAX335(this.arduino.spi, pcal9555a, PCAL9555A.PinName.P1_0);
 		}
 
 		private void button2_Click(object sender, EventArgs e)
 		{
-
+			max335.SetSwitch(new Dictionary<MAX335.PinName, SwitchState>()
+			{
+				{ MAX335.PinName.COM4, SwitchState.CLOSE }
+			});
 		}
 
 		private void button3_Click(object sender, EventArgs e)
 		{
-
+			ad5206 = new AD5206(this.arduino.spi, pcal9555a, PCAL9555A.PinName.P0_7);
 		}
 
 		private void button4_Click(object sender, EventArgs e)
 		{
-
+			ad5206.SetRegister(new Dictionary<AD5206<PCAL9555A.PinName>.PinName, byte>()
+			{
+				{  AD5206.PinName.BW4, 0x30 }
+			});
 		}
 
 
 		private void button6_Click(object sender, EventArgs e)
 		{
-
+			pcal9555a = new PCAL9555A(this.arduino.i2c, 0x20);
 		}
 
 		private void button7_Click(object sender, EventArgs e)
 		{
-
+			pcal9555a.SetLevel(new Dictionary<PCAL9555A.PinName, VoltageLevel>()
+			{
+				{PCAL9555A.PinName.P0_2, VoltageLevel.HIGH},
+				{PCAL9555A.PinName.P1_3, VoltageLevel.LOW},
+			});
 		}
 
 		private void button8_Click(object sender, EventArgs e)
 		{
-
+			max335[MAX335.PinName.COM4] = SwitchState.OPEN;
 		}
 
 		private void button9_Click(object sender, EventArgs e)
 		{
+			ad5206[AD5206.PinName.BW4] = 0xF0;
+		}
 
+		private void button10_Click(object sender, EventArgs e)
+		{
+			pcal9555a[PCAL9555A.PinName.P0_2] = VoltageLevel.LOW;
+			pcal9555a[PCAL9555A.PinName.P1_3] = VoltageLevel.HIGH;
 		}
 
 		private void COM_Click(object sender, EventArgs e)
 		{
 			this.arduino = new VirtualArduino(this.comboBox1.Text);
 		}
+
 	}
 
 
-	public class MAX335 : MAX335<VirtualArduino.PinName>
+	public class MAX335 : MAX335<PCAL9555A.PinName>
 	{
-		public MAX335(ISPI spi, IDigitalOutput<VirtualArduino.PinName> digitalouput) : base(spi, digitalouput) { }
+		public MAX335(ISPI spi, IGPIO<PCAL9555A.PinName> digitalouput, PCAL9555A.PinName latchPinName) : base(spi, digitalouput, latchPinName) { }
 	}
 
-	public class AD5206 : AD5206<VirtualArduino.PinName>
+	public class AD5206 : AD5206<PCAL9555A.PinName>
 	{
-		public AD5206(ISPI spi, IDigitalOutput<VirtualArduino.PinName> digitalouput) : base(spi, digitalouput) { }
+		public AD5206(ISPI spi, IGPIO<PCAL9555A.PinName> digitalouput, PCAL9555A.PinName latchPinName) : base(spi, digitalouput, latchPinName) { }
 	}
-
-
 }

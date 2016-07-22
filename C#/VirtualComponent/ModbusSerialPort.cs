@@ -52,9 +52,11 @@ namespace SharedLibrary.SerialPort.Modbus
 					byte[] buf2 = new byte[len];
 					Buffer.BlockCopy(buf1, 0, buf2, 0, len);
 					this.readDataList.AddRange(buf2);
-
-					if (this.readDataList.Count >= 8)
+					
+					while(this.readDataList.Count >= 8)
+					//if (this.readDataList.Count >= 8)
 					{
+						//Console.WriteLine(string.Format("&{0}&", this.readDataList.Count));
 						// ModbusDataReceivedイベントとして渡すイベント引数
 						ModbusDataReceivedEventArgs modbusData = new ModbusDataReceivedEventArgs();
 
@@ -224,6 +226,11 @@ namespace SharedLibrary.SerialPort.Modbus
 		public virtual void Write(byte[] buffer, int offset, int count)
 		{
 			this.serialPort1.Write(buffer, offset, count);
+			foreach(var b in buffer)
+			{
+				Console.Write(string.Format("[{0}]", b));
+			}
+			Console.WriteLine();
 		}
 
 

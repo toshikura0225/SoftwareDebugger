@@ -30,6 +30,15 @@ namespace VirtualComponent.Arduino
 		public static byte SPI_TRANSFER = 0x02;
 		public static byte SPI_END = 0x03;
 
+
+		public static byte SPI_CLOCK_DIV4 = 0x00;
+		public static byte SPI_CLOCK_DIV16 = 0x01;
+		public static byte SPI_CLOCK_DIV64 = 0x02;
+		public static byte SPI_CLOCK_DIV128 = 0x03;
+		public static byte SPI_CLOCK_DIV2 = 0x04;
+		public static byte SPI_CLOCK_DIV8 = 0x05;
+		public static byte SPI_CLOCK_DIV32 = 0x06;
+
 		// I2C関連
 		public static byte I2C = 0x06;
 		public static byte I2C_BEGIN = 0x00;
@@ -56,7 +65,7 @@ namespace VirtualComponent.Arduino
 		/// <summary>
 		/// Arduinoの入出力機能
 		/// </summary>
-		public IDigitalOutput<PinName> io;
+		public IGPIO<PinName> io;
 
 		/// <summary>
 		/// ArduinoのCPU(ATMEGA328P)のピン名
@@ -89,7 +98,7 @@ namespace VirtualComponent.Arduino
 		/// <summary>
 		/// Arduinoと通信するためのModbus通信
 		/// </summary>
-		ModbusSerialPort modbusSerialPort = new ModbusSerialPort();
+		ModbusSerialPort modbusSerialPort;
 		
 		/// <summary>
 		/// コンストラクタ
@@ -97,13 +106,15 @@ namespace VirtualComponent.Arduino
 		/// <param name="portName">COMポート名</param>
 		public VirtualArduino(string portName)
 		{
-			this.modbusSerialPort.PortName = portName;
-
 			this.modbusSerialPort = new ModbusSerialPort()
 			{
-				BaudRate = 9600,
+				//BaudRate = 9600,
+				BaudRate = 57600,
 				Handshake = System.IO.Ports.Handshake.None,
 			};
+
+			this.modbusSerialPort.PortName = portName;
+
 
 			this.modbusSerialPort.ModbusDataReceived += (s, e) =>
 			{
@@ -117,10 +128,11 @@ namespace VirtualComponent.Arduino
 				Console.WriteLine();
 			};
 
+			this.modbusSerialPort.Open();
 
 			this.i2c = (II2C)new VirtualI2C(this.modbusSerialPort);
 			this.spi = (ISPI)new VirtualSPI(this.modbusSerialPort);
-			this.io = (IDigitalOutput<PinName>)new VirtualGPIO(this.modbusSerialPort);
+			this.io = (IGPIO<PinName>)new VirtualGPIO(this.modbusSerialPort);
 		}
 		
 	}
@@ -173,15 +185,19 @@ namespace VirtualComponent.Arduino
 		/// </summary>
 		public void write(List<byte> dataList)
 		{
-			// Wire.write(0x06);
+			// Wire.write(0x**);
 			Query_x06 query = new Query_x06()
 			{
 				DeviceAddress = 0x00,
 				FunctionCode = 0x06,
 				RegisterAddress = ModbusData.bytes2int(0x06, 0x02),
-				PresetData = ModbusData.bytes2int(0x00, 0x06),
+				//PresetData = ModbusData.bytes2int(0x00, 0x06),
 			};
-			this.modbusSerialPort.Write(query);
+			foreach (var data in dataList)
+			{
+				query.PresetData = data;
+				this.modbusSerialPort.Write(query);
+			}
 		}
 		/// <summary>
 		/// スレーブデバイスに対する送信を完了します。
@@ -196,7 +212,7 @@ namespace VirtualComponent.Arduino
 			{
 				DeviceAddress = 0x00,
 				FunctionCode = 0x06,
-				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.I2C, VirtualArduinoAddress.I2C_BEGIN_TRANSMISSION),
+				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.I2C, VirtualArduinoAddress.I2C_END_TRANSMISSION),
 				PresetData = ModbusData.bytes2int(0x00, 0x00),  // 値は無効
 			};
 			this.modbusSerialPort.Write(query);
@@ -242,7 +258,7 @@ namespace VirtualComponent.Arduino
 				DeviceAddress = 0x00,
 				FunctionCode = 0x06,
 				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.SPI, VirtualArduinoAddress.SPI_MODE),
-				PresetData = ModbusData.bytes2int(0x00, 0x06),
+				PresetData = ModbusData.bytes2int(0x00, VirtualArduinoAddress.SPI_CLOCK_DIV32),
 			};
 			this.modbusSerialPort.Write(query);
 		}
@@ -272,7 +288,6 @@ namespace VirtualComponent.Arduino
 		/// </summary>
 		public void end()
 		{
-			// ▲Arduino側が未実装
 			Query_x06 query = new Query_x06()
 			{
 				DeviceAddress = 0x00,
@@ -281,8 +296,6 @@ namespace VirtualComponent.Arduino
 				PresetData = ModbusData.bytes2int(0x00, 0x00),
 			};
 			this.modbusSerialPort.Write(query);
-
-			throw new NotImplementedException();
 		}
 
 	}
@@ -290,45 +303,71 @@ namespace VirtualComponent.Arduino
 	/// <summary>
 	/// Arduinoの入出力機能の実装
 	/// </summary>
-	internal class VirtualGPIO : IDigitalOutput<VirtualArduino.PinName>
+	internal class VirtualGPIO : IGPIO<VirtualArduino.PinName>
 	{
-		public VirtualArduino.PinName PinName { get; set; }
+		protected ModbusSerialPort modbusSerialPort;
 
-		ModbusSerialPort modbusSerialPort = new ModbusSerialPort();
+		protected Dictionary<VirtualArduino.PinName, VoltageLevel> outputTable = new Dictionary<VirtualArduino.PinName, VoltageLevel>();
+
 
 		public VirtualGPIO(ModbusSerialPort modbusSerialPort)
 		{
 			this.modbusSerialPort = modbusSerialPort;
 		}
-		
+
+		/// <summary>
+		/// 出力状態をセットする
+		/// </summary>
+		/// <param name="pinName"></param>
+		/// <returns></returns>
+		public VoltageLevel this[VirtualArduino.PinName pinName]
+		{
+			set
+			{
+				this.outputTable[pinName] = value;
+			}
+		}
+
 		/// <summary>
 		/// デジタル入出力方向をセットする
 		/// </summary>
 		/// <param name="direction"></param>
-		public void SetDirection(bool direction)
+		public void SetDirection(VirtualArduino.PinName pinName, bool direction)
 		{
 			Query_x06 query = new Query_x06()
 			{
 				DeviceAddress = 0x00,
 				FunctionCode = 0x06,
-				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.DIO_MODE, (byte)this.PinName),
-				PresetData = ModbusData.bytes2int(0x00, VirtualArduinoAddress.DIO_MODE_DIGITAL),
+				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.DIO_MODE, (byte)pinName),
+				PresetData = ModbusData.bytes2int((direction ? (byte)0x01 : (byte)0x00), VirtualArduinoAddress.DIO_MODE_DIGITAL),
 			};
 			this.modbusSerialPort.Write(query);
+		}
+
+		/// <summary>
+		/// デジタル入出力の出力方向をセットする
+		/// </summary>
+		/// <param name="argTable"></param>
+		public void SetLevel(Dictionary<VirtualArduino.PinName, VoltageLevel> argTable)
+		{
+			foreach(var pair in argTable)
+			{
+				this.SetLevel(pair.Key, pair.Value);
+			}
 		}
 
 		/// <summary>
 		/// デジタル出力値をセットする
 		/// </summary>
 		/// <param name="level"></param>
-		public void SetLevel(bool level)
+		public void SetLevel(VirtualArduino.PinName pinName, VoltageLevel level)
 		{
 			Query_x06 query = new Query_x06()
 			{
 				DeviceAddress = 0x00,
 				FunctionCode = 0x06,
-				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.DIO_MODE, (byte)this.PinName),
-				PresetData = ModbusData.bytes2int(0x00, (level ? (byte)1 : (byte)0)),
+				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.DIO_VALUE, (byte)pinName),
+				PresetData = ModbusData.bytes2int(0x00, (level == VoltageLevel.HIGH ? (byte)1 : (byte)0)),
 			};
 			this.modbusSerialPort.Write(query);
 		}
