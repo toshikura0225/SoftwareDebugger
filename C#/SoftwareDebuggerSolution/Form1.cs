@@ -30,10 +30,7 @@ namespace SoftwareDebuggerSolution
 
 		private void button2_Click(object sender, EventArgs e)
 		{
-			max335.SetSwitch(new Dictionary<MAX335.PinName, SwitchState>()
-			{
-				{ MAX335.PinName.COM4, SwitchState.CLOSE }
-			});
+			max335[MAX335.PinName.COM0] = SwitchState.CLOSE;
 		}
 
 		private void button3_Click(object sender, EventArgs e)
@@ -43,10 +40,7 @@ namespace SoftwareDebuggerSolution
 
 		private void button4_Click(object sender, EventArgs e)
 		{
-			ad5206.SetRegister(new Dictionary<AD5206<PCAL9555A.PinName>.PinName, byte>()
-			{
-				{  AD5206.PinName.BW4, 0x30 }
-			});
+			max335[MAX335.PinName.COM1] = SwitchState.CLOSE;
 		}
 
 
@@ -57,27 +51,22 @@ namespace SoftwareDebuggerSolution
 
 		private void button7_Click(object sender, EventArgs e)
 		{
-			pcal9555a.SetLevel(new Dictionary<PCAL9555A.PinName, VoltageLevel>()
-			{
-				{PCAL9555A.PinName.P0_2, VoltageLevel.HIGH},
-				{PCAL9555A.PinName.P1_3, VoltageLevel.LOW},
-			});
+			max335[MAX335.PinName.COM2] = SwitchState.OPEN;
 		}
 
 		private void button8_Click(object sender, EventArgs e)
 		{
-			max335[MAX335.PinName.COM4] = SwitchState.OPEN;
+			max335[MAX335.PinName.COM2] = SwitchState.CLOSE;
 		}
 
 		private void button9_Click(object sender, EventArgs e)
 		{
-			ad5206[AD5206.PinName.BW4] = 0xF0;
+			ad5206[AD5206.PinName.BW1] = 0x00;
 		}
 
 		private void button10_Click(object sender, EventArgs e)
 		{
-			pcal9555a[PCAL9555A.PinName.P0_2] = VoltageLevel.LOW;
-			pcal9555a[PCAL9555A.PinName.P1_3] = VoltageLevel.HIGH;
+			ad5206[AD5206.PinName.BW1] = 0xFF;
 		}
 
 		private void COM_Click(object sender, EventArgs e)
