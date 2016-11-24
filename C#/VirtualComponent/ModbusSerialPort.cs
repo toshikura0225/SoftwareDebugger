@@ -231,6 +231,7 @@ namespace SharedLibrary.SerialPort.Modbus
 				Console.Write(string.Format("[{0}]", b));
 			}
 			Console.WriteLine();
+			Console.WriteLine();
 		}
 
 

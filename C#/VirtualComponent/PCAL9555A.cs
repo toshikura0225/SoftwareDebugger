@@ -30,6 +30,8 @@ namespace VirtualComponent.IC
 		{
 			// 入出力ポートをすべて出力に設定
 
+			Console.WriteLine(string.Format("PCAL9555A 各ピンを出力＆LOWにセット"));
+
 			this.write(new List<byte>()
 			{
 				(byte)Command.ConfigurationPort_0,
@@ -100,12 +102,18 @@ namespace VirtualComponent.IC
 				this.outputTable[key_pair.Key] = key_pair.Value;
 			}
 
+
+			byte data_P0 = this.getOutputValue_p0();
+			byte data_P1 = this.getOutputValue_p1();
+
+			Console.WriteLine(string.Format("PCAL9555A 出力値セット：P0 = {0}, P1 = {1}", data_P0, data_P1));
+
 			// P0_0～P0_7とP1_0～P1_7をまとめてセット
 			this.write(new List<byte>()
 			{
 				(byte)Command.OutputPort_0,	// 送信するコマンド
-				this.getOutputValue_p0(),	// 送信するデータ（P0_0～P0_7）
-				this.getOutputValue_p1(),	// 送信するデータ（P1_0～P1_7）
+				data_P0,					// 送信するデータ（P0_0～P0_7）
+				data_P1,					// 送信するデータ（P1_0～P1_7）
 			});
 		}
 
@@ -146,6 +154,8 @@ namespace VirtualComponent.IC
 		{
 			// 未対応機能→すべて出力ピンとする
 
+			Console.WriteLine(string.Format("PCAL9555A 出力方向：{0}を{1}に", Enum.GetName(typeof(PinName),pinName), direction));
+
 			this.write(new List<byte>()
 			{
 				(byte)Command.ConfigurationPort_0,
@@ -174,10 +184,14 @@ namespace VirtualComponent.IC
 				case PinName.P0_5:
 				case PinName.P0_6:
 				case PinName.P0_7:
+
+					byte data_p0 = this.getOutputValue_p0();
+					Console.WriteLine(string.Format("PCAL9555A 出力値セット：P0 = {0}", data_p0));
+
 					this.write(new List<byte>()
 						{
 							(byte)Command.OutputPort_0,	// 送信するコマンド
-							this.getOutputValue_p0(),	// 送信するデータ（P0_0～P0_7）
+							data_p0,	// 送信するデータ（P0_0～P0_7）
 						});
 
 					break;
@@ -190,10 +204,14 @@ namespace VirtualComponent.IC
 				case PinName.P1_5:
 				case PinName.P1_6:
 				case PinName.P1_7:
+
+					byte data_p1 = this.getOutputValue_p1();
+					Console.WriteLine(string.Format("PCAL9555A 出力値セット：P1 = {0}", data_p1));
+
 					this.write(new List<byte>()
 						{
 							(byte)Command.OutputPort_1,	// 送信するコマンド
-							this.getOutputValue_p1(),	// 送信するデータ（P0_0～P0_7）
+							data_p1,	// 送信するデータ（P0_0～P0_7）
 						});
 					break;
 			}

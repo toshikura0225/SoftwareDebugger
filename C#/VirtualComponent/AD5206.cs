@@ -63,6 +63,8 @@ namespace VirtualComponent.IC
 			//	this.adTable[key_pair.Key] = key_pair.Value;
 			//}
 
+			Console.WriteLine(string.Format("AD5206 AD値をセット"));
+
 			// スレーブ選択
 			this.digitalOutput.SetLevel(this.latchPinName, VoltageLevel.LOW);
 

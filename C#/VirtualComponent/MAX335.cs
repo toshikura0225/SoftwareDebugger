@@ -48,6 +48,7 @@ namespace VirtualComponent.IC
 			set
 			{
 				this.switchTable[pinName] = value;
+				Console.WriteLine(string.Format("MAX335－スイッチ状態：{0}", Enum.GetName(typeof(SwitchState), value)));
 				this.Transfer(this.getOutputValue());
 			}
 		}
@@ -65,8 +66,13 @@ namespace VirtualComponent.IC
 				this.switchTable[key_pair.Key] = key_pair.Value;
 			}
 
+
+			byte data = this.getOutputValue();
+
+			Console.WriteLine(string.Format("MAX335－スイッチ状態の一括書込み：{0}", data));
+
 			// 代入された変数の設定値を適用
-			this.Transfer(this.getOutputValue());
+			this.Transfer(data);
 		}
 
 		protected byte getOutputValue()
