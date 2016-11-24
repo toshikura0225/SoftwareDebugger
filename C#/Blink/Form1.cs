@@ -30,13 +30,26 @@ namespace Blink
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
-
+			
 		}
 
 		private void button1_Click(object sender, EventArgs e)
 		{
 			// 各オブジェクトを初期化する
 			this.initGlobalObject();
+
+			var task1 = Task.Run(() =>
+			{
+				Console.WriteLine("task1");
+			});
+
+			var task2 = task1.ContinueWith((t) =>
+			{
+				Console.WriteLine("task2");
+			});
+
+			task2.Wait();
+			Console.WriteLine("done");
 		}
 
 		/// <summary>
