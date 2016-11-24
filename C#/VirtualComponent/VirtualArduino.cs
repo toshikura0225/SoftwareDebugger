@@ -162,6 +162,7 @@ namespace VirtualComponent.Arduino
 				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.I2C, VirtualArduinoAddress.I2C_BEGIN),
 				PresetData = ModbusData.bytes2int(0x00, 0x00),  // 値は常に無効
 			};
+			Console.WriteLine("\nWire.begin();");
 			this.modbusSerialPort.Write(query);
 		}
 
@@ -178,6 +179,7 @@ namespace VirtualComponent.Arduino
 				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.I2C, VirtualArduinoAddress.I2C_BEGIN_TRANSMISSION),
 				PresetData = ModbusData.bytes2int(0x00, i2cAddress),
 			};
+			Console.WriteLine(string.Format("\nWire.beginTransmission({0});", i2cAddress));
 			this.modbusSerialPort.Write(query);
 		}
 		/// <summary>
@@ -196,6 +198,7 @@ namespace VirtualComponent.Arduino
 			foreach (var data in dataList)
 			{
 				query.PresetData = data;
+				Console.WriteLine(string.Format("Wire.write({0})", data));
 				this.modbusSerialPort.Write(query);
 			}
 		}
@@ -215,6 +218,7 @@ namespace VirtualComponent.Arduino
 				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.I2C, VirtualArduinoAddress.I2C_END_TRANSMISSION),
 				PresetData = ModbusData.bytes2int(0x00, 0x00),  // 値は無効
 			};
+			Console.WriteLine("\nWire.endTransmission();");
 			this.modbusSerialPort.Write(query);
 
 		}
@@ -248,6 +252,7 @@ namespace VirtualComponent.Arduino
 				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.SPI, VirtualArduinoAddress.SPI_BEGIN),
 				PresetData = ModbusData.bytes2int(0x00, 0x00),
 			};
+			Console.WriteLine("\nSPI.begin();");
 			this.modbusSerialPort.Write(query);
 
 			//SPI.setDataMode(SPI_MODE0);
@@ -260,6 +265,7 @@ namespace VirtualComponent.Arduino
 				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.SPI, VirtualArduinoAddress.SPI_MODE),
 				PresetData = ModbusData.bytes2int(0x00, VirtualArduinoAddress.SPI_CLOCK_DIV32),
 			};
+			Console.WriteLine("\nSPI.setDataMode(SPI_MODE0); SPI.setClockDivider(SPI_CLOCK_DIV32);");
 			this.modbusSerialPort.Write(query);
 		}
 		/// <summary>
@@ -279,6 +285,7 @@ namespace VirtualComponent.Arduino
 			foreach(var data in dataList)
 			{
 				query.PresetData = ModbusData.bytes2int(0x00, data);
+				Console.WriteLine(string.Format("\nSPI.transfer({0});", data));
 				this.modbusSerialPort.Write(query);
 			}
 
@@ -295,6 +302,7 @@ namespace VirtualComponent.Arduino
 				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.SPI, VirtualArduinoAddress.SPI_END),
 				PresetData = ModbusData.bytes2int(0x00, 0x00),
 			};
+			Console.WriteLine(string.Format("\nSPI.end();"));
 			this.modbusSerialPort.Write(query);
 		}
 
@@ -341,6 +349,7 @@ namespace VirtualComponent.Arduino
 				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.DIO_MODE, (byte)pinName),
 				PresetData = ModbusData.bytes2int((direction ? (byte)0x01 : (byte)0x00), VirtualArduinoAddress.DIO_MODE_DIGITAL),
 			};
+			Console.WriteLine(string.Format("\npinMode({0}, {1});", pinName, direction));
 			this.modbusSerialPort.Write(query);
 		}
 
@@ -369,6 +378,7 @@ namespace VirtualComponent.Arduino
 				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.DIO_VALUE, (byte)pinName),
 				PresetData = ModbusData.bytes2int(0x00, (level == VoltageLevel.HIGH ? (byte)1 : (byte)0)),
 			};
+			Console.WriteLine(string.Format("\ndigitalOut({0}, {1});", pinName, level));
 			this.modbusSerialPort.Write(query);
 		}
 	}
