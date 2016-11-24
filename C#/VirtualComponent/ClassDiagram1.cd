@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="VirtualComponent.IC.MAX335&lt;TLatchPinName&gt;">
+    <Position X="3.75" Y="15.25" Width="3.75" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="VirtualComponent.IC.MAX335&lt;TLatchPinName&gt;.PinName">
+        <TypeIdentifier>
+          <NewMemberFileName>MAX335.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAIAAAAAAACAAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MAX335.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VirtualComponent.LatchingSPI&lt;TLatchPinName&gt;">
+    <Position X="5.5" Y="12.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAgAAIgAAAAAA=</HashCode>
+      <FileName>LatchingSPI.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="digitalOutput" />
+      <Property Name="spi" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="VirtualComponent.IC.AD5206&lt;TLatchPinName&gt;">
+    <Position X="8.25" Y="15.25" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="VirtualComponent.IC.AD5206&lt;TLatchPinName&gt;.PinName">
+        <TypeIdentifier>
+          <NewMemberFileName>AD5206.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AD5206.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharedLibrary.SerialPort.Modbus.ModbusSerialPort">
+    <Position X="4.25" Y="4" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>IIAAAAAAACAgIFAAgACCAAACQAAABAAQAAAEEAGUAAA=</HashCode>
+      <FileName>ModbusSerialPort.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="serialPort1" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="SharedLibrary.SerialPort.Modbus.ModbusDataReceivedEventArgs">
+    <Position X="2.5" Y="22.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ModbusSerialPort.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ReadData" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="SharedLibrary.SerialPort.Modbus.ModbusData">
+    <Position X="6.5" Y="22" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAUAAAAAAAAAAAAAAAEAAAAABAAAAAg=</HashCode>
+      <FileName>ModbusData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.IO.Ports.SerialPort" Collapsed="true">
+    <Position X="1.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="VirtualComponent.IC.PCAL9555A">
+    <Position X="11.5" Y="15" Width="3.75" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="VirtualComponent.IC.PCAL9555A.Command">
+        <TypeIdentifier>
+          <NewMemberFileName>PCAL9555A.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="VirtualComponent.IC.PCAL9555A.PinName">
+        <TypeIdentifier>
+          <NewMemberFileName>PCAL9555A.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAACACQAAAAAAAAAAAAAACAAABAAAA=</HashCode>
+      <FileName>PCAL9555A.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="VirtualComponent.AddressingI2C">
+    <Position X="12.5" Y="12.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAQAAAAAABAA=</HashCode>
+      <FileName>AddressingI2C.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="i2c" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="VirtualComponent.Arduino.VirtualArduinoAddress">
+    <Position X="12.5" Y="0.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AIGEAIBEAEABAAEgEQEAEBIBAMAAAAEABAAAIgAAAAA=</HashCode>
+      <FileName>VirtualArduino.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VirtualComponent.Arduino.VirtualArduino">
+    <Position X="9.5" Y="5" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="VirtualComponent.Arduino.VirtualArduino.PinName">
+        <TypeIdentifier>
+          <NewMemberFileName>VirtualArduino.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQQAAAAACAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>VirtualArduino.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="i2c" />
+      <Field Name="io" />
+      <Field Name="modbusSerialPort" />
+      <Field Name="spi" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="VirtualComponent.Arduino.VirtualI2C" BaseTypeListCollapsed="true">
+    <Position X="4.75" Y="0.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAQAAAAAQAAAUAAAAAAAAA=</HashCode>
+      <FileName>VirtualArduino.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="modbusSerialPort" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="VirtualComponent.Arduino.VirtualSPI" BaseTypeListCollapsed="true">
+    <Position X="1.5" Y="6.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAQAQAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VirtualArduino.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="modbusSerialPort" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="VirtualComponent.Arduino.VirtualGPIO" BaseTypeListCollapsed="true">
+    <Position X="8" Y="0.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAACAAQAQAAAAAAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>VirtualArduino.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="modbusSerialPort" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="VirtualComponent.IGPIO&lt;TPinName&gt;">
+    <Position X="2.75" Y="11.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAQAAAAAAAAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>IGPIO.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="VirtualComponent.II2C">
+    <Position X="9.25" Y="12.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAQAAAUAAAAAAAAA=</HashCode>
+      <FileName>II2C.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="VirtualComponent.ISPI">
+    <Position X="12.75" Y="9.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAQAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ISPI.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Delegate Name="SharedLibrary.SerialPort.Modbus.ModbusDataReceivedEventHandler">
+    <Position X="0.5" Y="9" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>ModbusSerialPort.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="メイリオ" Size="9" />
+</ClassDiagram>
