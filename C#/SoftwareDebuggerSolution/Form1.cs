@@ -30,7 +30,7 @@ namespace SoftwareDebuggerSolution
 
 		private void button2_Click(object sender, EventArgs e)
 		{
-			max335[MAX335.PinName.COM0] = SwitchState.CLOSE;
+			pcal9555a.SetLevel(PCAL9555A.PinName.P0_0, VoltageLevel.HIGH);
 		}
 
 		private void button3_Click(object sender, EventArgs e)
@@ -40,13 +40,13 @@ namespace SoftwareDebuggerSolution
 
 		private void button4_Click(object sender, EventArgs e)
 		{
-			max335[MAX335.PinName.COM1] = SwitchState.CLOSE;
+			ad5206[AD5206.PinName.BW1] = 0x80;
 		}
 
 
 		private void button6_Click(object sender, EventArgs e)
 		{
-			pcal9555a = new PCAL9555A(this.arduino.i2c, 0x20);
+			pcal9555a = new PCAL9555A(this.arduino.i2c, 0x21);
 		}
 
 		private void button7_Click(object sender, EventArgs e)
@@ -69,9 +69,14 @@ namespace SoftwareDebuggerSolution
 			ad5206[AD5206.PinName.BW1] = 0xFF;
 		}
 
-		private void COM_Click(object sender, EventArgs e)
+		private void button5_Click(object sender, EventArgs e)
 		{
 			this.arduino = new VirtualArduino(this.comboBox1.Text);
+		}
+
+		private void button11_Click(object sender, EventArgs e)
+		{
+			pcal9555a.SetLevel(PCAL9555A.PinName.P0_0, VoltageLevel.LOW);
 		}
 
 	}
