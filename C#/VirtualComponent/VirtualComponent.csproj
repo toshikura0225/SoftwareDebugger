@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="AD5206.cs" />
     <Compile Include="AddressingI2C.cs" />
+    <Compile Include="Bin.cs" />
     <Compile Include="GeneralConstant.cs" />
     <Compile Include="IGPIO.cs" />
     <Compile Include="II2C.cs" />
