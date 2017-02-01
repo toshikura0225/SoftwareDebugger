@@ -45,6 +45,7 @@ namespace VirtualComponent.Arduino
 		public static byte I2C_BEGIN_TRANSMISSION = 0x01;
 		public static byte I2C_WRITE = 0x02;
 		public static byte I2C_END_TRANSMISSION = 0x03;
+		public static byte I2C_READ = 0x04;
 	}
 
 	/// <summary>
@@ -221,6 +222,38 @@ namespace VirtualComponent.Arduino
 			Console.WriteLine("Wire.endTransmission();");
 			this.modbusSerialPort.Write(query);
 
+		}
+
+		/// <summary>
+		/// マスターがスレーブから受信する（同期処理）
+		/// </summary>
+		/// <returns></returns>
+		public byte read(byte i2cAddress)
+		{
+			// Wire.requestForm(アドレス,受信バイト数);
+			Query_x03 query = new Query_x03()
+			{
+				DeviceAddress = 0x00,
+				FunctionCode = 0x03,
+				StartingAddress = ModbusData.bytes2int(VirtualArduinoAddress.I2C, VirtualArduinoAddress.I2C_READ),
+				NumberOfPoints = ModbusData.bytes2int(0x00, i2cAddress),  // データ長部分にI2Cのアドレスを指定
+			};
+			Console.WriteLine(string.Format("Wire.requestForm({0},1);", i2cAddress));
+
+			this.modbusSerialPort.DiscardOutBuffer();
+			this.modbusSerialPort.DiscardInBuffer();
+			this.modbusSerialPort.Write(query);
+
+			this.modbusSerialPort.ReadTimeout = 1000;
+			//this.modbusSerialPort.
+			List<byte> retData = new List<byte>();
+			while (retData.Count <= 6)
+			{
+				retData.Add(this.modbusSerialPort.ReadByte());
+			}
+			Console.WriteLine(string.Format("Wire.read() => {0}", retData[4]));
+
+			return retData[4];
 		}
 
 	}

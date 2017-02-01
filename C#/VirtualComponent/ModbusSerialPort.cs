@@ -234,6 +234,14 @@ namespace SharedLibrary.SerialPort.Modbus
 			Console.WriteLine();
 		}
 
+		/// <summary>
+		/// シリアルポートから同期で受信する
+		/// </summary>
+		/// <returns></returns>
+		public virtual byte ReadByte()
+		{
+			return (byte)this.serialPort1.ReadByte();
+		}
 
 
 		public ModbusSerialPort()
@@ -304,6 +312,14 @@ namespace SharedLibrary.SerialPort.Modbus
 			get { return this.serialPort1.IsOpen; }
 		}
 
+		/// <summary>
+		/// 受信タイムアウト
+		/// </summary>
+		public virtual int ReadTimeout
+		{
+			get { return this.serialPort1.ReadTimeout; }
+			set { this.serialPort1.ReadTimeout = value; }
+		}
 
 		/// <summary>
 		/// シリアルポートを開く
@@ -320,6 +336,24 @@ namespace SharedLibrary.SerialPort.Modbus
 		{
 			this.serialPort1.Close();
 		}
+
+		/// <summary>
+		/// 受信バッファをクリアする
+		/// </summary>
+		public virtual void DiscardInBuffer()
+		{
+			this.serialPort1.DiscardInBuffer();
+		}
+
+		/// <summary>
+		/// 送信バッファをクリアする
+		/// </summary>
+		public virtual void DiscardOutBuffer()
+		{
+			this.serialPort1.DiscardOutBuffer();
+		}
+
+
 		#endregion
 	}
 

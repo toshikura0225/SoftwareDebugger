@@ -46,7 +46,7 @@ namespace SoftwareDebuggerSolution
 
 		private void button6_Click(object sender, EventArgs e)
 		{
-			pcal9555a = new PCAL9555A(this.arduino.i2c, 0x21);
+			pcal9555a = new PCAL9555A(this.arduino.i2c, 0x20);
 		}
 
 		private void button7_Click(object sender, EventArgs e)
@@ -77,6 +77,11 @@ namespace SoftwareDebuggerSolution
 		private void button11_Click(object sender, EventArgs e)
 		{
 			pcal9555a.SetLevel(PCAL9555A.PinName.P0_0, VoltageLevel.LOW);
+		}
+
+		private void button12_Click(object sender, EventArgs e)
+		{
+			var k = pcal9555a.ReadLevel(PCAL9555A.Command.InputPort_1);
 		}
 
 	}

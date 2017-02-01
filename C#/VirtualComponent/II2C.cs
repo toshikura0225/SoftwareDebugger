@@ -26,5 +26,11 @@ namespace VirtualComponent
 		/// スレーブデバイスに対する送信を完了します。
 		/// </summary>
 		void endTransmission();
+		/// <summary>
+		/// マスターがスレーブから受信する
+		/// </summary>
+		/// <param name="i2cAddress"></param>
+		/// <returns></returns>
+		byte read(byte i2cAddress);
 	}
 }
