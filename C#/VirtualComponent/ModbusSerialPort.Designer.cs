@@ -30,11 +30,6 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
-			// 
-			// serialPort1
-			// 
-			this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPort1_DataReceived);
-
 		}
 
 		#endregion

@@ -240,7 +240,7 @@ namespace VirtualComponent.IC
 			Dictionary<PinName, VoltageLevel> retCollection = new Dictionary<PinName, VoltageLevel>();
 			switch(command)
 			{
-				case Command.ConfigurationPort_0:
+				case Command.InputPort_0:
 					retCollection[PinName.P0_7] = ((recvData & (byte)Bin.b00000001) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
 					retCollection[PinName.P0_6] = ((recvData & (byte)Bin.b00000010) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
 					retCollection[PinName.P0_5] = ((recvData & (byte)Bin.b00000100) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
@@ -252,7 +252,7 @@ namespace VirtualComponent.IC
 
 					break;
 
-				case Command.ConfigurationPort_1:
+				case Command.InputPort_1:
 					retCollection[PinName.P1_7] = ((recvData & (byte)Bin.b00000001) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
 					retCollection[PinName.P1_6] = ((recvData & (byte)Bin.b00000010) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
 					retCollection[PinName.P1_5] = ((recvData & (byte)Bin.b00000100) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);

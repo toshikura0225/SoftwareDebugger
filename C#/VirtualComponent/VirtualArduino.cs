@@ -158,7 +158,7 @@ namespace VirtualComponent.Arduino
 			// Wire.begin();
 			Query_x06 query = new Query_x06()
 			{
-				DeviceAddress = 0x00,
+				DeviceAddress = 0x01,
 				FunctionCode = 0x06,
 				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.I2C, VirtualArduinoAddress.I2C_BEGIN),
 				PresetData = ModbusData.bytes2int(0x00, 0x00),  // 値は常に無効
@@ -175,7 +175,7 @@ namespace VirtualComponent.Arduino
 			// Wire.beginTransmission(valueL);
 			Query_x06 query = new Query_x06()
 			{
-				DeviceAddress = 0x00,
+				DeviceAddress = 0x01,
 				FunctionCode = 0x06,
 				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.I2C, VirtualArduinoAddress.I2C_BEGIN_TRANSMISSION),
 				PresetData = ModbusData.bytes2int(0x00, i2cAddress),
@@ -191,7 +191,7 @@ namespace VirtualComponent.Arduino
 			// Wire.write(0x**);
 			Query_x06 query = new Query_x06()
 			{
-				DeviceAddress = 0x00,
+				DeviceAddress = 0x01,
 				FunctionCode = 0x06,
 				RegisterAddress = ModbusData.bytes2int(0x06, 0x02),
 				//PresetData = ModbusData.bytes2int(0x00, 0x06),
@@ -214,7 +214,7 @@ namespace VirtualComponent.Arduino
 			// Wire.endTransmission();
 			Query_x06 query = new Query_x06()
 			{
-				DeviceAddress = 0x00,
+				DeviceAddress = 0x01,
 				FunctionCode = 0x06,
 				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.I2C, VirtualArduinoAddress.I2C_END_TRANSMISSION),
 				PresetData = ModbusData.bytes2int(0x00, 0x00),  // 値は無効
@@ -233,27 +233,20 @@ namespace VirtualComponent.Arduino
 			// Wire.requestForm(アドレス,受信バイト数);
 			Query_x03 query = new Query_x03()
 			{
-				DeviceAddress = 0x00,
+				DeviceAddress = 0x01,
 				FunctionCode = 0x03,
 				StartingAddress = ModbusData.bytes2int(VirtualArduinoAddress.I2C, VirtualArduinoAddress.I2C_READ),
 				NumberOfPoints = ModbusData.bytes2int(0x00, i2cAddress),  // データ長部分にI2Cのアドレスを指定
 			};
 			Console.WriteLine(string.Format("Wire.requestForm({0},1);", i2cAddress));
 
-			this.modbusSerialPort.DiscardOutBuffer();
-			this.modbusSerialPort.DiscardInBuffer();
 			this.modbusSerialPort.Write(query);
 
-			this.modbusSerialPort.ReadTimeout = 1000;
-			//this.modbusSerialPort.
-			List<byte> retData = new List<byte>();
-			while (retData.Count <= 6)
-			{
-				retData.Add(this.modbusSerialPort.ReadByte());
-			}
-			Console.WriteLine(string.Format("Wire.read() => {0}", retData[4]));
+			this.modbusSerialPort.Read(7);			
 
-			return retData[4];
+			Console.WriteLine(string.Format("Wire.read() => {0}", this.modbusSerialPort.readDataList[4]));
+
+			return this.modbusSerialPort.readDataList[4];
 		}
 
 	}
@@ -280,7 +273,7 @@ namespace VirtualComponent.Arduino
 			//this.modbusSerial.PortName.Write(new byte[] { 0x00, 0x06, 0x05, 0x00, 0x00, 0x00, 0xAA, 0xAA });
 			Query_x06 query = new Query_x06()
 			{
-				DeviceAddress = 0x00,
+				DeviceAddress = 0x01,
 				FunctionCode = 0x06,
 				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.SPI, VirtualArduinoAddress.SPI_BEGIN),
 				PresetData = ModbusData.bytes2int(0x00, 0x00),
@@ -293,7 +286,7 @@ namespace VirtualComponent.Arduino
 			//this.modbusSerial.PortName.Write(new byte[] { 0x00, 0x06, 0x05, 0x01, 0x00, 0x06, 0xAA, 0xAA });
 			query = new Query_x06()
 			{
-				DeviceAddress = 0x00,
+				DeviceAddress = 0x01,
 				FunctionCode = 0x06,
 				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.SPI, VirtualArduinoAddress.SPI_MODE),
 				PresetData = ModbusData.bytes2int(0x00, VirtualArduinoAddress.SPI_CLOCK_DIV32),
@@ -309,7 +302,7 @@ namespace VirtualComponent.Arduino
 			// SPI.transfer(valueL);
 			Query_x06 query = new Query_x06()
 			{
-				DeviceAddress = 0x00,
+				DeviceAddress = 0x01,
 				FunctionCode = 0x06,
 				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.SPI, VirtualArduinoAddress.I2C_WRITE),
 				//PresetData = ModbusData.bytes2int(0x00, 0x00),
@@ -330,7 +323,7 @@ namespace VirtualComponent.Arduino
 		{
 			Query_x06 query = new Query_x06()
 			{
-				DeviceAddress = 0x00,
+				DeviceAddress = 0x01,
 				FunctionCode = 0x06,
 				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.SPI, VirtualArduinoAddress.SPI_END),
 				PresetData = ModbusData.bytes2int(0x00, 0x00),
@@ -377,7 +370,7 @@ namespace VirtualComponent.Arduino
 		{
 			Query_x06 query = new Query_x06()
 			{
-				DeviceAddress = 0x00,
+				DeviceAddress = 0x01,
 				FunctionCode = 0x06,
 				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.DIO_MODE, (byte)pinName),
 				PresetData = ModbusData.bytes2int((direction ? (byte)0x01 : (byte)0x00), VirtualArduinoAddress.DIO_MODE_DIGITAL),
@@ -406,7 +399,7 @@ namespace VirtualComponent.Arduino
 		{
 			Query_x06 query = new Query_x06()
 			{
-				DeviceAddress = 0x00,
+				DeviceAddress = 0x01,
 				FunctionCode = 0x06,
 				RegisterAddress = ModbusData.bytes2int(VirtualArduinoAddress.DIO_VALUE, (byte)pinName),
 				PresetData = ModbusData.bytes2int(0x00, (level == VoltageLevel.HIGH ? (byte)1 : (byte)0)),

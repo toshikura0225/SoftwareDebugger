@@ -30,10 +30,35 @@ namespace SharedLibrary.SerialPort.Modbus
 		protected virtual void InitializeComponent2()
 		{
 			// タイムアウト値がないとデータなしのDataReceivedイベントによりlock(this)でデッドロックする対策
-			this.serialPort1.ReadTimeout = 1;
-
+			this.serialPort1.ReadTimeout = 1000;
 		}
 
+		/// <summary>
+		/// 受信イベントハンドラを有効にする
+		/// </summary>
+		public void EnableDataReceivedEventHandler()
+		{
+			this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPort1_DataReceived);
+		}
+
+
+		/// <summary>
+		/// 非同期でデータを受信する
+		/// </summary>
+		/// <param name="length"></param>
+		public void Read(int length)
+		{
+			readDataList.Clear();
+			Console.Write("受信：");
+			while (readDataList.Count < length)
+			{
+				byte buf = (byte)this.serialPort1.ReadByte();
+				this.readDataList.Add(buf);
+
+				Console.Write(string.Format("[{0}]", buf));
+			}
+			Console.WriteLine();
+		}
 
 		/// <summary>
 		/// シリアルポートのデータ受信イベント
@@ -53,7 +78,7 @@ namespace SharedLibrary.SerialPort.Modbus
 					Buffer.BlockCopy(buf1, 0, buf2, 0, len);
 					this.readDataList.AddRange(buf2);
 					
-					while(this.readDataList.Count >= 8)
+					while(this.readDataList.Count >= 6)
 					//if (this.readDataList.Count >= 8)
 					{
 						//Console.WriteLine(string.Format("&{0}&", this.readDataList.Count));
@@ -225,7 +250,9 @@ namespace SharedLibrary.SerialPort.Modbus
 		/// <param name="count"></param>
 		public virtual void Write(byte[] buffer, int offset, int count)
 		{
+			this.discardBuffer();
 			this.serialPort1.Write(buffer, offset, count);
+			Console.Write("送信：");
 			foreach(var b in buffer)
 			{
 				Console.Write(string.Format("[{0}]", b));
@@ -234,14 +261,21 @@ namespace SharedLibrary.SerialPort.Modbus
 			Console.WriteLine();
 		}
 
+		void discardBuffer()
+		{
+			Thread.Sleep(100);	// これがないと処理速度的にクリアしきれない
+
+			this.serialPort1.DiscardOutBuffer();
+			this.serialPort1.DiscardInBuffer();
+		}
 		/// <summary>
 		/// シリアルポートから同期で受信する
 		/// </summary>
 		/// <returns></returns>
-		public virtual byte ReadByte()
-		{
-			return (byte)this.serialPort1.ReadByte();
-		}
+		//public virtual byte ReadByte()
+		//{
+		//	return (byte)this.serialPort1.ReadByte();
+		//}
 
 
 		public ModbusSerialPort()
