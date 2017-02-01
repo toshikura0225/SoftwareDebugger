@@ -81,7 +81,14 @@ namespace SoftwareDebuggerSolution
 
 		private void button12_Click(object sender, EventArgs e)
 		{
+			pcal9555a.SetDirection(PCAL9555A.PinName.P0_5, true);
+			pcal9555a.SetDirection(PCAL9555A.PinName.P1_1, false);
 			var k = pcal9555a.ReadLevel(PCAL9555A.Command.InputPort_1);
+		}
+
+		private void button13_Click(object sender, EventArgs e)
+		{
+			pcal9555a.SetLevel(PCAL9555A.PinName.P0_5, VoltageLevel.LOW);
 		}
 
 	}

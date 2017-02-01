@@ -23,7 +23,7 @@ namespace VirtualComponent.IC
 			ConfigurationPort_1,
 		}
 
-		enum IODirectionType
+		public enum IODirectionType
 		{
 			OutputPort = 0x00,
 			InputPort = 0x01,
@@ -36,28 +36,18 @@ namespace VirtualComponent.IC
 		/// <param name="address">I2Cスレーブのデバイスアドレス</param>
 		public PCAL9555A(II2C i2c, byte address) : base(i2c, address)
 		{
-			// 入出力ポートをすべて出力に設定
-
-			Console.WriteLine(string.Format("PCAL9555A 各ピンを出力＆LOWにセット"));
-			/*
-			this.write(new List<byte>()
-			{
-				(byte)Command.ConfigurationPort_0,
-				0,	// すべて出力
-			});
-
-			this.write(new List<byte>()
-			{
-				(byte)Command.ConfigurationPort_1,
-				0,	// すべて出力
-			});
-
-			// デフォルト値としてLOWをセット
+			// デフォルト値としてHIGHをセット
 			foreach (PinName P in Enum.GetValues(typeof(PinName)))
 			{
-				outputTable[P] = VoltageLevel.LOW;
+				outputTable[P] = VoltageLevel.HIGH;
 			}
-			*/
+
+			// デフォルト値として入力をセット
+			foreach (PinName P in Enum.GetValues(typeof(PinName)))
+			{
+				directionTable[P] = IODirectionType.InputPort;
+			}		
+
 		}
 
 		public enum PinName
@@ -80,9 +70,11 @@ namespace VirtualComponent.IC
 			P1_7,
 		}
 
-
-
+		// 送信データを内部的に持つ
 		protected Dictionary<PinName, VoltageLevel> outputTable = new Dictionary<PinName, VoltageLevel>();
+
+		// 入出力方向データを内部的に持つ
+		protected Dictionary<PinName, IODirectionType> directionTable = new Dictionary<PinName, IODirectionType>();
 
 		/// <summary>
 		/// 出力状態をセットする
@@ -154,6 +146,63 @@ namespace VirtualComponent.IC
 			return outputValue_1;
 		}
 
+		protected byte getDirectionValue_p0()
+		{
+			byte directonValue_0 = 0;
+			directonValue_0 |= (this.directionTable[PinName.P0_0] == IODirectionType.OutputPort) ? (byte)0 : (byte)Bin.b00000001;     // P0_0
+			directonValue_0 |= (this.directionTable[PinName.P0_1] == IODirectionType.OutputPort) ? (byte)0 : (byte)Bin.b00000010;     // P0_1
+			directonValue_0 |= (this.directionTable[PinName.P0_2] == IODirectionType.OutputPort) ? (byte)0 : (byte)Bin.b00000100;     // P0_2
+			directonValue_0 |= (this.directionTable[PinName.P0_3] == IODirectionType.OutputPort) ? (byte)0 : (byte)Bin.b00001000;     // P0_3
+			directonValue_0 |= (this.directionTable[PinName.P0_4] == IODirectionType.OutputPort) ? (byte)0 : (byte)Bin.b00010000;     // P0_4
+			directonValue_0 |= (this.directionTable[PinName.P0_5] == IODirectionType.OutputPort) ? (byte)0 : (byte)Bin.b00100000;     // P0_5
+			directonValue_0 |= (this.directionTable[PinName.P0_6] == IODirectionType.OutputPort) ? (byte)0 : (byte)Bin.b01000000;     // P0_6
+			directonValue_0 |= (this.directionTable[PinName.P0_7] == IODirectionType.OutputPort) ? (byte)0 : (byte)Bin.b10000000;    // P0_7
+			return directonValue_0;
+		}
+
+		protected byte getDirectionValue_p1()
+		{
+			byte directonValue_1 = 0;
+			directonValue_1 |= (this.directionTable[PinName.P1_0] == IODirectionType.OutputPort) ? (byte)0 : (byte)Bin.b00000001;     // P0_0
+			directonValue_1 |= (this.directionTable[PinName.P1_1] == IODirectionType.OutputPort) ? (byte)0 : (byte)Bin.b00000010;     // P0_1
+			directonValue_1 |= (this.directionTable[PinName.P1_2] == IODirectionType.OutputPort) ? (byte)0 : (byte)Bin.b00000100;     // P0_2
+			directonValue_1 |= (this.directionTable[PinName.P1_3] == IODirectionType.OutputPort) ? (byte)0 : (byte)Bin.b00001000;     // P0_3
+			directonValue_1 |= (this.directionTable[PinName.P1_4] == IODirectionType.OutputPort) ? (byte)0 : (byte)Bin.b00010000;     // P0_4
+			directonValue_1 |= (this.directionTable[PinName.P1_5] == IODirectionType.OutputPort) ? (byte)0 : (byte)Bin.b00100000;     // P0_5
+			directonValue_1 |= (this.directionTable[PinName.P1_6] == IODirectionType.OutputPort) ? (byte)0 : (byte)Bin.b01000000;     // P0_6
+			directonValue_1 |= (this.directionTable[PinName.P1_7] == IODirectionType.OutputPort) ? (byte)0 : (byte)Bin.b10000000;    // P0_7
+			return directonValue_1;
+
+		}
+
+
+		/// <summary>
+		/// 各ポートの出力値をセットする。
+		/// </summary>
+		/// <param name="argTable"></param>
+		public void SetDirection(Dictionary<PinName, IODirectionType> argTable)
+		{
+			// 指定値を変数に代入
+			foreach (var key_pair in argTable)
+			{
+				this.directionTable[key_pair.Key] = key_pair.Value;
+			}
+			
+			byte data_P0 = this.getDirectionValue_p0();
+			byte data_P1 = this.getDirectionValue_p1();
+
+			Console.WriteLine(string.Format("PCAL9555A 出力値セット：P0 = {0}, P1 = {1}", data_P0, data_P1));
+
+			// P0_0～P0_7とP1_0～P1_7をまとめてセット
+			this.write(new List<byte>()
+			{
+				(byte)Command.ConfigurationPort_0,	// 送信するコマンド
+				data_P0,					// 送信するデータ（P0_0～P0_7）
+				data_P1,					// 送信するデータ（P1_0～P1_7）
+			});
+		}
+
+
 		/// <summary>
 		/// 出力方向をセットする（未対応機能）
 		/// </summary>
@@ -161,24 +210,20 @@ namespace VirtualComponent.IC
 		/// <param name="direction"></param>
 		public void SetDirection(PinName p, bool b)
 		{
-			byte directionP0, directionP1;
+			this.directionTable[p] = (b) ? IODirectionType.OutputPort : IODirectionType.InputPort;
 
+			byte data_P0 = this.getDirectionValue_p0();
+			byte data_P1 = this.getDirectionValue_p1();
 
-			// 未対応機能→すべて出力ピンとする
-			//Console.WriteLine(string.Format("PCAL9555A 出力方向：{0}を{1}に", Enum.GetName(typeof(PinName),pinName), direction));
+			Console.WriteLine(string.Format("PCAL9555A 出力値セット：P0 = {0}, P1 = {1}", data_P0, data_P1));
 
+			// P0_0～P0_7とP1_0～P1_7をまとめてセット
 			this.write(new List<byte>()
 			{
-				(byte)Command.ConfigurationPort_0,
-				0,	// 出力
+				(byte)Command.ConfigurationPort_0,	// 送信するコマンド
+				data_P0,					// 送信するデータ（P0_0～P0_7）
+				data_P1,					// 送信するデータ（P1_0～P1_7）
 			});
-
-			this.write(new List<byte>()
-			{
-				(byte)Command.ConfigurationPort_1,
-				0,	// 出力
-			});
-
 		}
 
 		public void SetLevel(PinName pinName, VoltageLevel level)
@@ -241,26 +286,26 @@ namespace VirtualComponent.IC
 			switch(command)
 			{
 				case Command.InputPort_0:
-					retCollection[PinName.P0_7] = ((recvData & (byte)Bin.b00000001) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
-					retCollection[PinName.P0_6] = ((recvData & (byte)Bin.b00000010) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
-					retCollection[PinName.P0_5] = ((recvData & (byte)Bin.b00000100) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
-					retCollection[PinName.P0_4] = ((recvData & (byte)Bin.b00001000) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
-					retCollection[PinName.P0_3] = ((recvData & (byte)Bin.b00010000) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
-					retCollection[PinName.P0_2] = ((recvData & (byte)Bin.b00100000) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
-					retCollection[PinName.P0_1] = ((recvData & (byte)Bin.b01000000) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
-					retCollection[PinName.P0_0] = ((recvData & (byte)Bin.b10000000) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
+					retCollection[PinName.P0_0] = ((recvData & (byte)Bin.b00000001) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
+					retCollection[PinName.P0_1] = ((recvData & (byte)Bin.b00000010) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
+					retCollection[PinName.P0_2] = ((recvData & (byte)Bin.b00000100) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
+					retCollection[PinName.P0_3] = ((recvData & (byte)Bin.b00001000) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
+					retCollection[PinName.P0_4] = ((recvData & (byte)Bin.b00010000) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
+					retCollection[PinName.P0_5] = ((recvData & (byte)Bin.b00100000) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
+					retCollection[PinName.P0_6] = ((recvData & (byte)Bin.b01000000) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
+					retCollection[PinName.P0_7] = ((recvData & (byte)Bin.b10000000) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
 
 					break;
 
 				case Command.InputPort_1:
-					retCollection[PinName.P1_7] = ((recvData & (byte)Bin.b00000001) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
-					retCollection[PinName.P1_6] = ((recvData & (byte)Bin.b00000010) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
-					retCollection[PinName.P1_5] = ((recvData & (byte)Bin.b00000100) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
-					retCollection[PinName.P1_4] = ((recvData & (byte)Bin.b00001000) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
-					retCollection[PinName.P1_3] = ((recvData & (byte)Bin.b00010000) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
-					retCollection[PinName.P1_2] = ((recvData & (byte)Bin.b00100000) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
-					retCollection[PinName.P1_1] = ((recvData & (byte)Bin.b01000000) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
-					retCollection[PinName.P1_0] = ((recvData & (byte)Bin.b10000000) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
+					retCollection[PinName.P1_0] = ((recvData & (byte)Bin.b00000001) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
+					retCollection[PinName.P1_1] = ((recvData & (byte)Bin.b00000010) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
+					retCollection[PinName.P1_2] = ((recvData & (byte)Bin.b00000100) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
+					retCollection[PinName.P1_3] = ((recvData & (byte)Bin.b00001000) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
+					retCollection[PinName.P1_4] = ((recvData & (byte)Bin.b00010000) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
+					retCollection[PinName.P1_5] = ((recvData & (byte)Bin.b00100000) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
+					retCollection[PinName.P1_6] = ((recvData & (byte)Bin.b01000000) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
+					retCollection[PinName.P1_7] = ((recvData & (byte)Bin.b10000000) > 0 ? VoltageLevel.HIGH : VoltageLevel.LOW);
 	
 					break;
 			}
