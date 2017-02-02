@@ -40,33 +40,35 @@ namespace SoftwareDebuggerSolution
 
 		private void button4_Click(object sender, EventArgs e)
 		{
-			ad5206[AD5206.PinName.BW1] = 0x80;
+			ad5206[AD5206.PinName.BW4] = 0x80;
 		}
 
 
 		private void button6_Click(object sender, EventArgs e)
 		{
-			pcal9555a = new PCAL9555A(this.arduino.i2c, 0x20);
+			pcal9555a = new PCAL9555A(this.arduino.i2c, 0x21);
+			pcal9555a.SetDirection(PCAL9555A.PinName.P0_7, true);	// AD5206用
+			pcal9555a.SetDirection(PCAL9555A.PinName.P1_0, true);	// MAX335用
 		}
 
 		private void button7_Click(object sender, EventArgs e)
 		{
-			max335[MAX335.PinName.COM2] = SwitchState.OPEN;
+			max335[MAX335.PinName.COM3] = SwitchState.OPEN;
 		}
 
 		private void button8_Click(object sender, EventArgs e)
 		{
-			max335[MAX335.PinName.COM2] = SwitchState.CLOSE;
+			max335[MAX335.PinName.COM3] = SwitchState.CLOSE;
 		}
 
 		private void button9_Click(object sender, EventArgs e)
 		{
-			ad5206[AD5206.PinName.BW1] = 0x00;
+			ad5206[AD5206.PinName.BW4] = 0xA0;
 		}
 
 		private void button10_Click(object sender, EventArgs e)
 		{
-			ad5206[AD5206.PinName.BW1] = 0xFF;
+			ad5206[AD5206.PinName.BW4] = 0xC0;
 		}
 
 		private void button5_Click(object sender, EventArgs e)
@@ -81,14 +83,13 @@ namespace SoftwareDebuggerSolution
 
 		private void button12_Click(object sender, EventArgs e)
 		{
-			pcal9555a.SetDirection(PCAL9555A.PinName.P0_5, true);
-			pcal9555a.SetDirection(PCAL9555A.PinName.P1_1, false);
-			var k = pcal9555a.ReadLevel(PCAL9555A.Command.InputPort_1);
+			pcal9555a.SetDirection(PCAL9555A.PinName.P0_6, true);
+			var k = pcal9555a.ReadLevel(PCAL9555A.Command.InputPort_0);
 		}
 
 		private void button13_Click(object sender, EventArgs e)
 		{
-			pcal9555a.SetLevel(PCAL9555A.PinName.P0_5, VoltageLevel.LOW);
+			pcal9555a.SetLevel(PCAL9555A.PinName.P0_6, VoltageLevel.HIGH);
 		}
 
 	}
