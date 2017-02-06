@@ -35,7 +35,7 @@ namespace SoftwareDebuggerSolution
 
 		private void button3_Click(object sender, EventArgs e)
 		{
-			ad5206 = new AD5206(this.arduino.spi, pcal9555a, PCAL9555A.PinName.P0_7);
+			ad5206 = new AD5206(this.arduino.spi, pcal9555a, PCAL9555A.PinName.P1_1);
 		}
 
 		private void button4_Click(object sender, EventArgs e)
