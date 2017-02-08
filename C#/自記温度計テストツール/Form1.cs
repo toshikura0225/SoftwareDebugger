@@ -12,6 +12,7 @@ using VirtualComponent.Arduino;
 using VirtualComponent.IC;
 using VirtualComponent;
 using System.IO.Ports;
+using System.Threading;
 
 namespace 自記温度計テストツール
 {
@@ -185,6 +186,25 @@ namespace 自記温度計テストツール
 			{
 				ad5206[AD5206.PinName.BW6] = (byte)this.trackBarTH2.Value;
 			}
+		}
+
+		private void button集乳完了_Click(object sender, EventArgs e)
+		{
+			max335[MAX335.PinName.COM3] = SwitchState.CLOSE;
+			Thread.Sleep(2500);
+			max335[MAX335.PinName.COM3] = SwitchState.OPEN;
+		}
+
+		private void button積算乳温_Click(object sender, EventArgs e)
+		{
+			max335[MAX335.PinName.COM2] = SwitchState.CLOSE;
+			max335[MAX335.PinName.COM2] = SwitchState.OPEN;
+		}
+
+		private void button外部警報_Click(object sender, EventArgs e)
+		{
+			max335[MAX335.PinName.COM1] = SwitchState.CLOSE;
+			max335[MAX335.PinName.COM1] = SwitchState.OPEN;
 		}
 
 	}

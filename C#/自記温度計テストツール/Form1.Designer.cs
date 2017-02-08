@@ -48,6 +48,9 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.buttonTH1 = new System.Windows.Forms.Button();
 			this.buttonTH2 = new System.Windows.Forms.Button();
+			this.button集乳完了 = new System.Windows.Forms.Button();
+			this.button積算乳温 = new System.Windows.Forms.Button();
+			this.button外部警報 = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.trackBarTH1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackBarTH2)).BeginInit();
 			this.SuspendLayout();
@@ -250,11 +253,44 @@
 			this.buttonTH2.UseVisualStyleBackColor = true;
 			this.buttonTH2.Click += new System.EventHandler(this.buttonTH_Click);
 			// 
+			// button集乳完了
+			// 
+			this.button集乳完了.Location = new System.Drawing.Point(775, 36);
+			this.button集乳完了.Name = "button集乳完了";
+			this.button集乳完了.Size = new System.Drawing.Size(97, 23);
+			this.button集乳完了.TabIndex = 16;
+			this.button集乳完了.Text = "集乳完了";
+			this.button集乳完了.UseVisualStyleBackColor = true;
+			this.button集乳完了.Click += new System.EventHandler(this.button集乳完了_Click);
+			// 
+			// button積算乳温
+			// 
+			this.button積算乳温.Location = new System.Drawing.Point(775, 84);
+			this.button積算乳温.Name = "button積算乳温";
+			this.button積算乳温.Size = new System.Drawing.Size(97, 23);
+			this.button積算乳温.TabIndex = 17;
+			this.button積算乳温.Text = "積算乳温";
+			this.button積算乳温.UseVisualStyleBackColor = true;
+			this.button積算乳温.Click += new System.EventHandler(this.button積算乳温_Click);
+			// 
+			// button外部警報
+			// 
+			this.button外部警報.Location = new System.Drawing.Point(775, 132);
+			this.button外部警報.Name = "button外部警報";
+			this.button外部警報.Size = new System.Drawing.Size(97, 23);
+			this.button外部警報.TabIndex = 18;
+			this.button外部警報.Text = "外部警報";
+			this.button外部警報.UseVisualStyleBackColor = true;
+			this.button外部警報.Click += new System.EventHandler(this.button外部警報_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1052, 844);
+			this.Controls.Add(this.button外部警報);
+			this.Controls.Add(this.button積算乳温);
+			this.Controls.Add(this.button集乳完了);
 			this.Controls.Add(this.buttonTH2);
 			this.Controls.Add(this.buttonTH1);
 			this.Controls.Add(this.label2);
@@ -307,6 +343,9 @@
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Button buttonTH1;
 		private System.Windows.Forms.Button buttonTH2;
+		private System.Windows.Forms.Button button集乳完了;
+		private System.Windows.Forms.Button button積算乳温;
+		private System.Windows.Forms.Button button外部警報;
 	}
 }
 
