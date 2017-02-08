@@ -263,7 +263,7 @@ namespace SharedLibrary.SerialPort.Modbus
 
 		void discardBuffer()
 		{
-			Thread.Sleep(100);	// これがないと処理速度的にクリアしきれない
+			Thread.Sleep(10);	// これがないと処理速度的にクリアしきれない
 
 			this.serialPort1.DiscardOutBuffer();
 			this.serialPort1.DiscardInBuffer();
