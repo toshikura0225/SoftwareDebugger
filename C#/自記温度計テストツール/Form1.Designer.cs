@@ -41,6 +41,13 @@
 			this.buttonDebug4 = new System.Windows.Forms.Button();
 			this.buttonDebug5 = new System.Windows.Forms.Button();
 			this.buttonDebug6 = new System.Windows.Forms.Button();
+			this.checkCOM4 = new System.Windows.Forms.CheckBox();
+			this.checkCOM5 = new System.Windows.Forms.CheckBox();
+			this.checkCOM6 = new System.Windows.Forms.CheckBox();
+			this.checkCOM7 = new System.Windows.Forms.CheckBox();
+			this.label2 = new System.Windows.Forms.Label();
+			this.buttonTH1 = new System.Windows.Forms.Button();
+			this.buttonTH2 = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.trackBarTH1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackBarTH2)).BeginInit();
 			this.SuspendLayout();
@@ -48,7 +55,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(132, 124);
+			this.label1.Location = new System.Drawing.Point(266, 95);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(49, 12);
 			this.label1.TabIndex = 0;
@@ -66,7 +73,7 @@
 			// 
 			// trackBarTH2
 			// 
-			this.trackBarTH2.Location = new System.Drawing.Point(283, 171);
+			this.trackBarTH2.Location = new System.Drawing.Point(283, 143);
 			this.trackBarTH2.Maximum = 255;
 			this.trackBarTH2.Name = "trackBarTH2";
 			this.trackBarTH2.Size = new System.Drawing.Size(245, 45);
@@ -77,7 +84,7 @@
 			// labelTH1
 			// 
 			this.labelTH1.AutoSize = true;
-			this.labelTH1.Location = new System.Drawing.Point(242, 123);
+			this.labelTH1.Location = new System.Drawing.Point(266, 114);
 			this.labelTH1.Name = "labelTH1";
 			this.labelTH1.Size = new System.Drawing.Size(11, 12);
 			this.labelTH1.TabIndex = 3;
@@ -86,7 +93,7 @@
 			// labelTH2
 			// 
 			this.labelTH2.AutoSize = true;
-			this.labelTH2.Location = new System.Drawing.Point(242, 171);
+			this.labelTH2.Location = new System.Drawing.Point(266, 149);
 			this.labelTH2.Name = "labelTH2";
 			this.labelTH2.Size = new System.Drawing.Size(11, 12);
 			this.labelTH2.TabIndex = 3;
@@ -170,11 +177,91 @@
 			this.buttonDebug6.UseVisualStyleBackColor = true;
 			this.buttonDebug6.Click += new System.EventHandler(this.buttonDebug6_Click);
 			// 
+			// checkCOM4
+			// 
+			this.checkCOM4.AutoSize = true;
+			this.checkCOM4.Location = new System.Drawing.Point(268, 183);
+			this.checkCOM4.Name = "checkCOM4";
+			this.checkCOM4.Size = new System.Drawing.Size(54, 16);
+			this.checkCOM4.TabIndex = 12;
+			this.checkCOM4.Text = "10kΩ";
+			this.checkCOM4.UseVisualStyleBackColor = true;
+			this.checkCOM4.CheckedChanged += new System.EventHandler(this.checkTH_CheckedChanged);
+			// 
+			// checkCOM5
+			// 
+			this.checkCOM5.AutoSize = true;
+			this.checkCOM5.Location = new System.Drawing.Point(328, 183);
+			this.checkCOM5.Name = "checkCOM5";
+			this.checkCOM5.Size = new System.Drawing.Size(54, 16);
+			this.checkCOM5.TabIndex = 12;
+			this.checkCOM5.Text = "47kΩ";
+			this.checkCOM5.UseVisualStyleBackColor = true;
+			this.checkCOM5.CheckedChanged += new System.EventHandler(this.checkTH_CheckedChanged);
+			// 
+			// checkCOM6
+			// 
+			this.checkCOM6.AutoSize = true;
+			this.checkCOM6.Location = new System.Drawing.Point(388, 183);
+			this.checkCOM6.Name = "checkCOM6";
+			this.checkCOM6.Size = new System.Drawing.Size(60, 16);
+			this.checkCOM6.TabIndex = 12;
+			this.checkCOM6.Text = "100kΩ";
+			this.checkCOM6.UseVisualStyleBackColor = true;
+			this.checkCOM6.CheckedChanged += new System.EventHandler(this.checkTH_CheckedChanged);
+			// 
+			// checkCOM7
+			// 
+			this.checkCOM7.AutoSize = true;
+			this.checkCOM7.Location = new System.Drawing.Point(454, 183);
+			this.checkCOM7.Name = "checkCOM7";
+			this.checkCOM7.Size = new System.Drawing.Size(60, 16);
+			this.checkCOM7.TabIndex = 12;
+			this.checkCOM7.Text = "130kΩ";
+			this.checkCOM7.UseVisualStyleBackColor = true;
+			this.checkCOM7.CheckedChanged += new System.EventHandler(this.checkTH_CheckedChanged);
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(643, 95);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(85, 60);
+			this.label2.TabIndex = 13;
+			this.label2.Text = " 13kΩ→40℃\r\n 30kΩ→20℃\r\n 60kΩ→5℃\r\n 80kΩ→0℃\r\n146kΩ→-9.9℃";
+			// 
+			// buttonTH1
+			// 
+			this.buttonTH1.Location = new System.Drawing.Point(534, 109);
+			this.buttonTH1.Name = "buttonTH1";
+			this.buttonTH1.Size = new System.Drawing.Size(83, 23);
+			this.buttonTH1.TabIndex = 14;
+			this.buttonTH1.Text = "AD5セット";
+			this.buttonTH1.UseVisualStyleBackColor = true;
+			this.buttonTH1.Click += new System.EventHandler(this.buttonTH_Click);
+			// 
+			// buttonTH2
+			// 
+			this.buttonTH2.Location = new System.Drawing.Point(534, 138);
+			this.buttonTH2.Name = "buttonTH2";
+			this.buttonTH2.Size = new System.Drawing.Size(83, 23);
+			this.buttonTH2.TabIndex = 15;
+			this.buttonTH2.Text = "AD6セット";
+			this.buttonTH2.UseVisualStyleBackColor = true;
+			this.buttonTH2.Click += new System.EventHandler(this.buttonTH_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1052, 844);
+			this.Controls.Add(this.buttonTH2);
+			this.Controls.Add(this.buttonTH1);
+			this.Controls.Add(this.label2);
+			this.Controls.Add(this.checkCOM7);
+			this.Controls.Add(this.checkCOM6);
+			this.Controls.Add(this.checkCOM5);
+			this.Controls.Add(this.checkCOM4);
 			this.Controls.Add(this.buttonDebug6);
 			this.Controls.Add(this.buttonDebug5);
 			this.Controls.Add(this.buttonDebug4);
@@ -213,6 +300,13 @@
 		private System.Windows.Forms.Button buttonDebug4;
 		private System.Windows.Forms.Button buttonDebug5;
 		private System.Windows.Forms.Button buttonDebug6;
+		private System.Windows.Forms.CheckBox checkCOM4;
+		private System.Windows.Forms.CheckBox checkCOM5;
+		private System.Windows.Forms.CheckBox checkCOM6;
+		private System.Windows.Forms.CheckBox checkCOM7;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Button buttonTH1;
+		private System.Windows.Forms.Button buttonTH2;
 	}
 }
 

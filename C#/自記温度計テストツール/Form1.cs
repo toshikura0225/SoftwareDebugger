@@ -62,47 +62,69 @@ namespace 自記温度計テストツール
 
 			// AD5206の初期化
 			this.ad5206 = new AD5206(this.arduino.spi, pcal9555a, PCAL9555A.PinName.P1_1);
+
+			// サーミスタの初期化
+			initTH();
 		}
+
+
+		void initTH()
+		{
+			// サーミスタの初期化
+			this.trackBarTH1.Value = 128;
+			ad5206[AD5206.PinName.BW5] = 128;
+			this.trackBarTH2.Value = 255;
+			ad5206[AD5206.PinName.BW6] = 255;
+
+			this.checkCOM5.Checked = true;
+			max335[MAX335.PinName.COM4] = SwitchState.OPEN;
+			max335[MAX335.PinName.COM5] = SwitchState.CLOSE;
+			max335[MAX335.PinName.COM6] = SwitchState.OPEN;
+			max335[MAX335.PinName.COM7] = SwitchState.OPEN;
+		}
+
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
-			
+
 		}
 
 
 
 		private void buttonDebug1_Click(object sender, EventArgs e)
 		{
-			ad5206[AD5206.PinName.BW4] = 0x00;
+			max335[MAX335.PinName.COM4] = SwitchState.OPEN;
+			max335[MAX335.PinName.COM5] = SwitchState.OPEN;
+			max335[MAX335.PinName.COM6] = SwitchState.OPEN;
+			max335[MAX335.PinName.COM7] = SwitchState.OPEN;
 		}
 
 		private void buttonDebug2_Click(object sender, EventArgs e)
 		{
-			ad5206[AD5206.PinName.BW4] = 0x80;
+			ad5206[AD5206.PinName.BW5] = 0x80;
+			ad5206[AD5206.PinName.BW6] = 0x80;
+			max335[MAX335.PinName.COM4] = SwitchState.CLOSE;
 		}
 
 		private void buttonDebug3_Click(object sender, EventArgs e)
 		{
-			ad5206[AD5206.PinName.BW4] = 0xFF;
+			ad5206[AD5206.PinName.BW1] = 0xFF;
 		}
 
 		private void buttonDebug4_Click(object sender, EventArgs e)
 		{
-			this.arduino.io.SetDirection(VirtualArduino.PinName.pin7, true);
-			this.arduino.io.SetDirection(VirtualArduino.PinName.pin4, true);
-			this.arduino.io.SetLevel(VirtualArduino.PinName.pin7, VoltageLevel.HIGH);
-			this.arduino.io.SetLevel(VirtualArduino.PinName.pin4, VoltageLevel.HIGH);
+			max335[MAX335.PinName.COM2] = SwitchState.CLOSE;
 		}
 
 		private void buttonDebug5_Click(object sender, EventArgs e)
 		{
-			this.arduino.io.SetLevel(VirtualArduino.PinName.pin7, VoltageLevel.LOW);
-			this.arduino.io.SetLevel(VirtualArduino.PinName.pin4, VoltageLevel.LOW);
+			max335[MAX335.PinName.COM2] = SwitchState.OPEN;
+			
 		}
 
 		private void buttonDebug6_Click(object sender, EventArgs e)
 		{
-
+			var k = pcal9555a.ReadLevel(PCAL9555A.Command.InputPort_0);
 		}
 
 
@@ -126,6 +148,43 @@ namespace 自記温度計テストツール
 		private void trackBarTH2_ValueChanged(object sender, EventArgs e)
 		{
 			labelTH2.Text = this.trackBarTH2.Value.ToString();
+		}
+
+		/// <summary>
+		/// サーミスタのチェックボックス変化時（すべてのチェックボックス共通）
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void checkTH_CheckedChanged(object sender, EventArgs e)
+		{
+			if ((CheckBox)sender == this.checkCOM4)
+			{
+				max335[MAX335.PinName.COM4] = this.checkCOM4.Checked ? SwitchState.CLOSE : SwitchState.OPEN;
+			}
+			else if ((CheckBox)sender == this.checkCOM5)
+			{
+				max335[MAX335.PinName.COM5] = this.checkCOM5.Checked ? SwitchState.CLOSE : SwitchState.OPEN;
+			}
+			else if ((CheckBox)sender == this.checkCOM6)
+			{
+				max335[MAX335.PinName.COM6] = this.checkCOM6.Checked ? SwitchState.CLOSE : SwitchState.OPEN;
+			}
+			else if ((CheckBox)sender == this.checkCOM7)
+			{
+				max335[MAX335.PinName.COM7] = this.checkCOM7.Checked ? SwitchState.CLOSE : SwitchState.OPEN;
+			}
+		}
+
+		private void buttonTH_Click(object sender, EventArgs e)
+		{
+			if ((Button)sender == this.buttonTH1)
+			{
+				ad5206[AD5206.PinName.BW5] = (byte)this.trackBarTH1.Value;
+			}
+			else if ((Button)sender == this.buttonTH2)
+			{
+				ad5206[AD5206.PinName.BW6] = (byte)this.trackBarTH2.Value;
+			}
 		}
 
 	}
