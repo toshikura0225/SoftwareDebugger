@@ -56,6 +56,9 @@ namespace 自記温度計テストツール
 				this.pcal9555a.SetDirection(PCAL9555A.PinName.P0_0, false);	// 充電のON/OFF信号検出
 				this.pcal9555a.SetDirection(PCAL9555A.PinName.P0_1, false);	// 外部接点①の出力検出
 				this.pcal9555a.SetDirection(PCAL9555A.PinName.P0_2, false);	// 外部接点②の出力検出
+				this.pcal9555a.SetDirection(PCAL9555A.PinName.P0_5, true);	// P
+				this.pcal9555a.SetDirection(PCAL9555A.PinName.P0_6, true);	// C
+				this.pcal9555a.SetDirection(PCAL9555A.PinName.P0_7, true);	// A
 			}
 
 			// MAX335の初期化
@@ -94,32 +97,33 @@ namespace 自記温度計テストツール
 
 		private void buttonDebug1_Click(object sender, EventArgs e)
 		{
-			max335[MAX335.PinName.COM4] = SwitchState.OPEN;
-			max335[MAX335.PinName.COM5] = SwitchState.OPEN;
-			max335[MAX335.PinName.COM6] = SwitchState.OPEN;
-			max335[MAX335.PinName.COM7] = SwitchState.OPEN;
+			pcal9555a.SetLevel(PCAL9555A.PinName.P0_7, VoltageLevel.LOW);
+			pcal9555a.SetLevel(PCAL9555A.PinName.P0_6, VoltageLevel.HIGH);
+			pcal9555a.SetLevel(PCAL9555A.PinName.P0_5, VoltageLevel.LOW);
 		}
 
 		private void buttonDebug2_Click(object sender, EventArgs e)
 		{
-			ad5206[AD5206.PinName.BW5] = 0x80;
-			ad5206[AD5206.PinName.BW6] = 0x80;
-			max335[MAX335.PinName.COM4] = SwitchState.CLOSE;
+			pcal9555a.SetLevel(PCAL9555A.PinName.P0_7, VoltageLevel.HIGH);
+			pcal9555a.SetLevel(PCAL9555A.PinName.P0_6, VoltageLevel.LOW);
+			pcal9555a.SetLevel(PCAL9555A.PinName.P0_5, VoltageLevel.HIGH);
 		}
 
 		private void buttonDebug3_Click(object sender, EventArgs e)
 		{
-			ad5206[AD5206.PinName.BW1] = 0xFF;
+			pcal9555a.SetLevel(PCAL9555A.PinName.P0_7, VoltageLevel.HIGH);
+			pcal9555a.SetLevel(PCAL9555A.PinName.P0_6, VoltageLevel.HIGH);
+			pcal9555a.SetLevel(PCAL9555A.PinName.P0_5, VoltageLevel.LOW);
 		}
 
 		private void buttonDebug4_Click(object sender, EventArgs e)
 		{
-			max335[MAX335.PinName.COM2] = SwitchState.CLOSE;
+			ad5206[AD5206.PinName.BW4] = 0x80;
 		}
 
 		private void buttonDebug5_Click(object sender, EventArgs e)
 		{
-			max335[MAX335.PinName.COM2] = SwitchState.OPEN;
+			ad5206[AD5206.PinName.BW4] = 0x00;
 			
 		}
 
