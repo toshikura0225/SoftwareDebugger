@@ -69,24 +69,32 @@ namespace 自記温度計テストツール
 
 			// サーミスタの初期化
 			initTH();
+
+			// 充電状態の初期化
+			initCharge();
+
+			// リレーの初期化
+			initRelay();
+
 		}
 
 
 		void initTH()
 		{
-			// サーミスタの初期化
-			this.trackBarTH1.Value = 128;
-			ad5206[AD5206.PinName.BW5] = 128;
-			this.trackBarTH2.Value = 255;
-			ad5206[AD5206.PinName.BW6] = 255;
-
-			this.checkCOM5.Checked = true;
-			max335[MAX335.PinName.COM4] = SwitchState.OPEN;
-			max335[MAX335.PinName.COM5] = SwitchState.CLOSE;
-			max335[MAX335.PinName.COM6] = SwitchState.OPEN;
-			max335[MAX335.PinName.COM7] = SwitchState.OPEN;
+			button5C_Click(null, null);
 		}
 
+		void initCharge()
+		{
+			pcal9555a.SetDirection(PCAL9555A.PinName.P0_0, false);
+			button充電状態_Click(null, null);
+		}
+
+		void initRelay()
+		{
+			this.arduino.io.SetLevel(VirtualArduino.PinName.pin7, VoltageLevel.LOW);
+			this.arduino.io.SetLevel(VirtualArduino.PinName.pin4, VoltageLevel.LOW);
+		}
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
@@ -97,16 +105,14 @@ namespace 自記温度計テストツール
 
 		private void buttonDebug1_Click(object sender, EventArgs e)
 		{
-			pcal9555a.SetLevel(PCAL9555A.PinName.P0_7, VoltageLevel.LOW);
-			pcal9555a.SetLevel(PCAL9555A.PinName.P0_6, VoltageLevel.HIGH);
-			pcal9555a.SetLevel(PCAL9555A.PinName.P0_5, VoltageLevel.LOW);
+			this.arduino.io.SetLevel(VirtualArduino.PinName.pin7, VoltageLevel.HIGH);
+			//this.arduino.io.SetLevel(VirtualArduino.PinName.pin4, VoltageLevel.LOW);
 		}
 
 		private void buttonDebug2_Click(object sender, EventArgs e)
 		{
-			pcal9555a.SetLevel(PCAL9555A.PinName.P0_7, VoltageLevel.HIGH);
-			pcal9555a.SetLevel(PCAL9555A.PinName.P0_6, VoltageLevel.LOW);
-			pcal9555a.SetLevel(PCAL9555A.PinName.P0_5, VoltageLevel.HIGH);
+			this.arduino.io.SetLevel(VirtualArduino.PinName.pin7, VoltageLevel.LOW);
+			//this.arduino.io.SetLevel(VirtualArduino.PinName.pin4, VoltageLevel.HIGH);
 		}
 
 		private void buttonDebug3_Click(object sender, EventArgs e)
@@ -209,6 +215,48 @@ namespace 自記温度計テストツール
 		{
 			max335[MAX335.PinName.COM1] = SwitchState.CLOSE;
 			max335[MAX335.PinName.COM1] = SwitchState.OPEN;
+		}
+
+		private void button充電状態_Click(object sender, EventArgs e)
+		{
+			var k = pcal9555a.ReadLevel(PCAL9555A.Command.InputPort_0);
+
+			this.label充電状態.Text = ((k[PCAL9555A.PinName.P0_0] == VoltageLevel.HIGH) ? "充電中" : "充電なし");
+			this.label充電状態.BackColor = ((k[PCAL9555A.PinName.P0_0] == VoltageLevel.HIGH) ? Color.Red : Color.Blue);
+		}
+
+		private void button5C_Click(object sender, EventArgs e)
+		{
+			// サーミスタの初期化
+			this.trackBarTH1.Value = 115;
+			this.trackBarTH2.Value = 255;
+			ad5206[AD5206.PinName.BW5] = 115;
+			ad5206[AD5206.PinName.BW6] = 255;
+
+			this.checkCOM4.Checked = false;
+			this.checkCOM5.Checked = true;
+			this.checkCOM6.Checked = false;
+			this.checkCOM7.Checked = false;
+			//max335[MAX335.PinName.COM4] = SwitchState.OPEN;
+			//max335[MAX335.PinName.COM5] = SwitchState.CLOSE;
+			//max335[MAX335.PinName.COM6] = SwitchState.OPEN;
+			//max335[MAX335.PinName.COM7] = SwitchState.OPEN;
+
+			Dictionary<int, Dictionary<int, int>> dic = new Dictionary<int, Dictionary<int, int>>();
+
+			Dictionary<int, int> dic2 = new Dictionary<int,int>();
+			dic2.Add(2, 3);
+
+			dic.Add(2, dic2);
+
+
+		}
+
+		private void button電源リセット_Click(object sender, EventArgs e)
+		{
+			this.arduino.io.SetLevel(VirtualArduino.PinName.pin7, VoltageLevel.HIGH);
+			Thread.Sleep(1000);
+			this.arduino.io.SetLevel(VirtualArduino.PinName.pin7, VoltageLevel.LOW);
 		}
 
 	}

@@ -51,6 +51,11 @@
 			this.button集乳完了 = new System.Windows.Forms.Button();
 			this.button積算乳温 = new System.Windows.Forms.Button();
 			this.button外部警報 = new System.Windows.Forms.Button();
+			this.label3 = new System.Windows.Forms.Label();
+			this.label充電状態 = new System.Windows.Forms.Label();
+			this.button充電状態 = new System.Windows.Forms.Button();
+			this.button5C = new System.Windows.Forms.Button();
+			this.button電源リセット = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.trackBarTH1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.trackBarTH2)).BeginInit();
 			this.SuspendLayout();
@@ -58,7 +63,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(266, 95);
+			this.label1.Location = new System.Drawing.Point(120, 95);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(49, 12);
 			this.label1.TabIndex = 0;
@@ -66,20 +71,20 @@
 			// 
 			// trackBarTH1
 			// 
-			this.trackBarTH1.Location = new System.Drawing.Point(283, 110);
+			this.trackBarTH1.Location = new System.Drawing.Point(137, 110);
 			this.trackBarTH1.Maximum = 255;
 			this.trackBarTH1.Name = "trackBarTH1";
-			this.trackBarTH1.Size = new System.Drawing.Size(245, 45);
+			this.trackBarTH1.Size = new System.Drawing.Size(384, 45);
 			this.trackBarTH1.TabIndex = 1;
 			this.trackBarTH1.TickStyle = System.Windows.Forms.TickStyle.None;
 			this.trackBarTH1.ValueChanged += new System.EventHandler(this.trackBarTH1_ValueChanged);
 			// 
 			// trackBarTH2
 			// 
-			this.trackBarTH2.Location = new System.Drawing.Point(283, 143);
+			this.trackBarTH2.Location = new System.Drawing.Point(137, 143);
 			this.trackBarTH2.Maximum = 255;
 			this.trackBarTH2.Name = "trackBarTH2";
-			this.trackBarTH2.Size = new System.Drawing.Size(245, 45);
+			this.trackBarTH2.Size = new System.Drawing.Size(384, 45);
 			this.trackBarTH2.TabIndex = 2;
 			this.trackBarTH2.TickStyle = System.Windows.Forms.TickStyle.None;
 			this.trackBarTH2.ValueChanged += new System.EventHandler(this.trackBarTH2_ValueChanged);
@@ -87,7 +92,7 @@
 			// labelTH1
 			// 
 			this.labelTH1.AutoSize = true;
-			this.labelTH1.Location = new System.Drawing.Point(266, 114);
+			this.labelTH1.Location = new System.Drawing.Point(120, 114);
 			this.labelTH1.Name = "labelTH1";
 			this.labelTH1.Size = new System.Drawing.Size(11, 12);
 			this.labelTH1.TabIndex = 3;
@@ -96,7 +101,7 @@
 			// labelTH2
 			// 
 			this.labelTH2.AutoSize = true;
-			this.labelTH2.Location = new System.Drawing.Point(266, 149);
+			this.labelTH2.Location = new System.Drawing.Point(120, 149);
 			this.labelTH2.Name = "labelTH2";
 			this.labelTH2.Size = new System.Drawing.Size(11, 12);
 			this.labelTH2.TabIndex = 3;
@@ -109,6 +114,7 @@
 			this.comboCOM.Name = "comboCOM";
 			this.comboCOM.Size = new System.Drawing.Size(121, 20);
 			this.comboCOM.TabIndex = 4;
+			this.comboCOM.Text = "COM20";
 			// 
 			// button開始
 			// 
@@ -183,7 +189,7 @@
 			// checkCOM4
 			// 
 			this.checkCOM4.AutoSize = true;
-			this.checkCOM4.Location = new System.Drawing.Point(268, 183);
+			this.checkCOM4.Location = new System.Drawing.Point(152, 185);
 			this.checkCOM4.Name = "checkCOM4";
 			this.checkCOM4.Size = new System.Drawing.Size(54, 16);
 			this.checkCOM4.TabIndex = 12;
@@ -194,7 +200,7 @@
 			// checkCOM5
 			// 
 			this.checkCOM5.AutoSize = true;
-			this.checkCOM5.Location = new System.Drawing.Point(328, 183);
+			this.checkCOM5.Location = new System.Drawing.Point(212, 185);
 			this.checkCOM5.Name = "checkCOM5";
 			this.checkCOM5.Size = new System.Drawing.Size(54, 16);
 			this.checkCOM5.TabIndex = 12;
@@ -205,7 +211,7 @@
 			// checkCOM6
 			// 
 			this.checkCOM6.AutoSize = true;
-			this.checkCOM6.Location = new System.Drawing.Point(388, 183);
+			this.checkCOM6.Location = new System.Drawing.Point(272, 185);
 			this.checkCOM6.Name = "checkCOM6";
 			this.checkCOM6.Size = new System.Drawing.Size(60, 16);
 			this.checkCOM6.TabIndex = 12;
@@ -216,7 +222,7 @@
 			// checkCOM7
 			// 
 			this.checkCOM7.AutoSize = true;
-			this.checkCOM7.Location = new System.Drawing.Point(454, 183);
+			this.checkCOM7.Location = new System.Drawing.Point(338, 185);
 			this.checkCOM7.Name = "checkCOM7";
 			this.checkCOM7.Size = new System.Drawing.Size(60, 16);
 			this.checkCOM7.TabIndex = 12;
@@ -227,7 +233,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(643, 95);
+			this.label2.Location = new System.Drawing.Point(650, 96);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(85, 60);
 			this.label2.TabIndex = 13;
@@ -235,7 +241,7 @@
 			// 
 			// buttonTH1
 			// 
-			this.buttonTH1.Location = new System.Drawing.Point(534, 109);
+			this.buttonTH1.Location = new System.Drawing.Point(541, 110);
 			this.buttonTH1.Name = "buttonTH1";
 			this.buttonTH1.Size = new System.Drawing.Size(83, 23);
 			this.buttonTH1.TabIndex = 14;
@@ -245,7 +251,7 @@
 			// 
 			// buttonTH2
 			// 
-			this.buttonTH2.Location = new System.Drawing.Point(534, 138);
+			this.buttonTH2.Location = new System.Drawing.Point(541, 139);
 			this.buttonTH2.Name = "buttonTH2";
 			this.buttonTH2.Size = new System.Drawing.Size(83, 23);
 			this.buttonTH2.TabIndex = 15;
@@ -257,37 +263,91 @@
 			// 
 			this.button集乳完了.Location = new System.Drawing.Point(775, 36);
 			this.button集乳完了.Name = "button集乳完了";
-			this.button集乳完了.Size = new System.Drawing.Size(97, 23);
+			this.button集乳完了.Size = new System.Drawing.Size(70, 51);
 			this.button集乳完了.TabIndex = 16;
-			this.button集乳完了.Text = "集乳完了";
+			this.button集乳完了.Text = "集乳\r\n完了";
 			this.button集乳完了.UseVisualStyleBackColor = true;
 			this.button集乳完了.Click += new System.EventHandler(this.button集乳完了_Click);
 			// 
 			// button積算乳温
 			// 
-			this.button積算乳温.Location = new System.Drawing.Point(775, 84);
+			this.button積算乳温.Location = new System.Drawing.Point(861, 36);
 			this.button積算乳温.Name = "button積算乳温";
-			this.button積算乳温.Size = new System.Drawing.Size(97, 23);
+			this.button積算乳温.Size = new System.Drawing.Size(69, 51);
 			this.button積算乳温.TabIndex = 17;
-			this.button積算乳温.Text = "積算乳温";
+			this.button積算乳温.Text = "積算\r\n乳温";
 			this.button積算乳温.UseVisualStyleBackColor = true;
 			this.button積算乳温.Click += new System.EventHandler(this.button積算乳温_Click);
 			// 
 			// button外部警報
 			// 
-			this.button外部警報.Location = new System.Drawing.Point(775, 132);
+			this.button外部警報.Location = new System.Drawing.Point(952, 36);
 			this.button外部警報.Name = "button外部警報";
-			this.button外部警報.Size = new System.Drawing.Size(97, 23);
+			this.button外部警報.Size = new System.Drawing.Size(65, 51);
 			this.button外部警報.TabIndex = 18;
-			this.button外部警報.Text = "外部警報";
+			this.button外部警報.Text = "外部\r\n警報";
 			this.button外部警報.UseVisualStyleBackColor = true;
 			this.button外部警報.Click += new System.EventHandler(this.button外部警報_Click);
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(81, 356);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(53, 12);
+			this.label3.TabIndex = 19;
+			this.label3.Text = "充電状態";
+			// 
+			// label充電状態
+			// 
+			this.label充電状態.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.label充電状態.Location = new System.Drawing.Point(141, 356);
+			this.label充電状態.Name = "label充電状態";
+			this.label充電状態.Size = new System.Drawing.Size(80, 23);
+			this.label充電状態.TabIndex = 20;
+			this.label充電状態.Text = "label4";
+			this.label充電状態.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// button充電状態
+			// 
+			this.button充電状態.Location = new System.Drawing.Point(248, 356);
+			this.button充電状態.Name = "button充電状態";
+			this.button充電状態.Size = new System.Drawing.Size(100, 23);
+			this.button充電状態.TabIndex = 21;
+			this.button充電状態.Text = "充電状態更新";
+			this.button充電状態.UseVisualStyleBackColor = true;
+			this.button充電状態.Click += new System.EventHandler(this.button充電状態_Click);
+			// 
+			// button5C
+			// 
+			this.button5C.Location = new System.Drawing.Point(431, 181);
+			this.button5C.Name = "button5C";
+			this.button5C.Size = new System.Drawing.Size(46, 23);
+			this.button5C.TabIndex = 22;
+			this.button5C.Text = "5℃";
+			this.button5C.UseVisualStyleBackColor = true;
+			this.button5C.Click += new System.EventHandler(this.button5C_Click);
+			// 
+			// button電源リセット
+			// 
+			this.button電源リセット.Location = new System.Drawing.Point(414, 51);
+			this.button電源リセット.Name = "button電源リセット";
+			this.button電源リセット.Size = new System.Drawing.Size(95, 23);
+			this.button電源リセット.TabIndex = 23;
+			this.button電源リセット.Text = "電源リセット";
+			this.button電源リセット.UseVisualStyleBackColor = true;
+			this.button電源リセット.Click += new System.EventHandler(this.button電源リセット_Click);
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1052, 844);
+			this.Controls.Add(this.button電源リセット);
+			this.Controls.Add(this.button5C);
+			this.Controls.Add(this.button充電状態);
+			this.Controls.Add(this.label充電状態);
+			this.Controls.Add(this.label3);
 			this.Controls.Add(this.button外部警報);
 			this.Controls.Add(this.button積算乳温);
 			this.Controls.Add(this.button集乳完了);
@@ -346,6 +406,11 @@
 		private System.Windows.Forms.Button button集乳完了;
 		private System.Windows.Forms.Button button積算乳温;
 		private System.Windows.Forms.Button button外部警報;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.Label label充電状態;
+		private System.Windows.Forms.Button button充電状態;
+		private System.Windows.Forms.Button button5C;
+		private System.Windows.Forms.Button button電源リセット;
 	}
 }
 
